@@ -114,10 +114,10 @@ const MasterLayout = ({ children }) => {
                   <NavLink to="/" className={(navData) =>
                     navData.isActive ? "active-page" : ""
                   }>
-                    <i className="ri-circle-fill circle-icon text-primary-600 w-auto" />AI
+                    <i className="ri-circle-fill circle-icon text-primary-600 w-auto" />Team
                   </NavLink>
                 </li>
-                <li>
+                {/* <li>
                   <NavLink to="/index-2" className={(navData) =>
                     navData.isActive ? "active-page" : ""
                   }>
@@ -159,12 +159,12 @@ const MasterLayout = ({ children }) => {
                   }>
                     <i className="ri-circle-fill circle-icon text-info-main w-auto" /> NFT &amp; Gaming
                   </NavLink>
-                </li>
+                </li> */}
               </ul>
             </li>
 
-            <li className="sidebar-menu-group-title">Application</li>
-            <li>
+            {/* <li className="sidebar-menu-group-title">Application</li> */}
+            {/* <li>
               <NavLink to="/email" className={(navData) =>
                 navData.isActive ? "active-page" : ""
               }>
@@ -195,10 +195,10 @@ const MasterLayout = ({ children }) => {
                 <Icon icon="material-symbols:map-outline" className="menu-icon" />
                 <span>Kanban</span>
               </NavLink>
-            </li>
+            </li> */}
 
             {/* Invoice Dropdown */}
-            <li className="dropdown">
+            {/* <li className="dropdown">
               <Link to="#">
                 <Icon icon="hugeicons:invoice-03" className="menu-icon" />
                 <span>Invoice</span>
@@ -234,10 +234,10 @@ const MasterLayout = ({ children }) => {
                   </NavLink>
                 </li>
               </ul>
-            </li>
+            </li> */}
 
             {/* Ai Application Dropdown */}
-            <li className="dropdown">
+            {/* <li className="dropdown">
               <Link to="#">
                 <i className="ri-robot-2-line mr-10" />
 
@@ -280,10 +280,10 @@ const MasterLayout = ({ children }) => {
                   </NavLink>
                 </li>
               </ul>
-            </li>
+            </li> */}
 
             {/* Crypto Currency Dropdown */}
-            <li className="dropdown">
+            {/* <li className="dropdown">
               <Link to="#">
                 <i className="ri-robot-2-line mr-10" />
                 <span>Crypto Currency</span>
@@ -321,9 +321,9 @@ const MasterLayout = ({ children }) => {
                   </NavLink>
                 </li>
               </ul>
-            </li>
+            </li> */}
 
-            <li className="sidebar-menu-group-title">UI Elements</li>
+            {/* <li className="sidebar-menu-group-title">UI Elements</li> */}
 
             {/* Components Dropdown */}
             <li className="dropdown">
@@ -485,7 +485,7 @@ const MasterLayout = ({ children }) => {
             </li>
 
             {/* Forms Dropdown */}
-            <li className="dropdown">
+            {/* <li className="dropdown">
               <Link to="#">
                 <Icon icon="heroicons:document" className="menu-icon" />
                 <span>Forms</span>
@@ -520,10 +520,10 @@ const MasterLayout = ({ children }) => {
                   </NavLink>
                 </li>
               </ul>
-            </li>
+            </li> */}
 
             {/* Table Dropdown */}
-            <li className="dropdown">
+            {/* <li className="dropdown">
               <Link to="#">
                 <Icon icon="mingcute:storage-line" className="menu-icon" />
                 <span>Table</span>
@@ -544,10 +544,10 @@ const MasterLayout = ({ children }) => {
                   </NavLink>
                 </li>
               </ul>
-            </li>
+            </li> */}
 
             {/* Chart Dropdown */}
-            <li className="dropdown">
+            {/* <li className="dropdown">
               <Link to="#">
                 <Icon icon="solar:pie-chart-outline" className="menu-icon" />
                 <span>Chart</span>
@@ -584,7 +584,7 @@ const MasterLayout = ({ children }) => {
                 <Icon icon="fe:vector" className="menu-icon" />
                 <span>Widgets</span>
               </NavLink>
-            </li>
+            </li> */}
 
             {/* Users Dropdown */}
             <li className="dropdown">
@@ -648,10 +648,10 @@ const MasterLayout = ({ children }) => {
               </ul>
             </li>
 
-            <li className="sidebar-menu-group-title">Application</li>
+            {/* <li className="sidebar-menu-group-title">Application</li> */}
 
             {/* Authentication Dropdown */}
-            <li className="dropdown">
+            {/* <li className="dropdown">
               <Link to="#">
                 <Icon icon="simple-line-icons:vector" className="menu-icon" />
                 <span>Authentication</span>
@@ -679,9 +679,9 @@ const MasterLayout = ({ children }) => {
                   </NavLink>
                 </li>
               </ul>
-            </li>
+            </li> */}
 
-            <li>
+            {/* <li>
               <NavLink to="/gallery" className={(navData) =>
                 navData.isActive ? "active-page" : ""
               }>
@@ -720,10 +720,10 @@ const MasterLayout = ({ children }) => {
                 <Icon icon="octicon:info-24" className="menu-icon" />
                 <span>Terms &amp; Conditions</span>
               </NavLink>
-            </li>
+            </li> */}
 
             {/* Settings Dropdown */}
-            <li className="dropdown">
+            {/* <li className="dropdown">
               <Link to="#">
                 <Icon icon="icon-park-outline:setting-two" className="menu-icon" />
                 <span>Settings</span>
@@ -779,7 +779,7 @@ const MasterLayout = ({ children }) => {
                   </NavLink>
                 </li>
               </ul>
-            </li>
+            </li> */}
           </ul>
         </div>
       </aside>
@@ -824,7 +824,7 @@ const MasterLayout = ({ children }) => {
                   >
                     <img
                       src="assets/images/lang-flag.png"
-                      alt="Wowdash"
+                      alt="Vraaas Travel and Tour"
                       className="w-24 h-24 object-fit-cover rounded-circle"
                     />
                   </button>
@@ -1440,11 +1440,11 @@ const MasterLayout = ({ children }) => {
         <footer className="d-footer">
           <div className="row align-items-center justify-content-between">
             <div className="col-auto">
-              <p className="mb-0">© 2024 WowDash. All Rights Reserved.</p>
+              <p className="mb-0">© 2024 Vraaas Travel and Tour. All Rights Reserved.</p>
             </div>
             <div className="col-auto">
               <p className="mb-0">
-                Made by <span className="text-primary-600">wowtheme7</span>
+                Made by <span className="text-primary-600">Vraaas Digital Solution</span>
               </p>
             </div>
           </div>

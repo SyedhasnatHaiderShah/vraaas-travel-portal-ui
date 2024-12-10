@@ -1,9 +1,15 @@
 import { Icon } from '@iconify/react/dist/iconify.js';
 import React, { useState } from 'react';
+import UploadWithImagePreviewList from './child/UploadWithImagePreviewList';
+import PassportUpload from './TravelDocuments/PassportUpload';
+import IdUpload from './TravelDocuments/IdUpload';
 
 const AddUserLayer = () => {
 
     const [imagePreviewUrl, setImagePreviewUrl] = useState('');
+    const [passportPreviewUrl, setPassportPreviewUrl] = useState('');
+    const [photoPreviewUrl, setPhotoPreviewUrl] = useState('');
+    const [idCardPreviewUrl, setIdCardPreviewUrl] = useState('');
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -96,7 +102,7 @@ const AddUserLayer = () => {
                                             placeholder="Enter phone number"
                                         />
                                     </div>
-                                    <div className="mb-20">
+                                    {/* <div className="mb-20">
                                         <label
                                             htmlFor="depart"
                                             className="form-label fw-semibold text-primary-light text-sm mb-8"
@@ -115,8 +121,8 @@ const AddUserLayer = () => {
                                             <option value="Enter Event Title One">Enter Event Title One</option>
                                             <option value="Enter Event Title Two">Enter Event Title Two</option>
                                         </select>
-                                    </div>
-                                    <div className="mb-20">
+                                    </div> */}
+                                    {/* <div className="mb-20">
                                         <label
                                             htmlFor="desig"
                                             className="form-label fw-semibold text-primary-light text-sm mb-8"
@@ -135,21 +141,24 @@ const AddUserLayer = () => {
                                             <option value="Enter Designation Title One">Enter Designation Title One</option>
                                             <option value="Enter Designation Title Two">Enter Designation Title Two</option>
                                         </select>
+                                    </div> */}
+                                    <div className="mb-20">
+                                        <label
+                                            htmlFor="desc"
+                                            className="form-label fw-semibold text-primary-light text-sm mb-8"
+                                        >
+                                            Required Documents 1st
+                                        </label>
+                                        <PassportUpload title={'Upload Passport'} />
                                     </div>
                                     <div className="mb-20">
                                         <label
                                             htmlFor="desc"
                                             className="form-label fw-semibold text-primary-light text-sm mb-8"
                                         >
-                                            Description
+                                            Required Documents 2nd
                                         </label>
-                                        <textarea
-                                            name="#0"
-                                            className="form-control radius-8"
-                                            id="desc"
-                                            placeholder="Write description..."
-                                            defaultValue={""}
-                                        />
+                                        <IdUpload title={'Upload Id Card'}/>
                                     </div>
                                     <div className="d-flex align-items-center justify-content-center gap-3">
                                         <button
