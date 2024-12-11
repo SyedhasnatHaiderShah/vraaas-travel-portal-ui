@@ -82,6 +82,8 @@ import WizardPage from "./pages/WizardPage";
 import RouteScrollToTop from "./helper/RouteScrollToTop";
 import TextGeneratorNewPage from "./pages/TextGeneratorNewPage";
 
+// added by khurram
+import ChangePasswordPage from "./pages/ChangePasswordPage";
 
 function App() {
   return (
@@ -96,7 +98,6 @@ function App() {
         <Route exact path="/index-6" element={<HomePageSix />} />
         <Route exact path="/index-7" element={<HomePageSeven />} /> */}
 
-
         {/* SL */}
         <Route exact path="/add-user" element={<AddUserPage />} />
         {/* <Route exact path="/alert" element={<AlertPage />} /> */}
@@ -105,14 +106,18 @@ function App() {
         {/* <Route exact path="/badges" element={<BadgesPage />} /> */}
         {/* <Route exact path="/button" element={<ButtonPage />} /> */}
         {/* <Route exact path="/calendar-main" element={<CalendarMainPage />} /> */}
-        {/* <Route exact path="/calendar" element={<CalendarMainPage />} />
+        <Route exact path="/calendar" element={<CalendarMainPage />} />
         <Route exact path="/card" element={<CardPage />} />
         <Route exact path="/carousel" element={<CarouselPage />} />
         <Route exact path="/chat-empty" element={<ChatEmptyPage />} />
         <Route exact path="/chat-message" element={<ChatMessagePage />} />
         <Route exact path="/chat-profile" element={<ChatProfilePage />} />
         <Route exact path="/code-generator" element={<CodeGeneratorPage />} />
-        <Route exact path="/code-generator-new" element={<CodeGeneratorNewPage />} />
+        <Route
+          exact
+          path="/code-generator-new"
+          element={<CodeGeneratorNewPage />}
+        />
         <Route exact path="/colors" element={<ColorsPage />} />
         <Route exact path="/column-chart" element={<ColumnChartPage />} />
         <Route exact path="/company" element={<CompanyPage />} />
@@ -120,11 +125,10 @@ function App() {
         <Route exact path="/dropdown" element={<DropdownPage />} />
         <Route exact path="/email" element={<EmailPage />} />
         <Route exact path="/faq" element={<FaqPage />} />
-        <Route exact path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route exact path="/form-layout" element={<FormLayoutPage />} />
         <Route exact path="/form-validation" element={<FormValidationPage />} />
         <Route exact path="/form" element={<FormPage />} />
-        <Route exact path="/gallery" element={<GalleryPage />} /> */}
+        <Route exact path="/gallery" element={<GalleryPage />} />
         {/* <Route exact path="/image-generator" element={<ImageGeneratorPage />} /> */}
         <Route exact path="/image-upload" element={<ImageUploadPage />} />
         <Route exact path="/invoice-add" element={<InvoiceAddPage />} />
@@ -149,6 +153,9 @@ function App() {
         <Route exact path="/role-access" element={<RoleAccessPage />} /> */}
         <Route exact path="/sign-in" element={<SignInPage />} />
         <Route exact path="/sign-up" element={<SignUpPage />} />
+        <Route exact path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route exact path="/change-password" element={<ChangePasswordPage />} />
+
         {/* <Route exact path="/star-rating" element={<StarRatingPage />} />
         <Route exact path="/starred" element={<StarredPage />} />
         <Route exact path="/switch" element={<SwitchPage />} /> */}
@@ -173,16 +180,10 @@ function App() {
         <Route exact path="/widgets" element={<WidgetsPage />} />
         <Route exact path="/wizard" element={<WizardPage />} /> */}
 
-
         <Route exact path="*" element={<ErrorPage />} />
-
-
       </Routes>
     </BrowserRouter>
   );
 }
 
 export default App;
-
-
-
