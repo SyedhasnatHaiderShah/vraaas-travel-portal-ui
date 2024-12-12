@@ -6,10 +6,10 @@ import { RxEyeOpen } from "react-icons/rx";
 import { RxEyeClosed } from "react-icons/rx";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { allCountries } from "./../utils/countries";
-import { MdDeleteForever } from "react-icons/md";
 import { MdContactMail } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 const ChangePasswordLayer = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = React.useState(false);
 
   const {
@@ -19,7 +19,6 @@ const ChangePasswordLayer = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       const response = await axios.post(
         "http://localhost:3000/auth/change-password",
@@ -30,10 +29,12 @@ const ChangePasswordLayer = () => {
           },
         }
       );
-      if (response.data.is_success) {
+
+      if (response.data.is_success === true) {
         toast.success(response.data.message);
+        navigate("/sign-in");
       } else {
-        toast.info(response.data.message);
+        toast.error(response.data.message);
       }
     } catch (error) {
       console.error("Error during registration:", error.message);

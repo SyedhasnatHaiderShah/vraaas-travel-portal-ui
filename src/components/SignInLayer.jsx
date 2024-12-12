@@ -1,12 +1,15 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { RxEyeOpen } from "react-icons/rx";
+import { RxEyeClosed } from "react-icons/rx";
 
 const SignInLayer = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -101,7 +104,7 @@ const SignInLayer = () => {
                   <Icon icon="solar:lock-password-outline" />
                 </span>
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   className="form-control h-56-px bg-neutral-50 radius-12"
                   id="your-password"
                   placeholder="Password"
@@ -109,15 +112,27 @@ const SignInLayer = () => {
                   {...register("password", { required: true })}
                 />
               </div>
+
               {errors.password && (
                 <div className="fw-normal text-danger">
                   Password is required
                 </div>
               )}
-              <span
+              {!showPassword ? (
+                <RxEyeClosed
+                  className="toggle-password ri-eye-line cursor-pointer position-absolute end-0 top-50 translate-middle-y me-16 text-secondary-light"
+                  onClick={() => setShowPassword(!showPassword)}
+                />
+              ) : (
+                <RxEyeOpen
+                  className="toggle-password ri-eye-line cursor-pointer position-absolute end-0 top-50 translate-middle-y me-16 text-secondary-light"
+                  onClick={() => setShowPassword(!showPassword)}
+                />
+              )}
+              {/* <span
                 className="toggle-password ri-eye-line cursor-pointer position-absolute end-0 top-50 translate-middle-y me-16 text-secondary-light"
                 data-toggle="#your-password"
-              />
+              /> */}
             </div>
             <div className="d-flex justify-content-between gap-2">
               <div className="form-check style-check d-flex align-items-center">
