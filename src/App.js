@@ -85,6 +85,7 @@ import TextGeneratorNewPage from "./pages/TextGeneratorNewPage";
 // added by khurram
 import ChangePasswordPage from "./pages/ChangePasswordPage";
 import UserDetailPage from "./pages/UserDetailPage";
+import UserDataPage from "./pages/UserDataPage";
 
 function App() {
   return (
@@ -157,6 +158,7 @@ function App() {
         <Route exact path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route exact path="/change-password" element={<ChangePasswordPage />} />
         <Route exact path="/user-detail" element={<UserDetailPage />} />
+        <Route exact path="/user-data" element={<UserDataPage />} />
 
         {/* <Route exact path="/star-rating" element={<StarRatingPage />} />
         <Route exact path="/starred" element={<StarredPage />} />
