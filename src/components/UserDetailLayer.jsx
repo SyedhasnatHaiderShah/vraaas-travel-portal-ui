@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const UserDetailLayer = () => {
+const UserDetailLayer = ({ editUserData, setShowModal }) => {
   const {
     register,
     handleSubmit,
@@ -59,13 +59,16 @@ const UserDetailLayer = () => {
           <div className="pb-24 ms-16 mb-24 me-16  mt--100">
             <div className="text-center border border-top-0 border-start-0 border-end-0">
               <img
-                src="assets/images/user-grid/user-grid-img14.png"
+                src={
+                  editUserData.data.profile_picture ||
+                  "assets/images/user-grid/user-grid-img14.png"
+                }
                 alt=""
                 className="border br-white border-width-2-px w-200-px h-200-px rounded-circle object-fit-cover"
               />
-              <h6 className="mb-0 mt-16">Jacob Jones</h6>
+              <h6 className="mb-0 mt-16">{editUserData.data.full_name}</h6>
               <span className="text-secondary-light mb-16">
-                ifrandom@gmail.com
+                {editUserData.data.email}
               </span>
             </div>
             <div className="mt-24">
@@ -76,7 +79,16 @@ const UserDetailLayer = () => {
                     Full Name
                   </span>
                   <span className="w-70 text-secondary-light fw-medium">
-                    : Will Jonto
+                    : {editUserData.data.full_name}
+                  </span>
+                </li>
+                <li className="d-flex align-items-center gap-1 mb-12">
+                  <span className="w-30 text-md fw-semibold text-primary-light">
+                    {" "}
+                    Username
+                  </span>
+                  <span className="w-70 text-secondary-light fw-medium">
+                    : {editUserData.data.username}
                   </span>
                 </li>
                 <li className="d-flex align-items-center gap-1 mb-12">
@@ -85,7 +97,7 @@ const UserDetailLayer = () => {
                     Email
                   </span>
                   <span className="w-70 text-secondary-light fw-medium">
-                    : willjontoax@gmail.com
+                    : {editUserData.data.email}
                   </span>
                 </li>
                 <li className="d-flex align-items-center gap-1 mb-12">
@@ -94,44 +106,35 @@ const UserDetailLayer = () => {
                     Phone Number
                   </span>
                   <span className="w-70 text-secondary-light fw-medium">
-                    : (1) 2536 2561 2365
+                    : {editUserData.data.phone_number}
                   </span>
                 </li>
                 <li className="d-flex align-items-center gap-1 mb-12">
                   <span className="w-30 text-md fw-semibold text-primary-light">
                     {" "}
-                    Department
+                    Leader ID
                   </span>
                   <span className="w-70 text-secondary-light fw-medium">
-                    : Design
+                    : {editUserData.data.leader_id}
                   </span>
                 </li>
                 <li className="d-flex align-items-center gap-1 mb-12">
                   <span className="w-30 text-md fw-semibold text-primary-light">
                     {" "}
-                    Designation
+                    Role
                   </span>
                   <span className="w-70 text-secondary-light fw-medium">
-                    : UI UX Designer
+                    : {editUserData.data.role}
                   </span>
                 </li>
-                <li className="d-flex align-items-center gap-1 mb-12">
-                  <span className="w-30 text-md fw-semibold text-primary-light">
-                    {" "}
-                    Languages
-                  </span>
-                  <span className="w-70 text-secondary-light fw-medium">
-                    : English
-                  </span>
-                </li>
+
                 <li className="d-flex align-items-center gap-1">
                   <span className="w-30 text-md fw-semibold text-primary-light">
                     {" "}
-                    Bio
+                    Country
                   </span>
                   <span className="w-70 text-secondary-light fw-medium">
-                    : Lorem Ipsum&nbsp;is simply dummy text of the printing and
-                    typesetting industry.
+                    : {editUserData.data.country}
                   </span>
                 </li>
               </ul>
@@ -145,7 +148,7 @@ const UserDetailLayer = () => {
             <div className="tab-content" id="pills-tabContent">
               <div>
                 <h6 className="text-md text-primary-light mb-16">
-                  Profile Image
+                  Update Profile Detail
                 </h6>
                 <form action="#" onSubmit={handleSubmit(onSubmit)}>
                   <div className="row">
@@ -155,14 +158,15 @@ const UserDetailLayer = () => {
                           htmlFor="number"
                           className="form-label fw-semibold text-primary-light text-sm mb-8"
                         >
-                          Secondary Phone Number
+                          Full Name
                         </label>
                         <input
-                          type="tel"
+                          value={editUserData.data.full_name}
+                          type="text"
                           className="form-control radius-8"
                           id="number"
-                          placeholder="Enter Secondary phone number"
-                          {...register("secondary_phone_number", {
+                          placeholder="Enter Full Name"
+                          {...register("full_name", {
                             required: true,
                           })}
                         />
@@ -174,18 +178,87 @@ const UserDetailLayer = () => {
                           htmlFor="number"
                           className="form-label fw-semibold text-primary-light text-sm mb-8"
                         >
-                          Passport Number
+                          Email
                         </label>
                         <input
-                          type="text"
-                          className="form-control radius-8"
+                          value={editUserData.data.email}
+                          type="email"
+                          className="form-control radius-8 bg-dark-200"
                           id="number"
-                          placeholder="Enter Secondary phone number"
-                          {...register("passport_number", { required: true })}
+                          // placeholder="Enter Secondary phone number"
                         />
                       </div>
                     </div>
                     <div className="col-sm-6">
+                      <div className="mb-20">
+                        <label
+                          htmlFor="number"
+                          className="form-label fw-semibold text-primary-light text-sm mb-8"
+                        >
+                          Phone Number
+                        </label>
+                        <input
+                          value={editUserData.data.phone_number}
+                          type="tel"
+                          className="form-control radius-8 bg-dark-200"
+                          id="number"
+                          placeholder="Enter phone number"
+                          {...register("phone_number", { required: true })}
+                        />
+                      </div>
+                    </div>
+                    <div className="col-sm-6">
+                      <div className="mb-20">
+                        <label
+                          htmlFor="number"
+                          className="form-label fw-semibold text-primary-light text-sm mb-8"
+                        >
+                          Leader ID
+                        </label>
+                        <input
+                          value={editUserData.data.leader_id}
+                          type="text"
+                          className="form-control radius-8"
+                          id="number"
+                          placeholder="Enter Leader ID"
+                          {...register("leader_id", {
+                            required: true,
+                          })}
+                        />
+                      </div>
+                    </div>
+                    <div className="col-sm-6">
+                      <div className="mb-20">
+                        <label
+                          htmlFor="number"
+                          className="form-label fw-semibold text-primary-light text-sm mb-8"
+                        >
+                          Role
+                        </label>
+                        <select
+                          name=""
+                          id=""
+                          className="form-control radius-8"
+                          {...register("role", { required: true })}
+                        >
+                          <option value="leader">Leader</option>
+                          <option value="member">Member</option>
+                          <option value="admin">Admin</option>
+                          <option value="user">User</option>
+                        </select>
+                        {/* <input
+                          value={editUserData.data.leader_id}
+                          type=""
+                          className="form-control radius-8"
+                          id="number"
+                          placeholder="Enter Leader ID"
+                          {...register("leader_id", {
+                            required: true,
+                          })}
+                        /> */}
+                      </div>
+                    </div>
+                    {/* <div className="col-sm-6">
                       <div className="mb-20">
                         <label
                           htmlFor="number"
@@ -201,7 +274,7 @@ const UserDetailLayer = () => {
                           {...register("date_of_birth", { required: true })}
                         />
                       </div>
-                    </div>
+                    </div> */}
 
                     <div className="col-sm-6">
                       <div className="mb-20">
@@ -212,8 +285,9 @@ const UserDetailLayer = () => {
                           Country
                         </label>
                         <select
-                          className=" form-select form-control px-16 py-14 h-48-px"
+                          className="form-control radius-8"
                           {...register("country", { required: true })}
+                          defaultValue={editUserData.data.country}
                         >
                           <option value="">Select a country</option>
                           {allCountries.map((country) => (
@@ -310,6 +384,7 @@ const UserDetailLayer = () => {
                     <button
                       type="button"
                       className="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md px-56 py-11 radius-8"
+                      onClick={() => setShowModal(false)}
                     >
                       Cancel
                     </button>

@@ -36,9 +36,12 @@ const SignInLayer = () => {
         }
       );
 
-      console.log(response);
+      console.log(response.data);
 
       if (response.data.is_success) {
+        localStorage.setItem("token", response.data.access_token);
+        localStorage.setItem("user_id", response.data.data.user.user_id);
+        localStorage.setItem("user_name", response.data.data.user.username);
         toast.success(response.data.message);
         navigate("/");
 
