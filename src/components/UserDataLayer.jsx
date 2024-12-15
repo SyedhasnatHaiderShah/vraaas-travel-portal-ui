@@ -1,24 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Icon } from "@iconify/react/dist/iconify.js";
-import PassportUpload from "./TravelDocuments/PassportUpload";
-import IdUpload from "./TravelDocuments/IdUpload";
-import VisaUpload from "./TravelDocuments/VisaUpload";
-import InsuranceUpload from "./TravelDocuments/InsuranceUpload";
-import TicketUpload from "./TravelDocuments/TicketUpload";
-import HotelBookingUpload from "./TravelDocuments/HotelBookingUpload";
-import ItineraryUpload from "./TravelDocuments/ItineraryUpload";
-import CountryStatusOne from "./child/CountryStatusOne";
-import { allCountries } from "../utils/countries";
 import { set, useForm } from "react-hook-form";
-import axios from "axios";
+import axios, { all } from "axios";
 import { toast } from "react-toastify";
-// import MdDeleteForever
 import { MdDeleteForever } from "react-icons/md";
+import Swal from "sweetalert2";
+import EditData from "./EditData";
 
 const UserDataLayer = () => {
   const fileInputRef = useRef(null);
   const [selectFile, setSelectFile] = React.useState(null);
   const [preview, setPreview] = React.useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [editData, setEditData] = useState(null);
+  const [allUserData, setAllUserData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -38,7 +33,7 @@ const UserDataLayer = () => {
     setSelectFile(null);
     setPreview(null);
     if (fileInputRef.current) {
-      fileInputRef.current.value = ""; // Reset the file input value
+      fileInputRef.current.value = "";
     }
   };
 
@@ -79,11 +74,6 @@ const UserDataLayer = () => {
     }
   };
 
-  // get all the user data
-  const [allUserData, setAllUserData] = useState([]);
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-
   const getUserData = async () => {
     try {
       setLoading(true);
@@ -96,17 +86,60 @@ const UserDataLayer = () => {
       }
       setLoading(false);
     } catch (error) {
-      // toast.error(error.message);
+      // toast.error("Failed to fetch user data.");
     } finally {
       setLoading(false);
     }
   };
 
-  React.useEffect(() => {
-    getUserData();
-  }, []);
+  // Edit Handler
+  const handleEdit = (id) => {
+    console.log(id);
+    const selectedData = allUserData.find((item) => item.id === id);
+    if (selectedData) {
+      setEditData(selectedData);
+      setShowModal(true);
+    } else {
+      toast.error("Data not found.");
+    }
+  };
 
-  const handleEdit = (id) => {};
+  // Modal Content
+  const renderModal = () => (
+    <div
+      className={`modal fade ${showModal ? "show d-block" : ""}`}
+      id="exampleModalCenter"
+      tabIndex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalCenterTitle"
+      aria-hidden={!showModal}
+      style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+    >
+      <div className="modal-dialog modal-dialog-centered" role="document">
+        <div className="modal-content">
+          <div className="modal-header ">
+            <div className=" d-flex align-items-center justify-content-between w-100">
+              <h5 className="modal-title">Edit User Data</h5>
+              <button
+                type="button"
+                className="close"
+                onClick={() => setShowModal(false)}
+                aria-label="Close"
+              >
+                Close
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </div>
+          <div className="modal-body">
+            {editData && (
+              <EditData editUserData={editData} setShowModal={setShowModal} />
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 
   const handleDelete = async (id) => {
     if (!id || typeof id !== "number") {
@@ -114,20 +147,37 @@ const UserDataLayer = () => {
       return;
     }
 
-    try {
-      const response = await axios.post(
-        `http://localhost:3000/user-data/delete/${id}`
-      );
-      if (response.data.is_success) {
-        toast.success(response.data.message);
-        setData(data.filter((item) => item.id !== id)); // Remove item from the local state
-      } else {
-        toast.error(response.data.message);
+    // SweetAlert2 confirmation popup
+    const result = await Swal.fire({
+      title: "Are you sure to delete this data?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const response = await axios.post(
+          `http://localhost:3000/user-data/delete/${id}`
+        );
+        if (response.data.is_success) {
+          Swal.fire("Deleted!", response.data.message, "success");
+          setAllUserData(allUserData.filter((item) => item.id !== id));
+        } else {
+          toast.error(response.data.message);
+        }
+      } catch (error) {
+        toast.error("Failed to delete data.");
       }
-    } catch (error) {
-      toast.error("Failed to delete data.");
     }
   };
+
+  React.useEffect(() => {
+    getUserData();
+  }, []);
 
   return (
     <div className="row gy-4">
@@ -293,7 +343,7 @@ const UserDataLayer = () => {
                   <span className="visually-hidden">Loading...</span>
                 </div>
               </div>
-            ) : data.length === 0 ? (
+            ) : allUserData.length === 0 ? (
               <div className="text-center text-muted">No data found</div>
             ) : (
               <div className="table-responsive ">
@@ -346,6 +396,9 @@ const UserDataLayer = () => {
           </div>
         </div>
       </div>
+
+      {/* Render Modal */}
+      {showModal && renderModal()}
     </div>
   );
 };
