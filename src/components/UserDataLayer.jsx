@@ -2,9 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { set, useForm } from "react-hook-form";
 import axios, { all } from "axios";
 import { toast } from "react-toastify";
-import { MdDeleteForever } from "react-icons/md";
+import { MdDelete, MdDeleteForever } from "react-icons/md";
 import Swal from "sweetalert2";
 import EditData from "./EditData";
+import { IoClose } from "react-icons/io5";
+import { FaDownload, FaEdit } from "react-icons/fa";
 
 const UserDataLayer = () => {
   const fileInputRef = useRef(null);
@@ -14,6 +16,9 @@ const UserDataLayer = () => {
   const [editData, setEditData] = useState(null);
   const [allUserData, setAllUserData] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [showImageModal, setShowImageModal] = useState(false);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -148,31 +153,103 @@ const UserDataLayer = () => {
     }
 
     // SweetAlert2 confirmation popup
-    const result = await Swal.fire({
-      title: "Are you sure to delete this data?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Yes, delete it!",
-    });
+    // const result = await Swal.fire({
+    //   title: "Are you sure to delete this data?",
+    //   text: "You won't be able to revert this!",
+    //   icon: "warning",
+    //   showCancelButton: true,
+    //   confirmButtonColor: "#d33",
+    //   cancelButtonColor: "#3085d6",
+    //   confirmButtonText: "Yes, delete it!",
+    // });
 
-    if (result.isConfirmed) {
-      try {
-        const response = await axios.post(
-          `http://localhost:3000/user-data/delete/${id}`
-        );
-        if (response.data.is_success) {
-          Swal.fire("Deleted!", response.data.message, "success");
-          setAllUserData(allUserData.filter((item) => item.id !== id));
-        } else {
-          toast.error(response.data.message);
-        }
-      } catch (error) {
-        toast.error("Failed to delete data.");
+    // if (result.isConfirmed) {
+    try {
+      const response = await axios.post(
+        `http://localhost:3000/user-data/delete/${id}`
+      );
+      if (response.data.is_success) {
+        // Swal.fire("Deleted!", response.data.message, "success");
+        setAllUserData(allUserData.filter((item) => item.id !== id));
+      } else {
+        toast.error(response.data.message);
       }
+    } catch (error) {
+      toast.error("Failed to delete data.");
     }
+    // }
+  };
+  // const handleDelete = async (id) => {
+  //   if (!id || typeof id !== "number") {
+  //     toast.error("Invalid ID for deletion.");
+  //     return;
+  //   }
+
+  //   // SweetAlert2 confirmation popup
+  //   const result = await Swal.fire({
+  //     title: "Are you sure to delete this data?",
+  //     text: "You won't be able to revert this!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#d33",
+  //     cancelButtonColor: "#3085d6",
+  //     confirmButtonText: "Yes, delete it!",
+  //   });
+
+  //   if (result.isConfirmed) {
+  //     try {
+  //       const response = await axios.post(
+  //         `http://localhost:3000/user-data/delete/${id}`
+  //       );
+  //       if (response.data.is_success) {
+  //         Swal.fire("Deleted!", response.data.message, "success");
+  //         setAllUserData(allUserData.filter((item) => item.id !== id));
+  //       } else {
+  //         toast.error(response.data.message);
+  //       }
+  //     } catch (error) {
+  //       toast.error("Failed to delete data.");
+  //     }
+  //   }
+  // };
+
+  const handleDownload = async (fileUrl) => {
+    try {
+      // Make a request to fetch the file as a Blob
+      const response = await axios.get(fileUrl, {
+        responseType: "blob", // Important: set responseType to blob to get the file data
+      });
+
+      // Create a Blob from the response
+      const fileBlob = response.data;
+      const fileName = fileUrl.split("/").pop(); // Get the file name from the URL
+
+      // Create a temporary URL for the Blob
+      const url = window.URL.createObjectURL(fileBlob);
+
+      // Create an anchor element to simulate the download
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = fileName; // Set the filename to save as
+      link.click(); // Trigger the download automatically
+
+      // Clean up by revoking the Blob URL after download
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading file:", error);
+      // Handle error if the file can't be downloaded
+    }
+  };
+
+  // handlePreview
+  const handleImageClick = (imageUrl) => {
+    setImagePreviewUrl(imageUrl); // Set the image URL
+    setShowImageModal(true); // Show the modal
+  };
+
+  const closeImageModal = () => {
+    setShowImageModal(false);
+    setImagePreviewUrl(null); // Reset the image URL when closing
   };
 
   React.useEffect(() => {
@@ -216,6 +293,7 @@ const UserDataLayer = () => {
                 </h6>
                 <form action="#" onSubmit={handleSubmit(onSubmit)}>
                   {/* file */}
+                  {/* // passport, id, visa, air_ticket, other_document, itinerary */}
                   <div className=" w-100 d-flex flex-column align-items-center justify-content-center">
                     <div className="col-12 mb-20">
                       <label className="form-label">Document Photo</label>
@@ -330,6 +408,44 @@ const UserDataLayer = () => {
         </div>
       </div>
 
+      {showImageModal && (
+        <div
+          className="modal fade show"
+          style={{ display: "block", backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+          role="dialog"
+        >
+          <div className="modal-dialog modal-dialog-centered w-100">
+            <div className="modal-content  w-100">
+              <div className="modal-header w-100">
+                <h5 className="modal-title d-flex align-items-center justify-content-between w-100">
+                  Image Preview
+                </h5>
+                <div
+                  className=" d-flex align-items-center"
+                  onClick={closeImageModal}
+                >
+                  <button type="button" className="close">
+                    Close{" "}
+                  </button>
+                  <IoClose
+                    size="30px"
+                    className=" absolute top-0 right-0 text-danger cursor-pointer"
+                  />
+                </div>
+              </div>
+              <div className="modal-body">
+                <img
+                  src={imagePreviewUrl}
+                  alt="Preview"
+                  className="img-fluid"
+                  style={{ maxHeight: "500px", width: "auto" }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* all user data */}
       <div className="col-lg-8 mx-auto">
         <div className="card">
@@ -346,7 +462,7 @@ const UserDataLayer = () => {
             ) : allUserData.length === 0 ? (
               <div className="text-center text-muted">No data found</div>
             ) : (
-              <div className="table-responsive ">
+              <div className="table-responsive h-100 ">
                 <table className="table table-striped mb-0">
                   <thead>
                     <tr>
@@ -366,7 +482,15 @@ const UserDataLayer = () => {
                             src={item.secure_url}
                             alt={item.document_name || "Document"}
                             className="img-thumbnail"
-                            style={{ maxWidth: "50px" }}
+                            style={{
+                              maxWidth: "120px",
+                              maxHeight: "120px",
+                              borderRadius: "8px",
+                              objectFit: "cover",
+                              objectPosition: "center",
+                              cursor: "pointer",
+                            }}
+                            onClick={() => handleImageClick(item.secure_url)}
                           />
                         </td>
                         <td>{item.document_name || "Untitled"}</td>
@@ -374,17 +498,35 @@ const UserDataLayer = () => {
                         <td>{item.document_type}</td>
                         <td>{item.document_extension}</td>
                         <td>
+                          <div className=" d-flex align-items-center gap-2">
+                            <button
+                              className="btn btn-sm btn-primary w-100"
+                              onClick={() => handleEdit(item.id)}
+                            >
+                              Edit
+                              {/* <FaEdit
+                                size="20px"
+                                color=" text-white"
+                                className=" ml-3"
+                              /> */}
+                            </button>
+                          </div>
+                          <div className=" d-flex align-items-center">
+                            <button
+                              className="btn btn-sm btn-danger w-100"
+                              onClick={() => handleDelete(item.id)}
+                            >
+                              Delete
+                              {/* <MdDelete size="20px" color=" text-white" /> */}
+                            </button>
+                          </div>
+
                           <button
-                            className="btn btn-sm btn-primary me-2"
-                            onClick={() => handleEdit(item.id)}
+                            className="btn btn-sm btn-success w-100"
+                            onClick={() => handleDownload(item.secure_url)} // Add the download handler
                           >
-                            Edit
-                          </button>
-                          <button
-                            className="btn btn-sm btn-danger"
-                            onClick={() => handleDelete(item.id)}
-                          >
-                            Delete
+                            Download
+                            {/* <FaDownload /> */}
                           </button>
                         </td>
                       </tr>
