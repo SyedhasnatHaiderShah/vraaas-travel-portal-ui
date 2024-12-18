@@ -5,6 +5,8 @@ import { MdDeleteForever } from "react-icons/md";
 import axios from "axios";
 
 const EditData = ({ editUserData, setShowModal }) => {
+  const username = localStorage.getItem("username");
+  console.log("type of username", typeof username);
   console.log("edit user data", editUserData);
   const {
     register,
@@ -43,7 +45,7 @@ const EditData = ({ editUserData, setShowModal }) => {
   const onSubmit = async (data) => {
     try {
       if (!selectFile) {
-        const updatedData = { ...data };
+        const updatedData = { ...data, username };
         const response = await axios.post(
           `http://localhost:3000/user-data/update/${editUserData.id}`,
           updatedData,
@@ -60,7 +62,7 @@ const EditData = ({ editUserData, setShowModal }) => {
           toast.error("Failed to update data.");
         }
       } else {
-        const updatedData = { ...data, file: selectFile };
+        const updatedData = { ...data, file: selectFile, username };
         const response = await axios.post(
           `http://localhost:3000/user-data/update/${editUserData.id}`,
           updatedData,
@@ -155,7 +157,7 @@ const EditData = ({ editUserData, setShowModal }) => {
           </div>
 
           <div className="row">
-            <div className="col-sm-6">
+            {/* <div className="col-sm-6">
               <div className="mb-20">
                 <label
                   htmlFor="number"
@@ -174,7 +176,7 @@ const EditData = ({ editUserData, setShowModal }) => {
                   })}
                 />
               </div>
-            </div>
+            </div> */}
             <div className="col-sm-6">
               <div className="mb-20">
                 <label

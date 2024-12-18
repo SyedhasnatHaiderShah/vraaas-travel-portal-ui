@@ -9,6 +9,8 @@ import { IoClose } from "react-icons/io5";
 import { FaDownload, FaEdit } from "react-icons/fa";
 
 const UserDataLayer = () => {
+  const username = localStorage.getItem("username");
+  const user_id = localStorage.getItem("user_id");
   const fileInputRef = useRef(null);
   const [selectFile, setSelectFile] = React.useState(null);
   const [preview, setPreview] = React.useState(null);
@@ -54,9 +56,10 @@ const UserDataLayer = () => {
       // Create a FormData instance
       const formData = new FormData();
       formData.append("user_id", "2");
-      formData.append("document_id", data.document_id);
+      // formData.append("document_id", data.document_id);
       formData.append("document_name", data.document_name);
       formData.append("document_type", data.document_type);
+      formData.append("username", username);
 
       if (selectFile) {
         formData.append("file", selectFile);
@@ -82,8 +85,10 @@ const UserDataLayer = () => {
   const getUserData = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:3000/user-data/all");
-      console.log(response.data);
+      const response = await axios.get(
+        `http://localhost:3000/user-data/all/${username}`
+      );
+      console.log("username data", response.data);
       if (response.data.is_success === true) {
         setAllUserData(response.data.data);
       } else {
@@ -333,7 +338,7 @@ const UserDataLayer = () => {
                   </div>
 
                   <div className="row">
-                    <div className="col-sm-6">
+                    {/* <div className="col-sm-6">
                       <div className="mb-20">
                         <label
                           htmlFor="number"
@@ -351,7 +356,7 @@ const UserDataLayer = () => {
                           })}
                         />
                       </div>
-                    </div>
+                    </div> */}
                     <div className="col-sm-6">
                       <div className="mb-20">
                         <label
@@ -418,7 +423,7 @@ const UserDataLayer = () => {
             <div className="modal-content  w-100">
               <div className="modal-header w-100">
                 <h5 className="modal-title d-flex align-items-center justify-content-between w-100">
-                  Image Preview
+                  <span>Preview</span>
                 </h5>
                 <div
                   className=" d-flex align-items-center"
@@ -468,7 +473,7 @@ const UserDataLayer = () => {
                     <tr>
                       <th scope="col">Preview</th>
                       <th scope="col">Document Name</th>
-                      <th scope="col">Document ID</th>
+                      {/* <th scope="col">Document ID</th> */}
                       <th scope="col">Document Type</th>
                       <th scope="col">Extension</th>
                       <th scope="col">Actions</th>
@@ -494,7 +499,7 @@ const UserDataLayer = () => {
                           />
                         </td>
                         <td>{item.document_name || "Untitled"}</td>
-                        <td>{item.document_id || "Untitled"}</td>
+                        {/* <td>{item.document_id || "Untitled"}</td> */}
                         <td>{item.document_type}</td>
                         <td>{item.document_extension}</td>
                         <td>
