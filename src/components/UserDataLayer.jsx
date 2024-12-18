@@ -503,36 +503,37 @@ const UserDataLayer = () => {
                         <td>{item.document_type}</td>
                         <td>{item.document_extension}</td>
                         <td>
-                          <div className=" d-flex align-items-center gap-2">
+                          {/* <div className=" d-flex align-items-center gap-2">
                             <button
                               className="btn btn-sm btn-primary w-100"
                               onClick={() => handleEdit(item.id)}
                             >
                               Edit
-                              {/* <FaEdit
+                              <FaEdit
                                 size="20px"
                                 color=" text-white"
                                 className=" ml-3"
-                              /> */}
+                              />
                             </button>
-                          </div>
-                          <div className=" d-flex align-items-center">
+                          </div> */}
+                          <div className="d-flex align-items-center gap-2 w-100">
                             <button
-                              className="btn btn-sm btn-danger w-100"
+                              className="border border-danger-600 btn-sm bg-hover-danger-200 text-danger-600 text-md px-20 py-15 rounded-pill d-flex align-items-center justify-content-center gap-2 w-50"
                               onClick={() => handleDelete(item.id)}
                             >
+                              <i className="bi bi-trash"></i>{" "}
+                              {/* Bootstrap icon for delete */}
                               Delete
-                              {/* <MdDelete size="20px" color=" text-white" /> */}
+                            </button>
+                            <button
+                              className="border border-success-600 btn-sm bg-hover-success-200 text-success-600 text-md px-20 py-15 rounded-pill d-flex align-items-center justify-content-center gap-2 w-50"
+                              onClick={() => handleDownload(item.secure_url)}
+                            >
+                              <i className="bi bi-download"></i>{" "}
+                              {/* Bootstrap icon for download */}
+                              Download
                             </button>
                           </div>
-
-                          <button
-                            className="btn btn-sm btn-success w-100"
-                            onClick={() => handleDownload(item.secure_url)} // Add the download handler
-                          >
-                            Download
-                            {/* <FaDownload /> */}
-                          </button>
                         </td>
                       </tr>
                     ))}
