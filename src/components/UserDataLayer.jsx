@@ -22,6 +22,8 @@ const UserDataLayer = () => {
   const [showImageModal, setShowImageModal] = useState(false);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
 
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectFile(file);
@@ -64,8 +66,6 @@ const UserDataLayer = () => {
       if (selectFile) {
         formData.append("file", selectFile);
       }
-
-      // Make the request using axios
       const response = await axios.post(
         "http://localhost:3000/user-data/save",
         formData
@@ -77,7 +77,7 @@ const UserDataLayer = () => {
         toast.error(response.data.message);
       }
     } catch (error) {
-      console.error(error.response?.data); // Log error response for debugging
+      console.error(error.response?.data);
       toast.error(error.response?.data?.message || "An error occurred");
     }
   };
@@ -114,6 +114,17 @@ const UserDataLayer = () => {
     }
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 768);
+    };
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   // Modal Content
   const renderModal = () => (
     <div
@@ -141,11 +152,11 @@ const UserDataLayer = () => {
               </button>
             </div>
           </div>
-          <div className="modal-body">
+          {/* <div className="modal-body">
             {editData && (
               <EditData editUserData={editData} setShowModal={setShowModal} />
             )}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
@@ -220,41 +231,31 @@ const UserDataLayer = () => {
 
   const handleDownload = async (fileUrl) => {
     try {
-      // Make a request to fetch the file as a Blob
       const response = await axios.get(fileUrl, {
-        responseType: "blob", // Important: set responseType to blob to get the file data
+        responseType: "blob",
       });
-
-      // Create a Blob from the response
       const fileBlob = response.data;
-      const fileName = fileUrl.split("/").pop(); // Get the file name from the URL
-
-      // Create a temporary URL for the Blob
+      const fileName = fileUrl.split("/").pop();
       const url = window.URL.createObjectURL(fileBlob);
-
-      // Create an anchor element to simulate the download
       const link = document.createElement("a");
       link.href = url;
-      link.download = fileName; // Set the filename to save as
-      link.click(); // Trigger the download automatically
-
-      // Clean up by revoking the Blob URL after download
+      link.download = fileName;
+      link.click();
       window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error("Error downloading file:", error);
-      // Handle error if the file can't be downloaded
     }
   };
 
   // handlePreview
   const handleImageClick = (imageUrl) => {
-    setImagePreviewUrl(imageUrl); // Set the image URL
-    setShowImageModal(true); // Show the modal
+    setImagePreviewUrl(imageUrl);
+    setShowImageModal(true);
   };
 
   const closeImageModal = () => {
     setShowImageModal(false);
-    setImagePreviewUrl(null); // Reset the image URL when closing
+    setImagePreviewUrl(null);
   };
 
   React.useEffect(() => {
@@ -277,13 +278,15 @@ const UserDataLayer = () => {
                 alt=""
                 className="border br-white border-width-2-px w-200-px h-200-px rounded-circle object-fit-cover"
               />
-              <h6 className="mb-0 mt-16">Jacob Jones</h6>
+              <h6 className="mb-0 mt-16">
+                {localStorage.getItem("username") || "Username"}
+              </h6>
               <span className="text-secondary-light mb-16">
-                ifrandom@gmail.com
+                {localStorage.getItem("email") || "Email"}
               </span>
             </div>
             <div className="mt-24">
-              <h6 className="text-xl mb-16">User Data</h6>
+              <h6 className="text-xl mb-16">User Documents</h6>
             </div>
           </div>
         </div>
@@ -294,7 +297,7 @@ const UserDataLayer = () => {
             <div className="tab-content" id="pills-tabContent">
               <div>
                 <h6 className="text-md text-primary-light mb-16">
-                  Upload the data
+                  Upload the Docuements
                 </h6>
                 <form action="#" onSubmit={handleSubmit(onSubmit)}>
                   {/* file */}
@@ -305,7 +308,8 @@ const UserDataLayer = () => {
                       <input
                         className="form-control"
                         type="file"
-                        accept="image/*"
+                        // accept image / pdf document
+                        accept="image/*, application/pdf"
                         onChange={handleFileChange}
                         ref={fileInputRef}
                         required=""
@@ -383,8 +387,9 @@ const UserDataLayer = () => {
                           Document Type
                         </label>
                         <input
+                          value={selectFile?.type || ""}
                           type="text"
-                          className="form-control radius-8"
+                          className="form-control radius-8 bg-gray-100"
                           id="number"
                           placeholder="Enter Document Type"
                           {...register("document_type", { required: true })}
@@ -455,7 +460,7 @@ const UserDataLayer = () => {
       <div className="col-lg-8 mx-auto">
         <div className="card">
           <div className="card-header d-flex justify-content-between align-items-center">
-            <h5 className="card-title mb-0">User Documents</h5>
+            <h5 className="card-title mb-0">User Uploaded Documents</h5>
           </div>
           <div className="card-body">
             {loading ? (
@@ -466,14 +471,60 @@ const UserDataLayer = () => {
               </div>
             ) : allUserData.length === 0 ? (
               <div className="text-center text-muted">No data found</div>
+            ) : isSmallScreen ? (
+              <div className="d-flex flex-column gap-3">
+                {allUserData.map((item) => (
+                  <div key={item.id} className="border rounded p-3">
+                    <div className="mb-2">
+                      <img
+                        src={item.secure_url}
+                        alt={item.document_name || "Document"}
+                        className="img-thumbnail"
+                        style={{
+                          maxWidth: "100%",
+                          maxHeight: "200px",
+                          borderRadius: "8px",
+                          objectFit: "cover",
+                          objectPosition: "center",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => handleImageClick(item.secure_url)}
+                      />
+                    </div>
+                    <div>
+                      <strong>Document Name:</strong>{" "}
+                      {item.document_name || "Untitled"}
+                    </div>
+                    <div>
+                      <strong>Document Type:</strong> {item.document_type}
+                    </div>
+                    <div>
+                      <strong>Extension:</strong> {item.document_extension}
+                    </div>
+                    <div className="d-flex align-items-center gap-2 mt-2">
+                      <button
+                        className="border border-danger-600 btn-sm bg-hover-danger-200 text-danger-600 text-md px-20 py-15 rounded-pill d-flex align-items-center justify-content-center gap-2 w-50"
+                        onClick={() => handleDelete(item.id)}
+                      >
+                        <i className="bi bi-trash"></i> Delete
+                      </button>
+                      <button
+                        className="border border-success-600 btn-sm bg-hover-success-200 text-success-600 text-md px-20 py-15 rounded-pill d-flex align-items-center justify-content-center gap-2 w-50"
+                        onClick={() => handleDownload(item.secure_url)}
+                      >
+                        <i className="bi bi-download"></i> Download
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
             ) : (
-              <div className="table-responsive h-100 ">
+              <div className="table-responsive h-100">
                 <table className="table table-striped mb-0">
                   <thead>
                     <tr>
                       <th scope="col">Preview</th>
                       <th scope="col">Document Name</th>
-                      {/* <th scope="col">Document ID</th> */}
                       <th scope="col">Document Type</th>
                       <th scope="col">Extension</th>
                       <th scope="col">Actions</th>
@@ -499,39 +550,21 @@ const UserDataLayer = () => {
                           />
                         </td>
                         <td>{item.document_name || "Untitled"}</td>
-                        {/* <td>{item.document_id || "Untitled"}</td> */}
                         <td>{item.document_type}</td>
                         <td>{item.document_extension}</td>
                         <td>
-                          {/* <div className=" d-flex align-items-center gap-2">
-                            <button
-                              className="btn btn-sm btn-primary w-100"
-                              onClick={() => handleEdit(item.id)}
-                            >
-                              Edit
-                              <FaEdit
-                                size="20px"
-                                color=" text-white"
-                                className=" ml-3"
-                              />
-                            </button>
-                          </div> */}
                           <div className="d-flex align-items-center gap-2 w-100">
                             <button
                               className="border border-danger-600 btn-sm bg-hover-danger-200 text-danger-600 text-md px-20 py-15 rounded-pill d-flex align-items-center justify-content-center gap-2 w-50"
                               onClick={() => handleDelete(item.id)}
                             >
-                              <i className="bi bi-trash"></i>{" "}
-                              {/* Bootstrap icon for delete */}
-                              Delete
+                              <i className="bi bi-trash"></i> Delete
                             </button>
                             <button
                               className="border border-success-600 btn-sm bg-hover-success-200 text-success-600 text-md px-20 py-15 rounded-pill d-flex align-items-center justify-content-center gap-2 w-50"
                               onClick={() => handleDownload(item.secure_url)}
                             >
-                              <i className="bi bi-download"></i>{" "}
-                              {/* Bootstrap icon for download */}
-                              Download
+                              <i className="bi bi-download"></i> Download
                             </button>
                           </div>
                         </td>

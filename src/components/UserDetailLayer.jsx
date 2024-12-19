@@ -180,8 +180,38 @@ const UserDetailLayer = ({ editUserData = {}, setShowModal }) => {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
+
+  const resetForm = () => {
+    reset(); // Reset react-hook-form fields
+
+    // Clear file inputs and previews
+    setSelectPassport(null);
+    setPreviewPassport(null);
+    if (passportInputRef.current) passportInputRef.current.value = "";
+
+    setSelectId(null);
+    setPreviewId(null);
+    if (idInputRef.current) idInputRef.current.value = "";
+
+    setSelectVisa(null);
+    setPreviewVisa(null);
+    if (visaInputRef.current) visaInputRef.current.value = "";
+
+    setSelectAirTicket(null);
+    setPreviewAirTicket(null);
+    if (airTicketInputRef.current) airTicketInputRef.current.value = "";
+
+    setSelectOtherDocument(null);
+    setPreviewOtherDocument(null);
+    if (otherDocumentInputRef.current) otherDocumentInputRef.current.value = "";
+
+    setSelectItinerary(null);
+    setPreviewItinerary(null);
+    if (itineraryInputRef.current) itineraryInputRef.current.value = "";
+  };
 
   const onSubmit = async (data) => {
     try {
@@ -207,6 +237,7 @@ const UserDetailLayer = ({ editUserData = {}, setShowModal }) => {
         }
       );
       if (response.data.is_success === true) {
+        resetForm();
         toast.success(response.data.message);
       } else {
         toast.error(response.data.message);
@@ -422,7 +453,7 @@ const UserDetailLayer = ({ editUserData = {}, setShowModal }) => {
                           {...register("role", { required: true })}
                           defaultValue={editUserData?.data?.role || ""}
                         >
-                          <option value="leader">Leader</option>
+                          {/* <option value="leader">Leader</option> */}
                           <option value="member">Vendor</option>
                           <option value="admin">Admin</option>
                           <option value="user">User</option>
@@ -495,7 +526,7 @@ const UserDetailLayer = ({ editUserData = {}, setShowModal }) => {
                           type="text"
                           className="form-control radius-8"
                           id="number"
-                          placeholder="Enter Leader ID"
+                          placeholder="Enter Passport Number"
                           {...register("passport_number", {
                             required: true,
                           })}
