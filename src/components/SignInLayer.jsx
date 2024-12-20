@@ -39,6 +39,10 @@ const SignInLayer = () => {
       console.log(response.data);
 
       if (response.data.is_success) {
+        localStorage.setItem(
+          "profile_picture",
+          response.data.data.user.profile_picture
+        );
         localStorage.setItem("token", response.data.access_token);
         localStorage.setItem("user_id", response.data.data.user.user_id);
         localStorage.setItem("username", response.data.data.user.username);

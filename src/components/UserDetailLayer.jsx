@@ -237,7 +237,7 @@ const UserDetailLayer = ({ editUserData = {}, setShowModal }) => {
         }
       );
       if (response.data.is_success === true) {
-        resetForm();
+        // resetForm();
         toast.success(response.data.message);
       } else {
         toast.error(response.data.message);
@@ -260,19 +260,15 @@ const UserDetailLayer = ({ editUserData = {}, setShowModal }) => {
             className="w-100 object-fit-cover"
           />
           <div className="pb-24 ms-16 mb-24 me-16  mt--100">
-            <div className="text-center border border-top-0 border-start-0 border-end-0">
+            <div className="text-center border border-top-0 border-start-0 border-end-0 position-relative">
               <img
                 src={
                   editUserData?.data?.profile_picture ||
                   "assets/images/user-grid/user-grid-img14.png"
                 }
                 alt=""
-                className="border br-white border-width-2-px w-200-px h-200-px rounded-circle object-fit-cover"
+                className="border br-white border-width-2-px w-200-px h-200-px rounded-circle object-fit-cover position-relative"
               />
-              {/* camera icon */}
-              <div className="camera-icon">
-                <IoCameraReverseOutline size="5em" />
-              </div>
               <h6 className="mb-0 mt-16">
                 {editUserData?.data?.full_name || "No full name available"}
               </h6>
@@ -895,7 +891,7 @@ const UserDetailLayer = ({ editUserData = {}, setShowModal }) => {
 
                     {/* document list like [list of ids, passport, visa, id, profile picture, air tickets],  */}
                   </div>
-                  <div className="d-flex align-items-center justify-content-center gap-3">
+                  <div className="d-flex align-items-center justify-content-center gap-3 flex-column flex-md-row my-3">
                     <button
                       type="button"
                       className="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md px-56 py-11 radius-8"
@@ -905,7 +901,7 @@ const UserDetailLayer = ({ editUserData = {}, setShowModal }) => {
                     </button>
                     <button
                       type="submit"
-                      className="btn btn-primary border border-primary-600 text-md px-56 py-12 radius-8"
+                      className="btn btn-primary border border-primary-600 text-md px-64 py-12 radius-8"
                     >
                       Save
                     </button>

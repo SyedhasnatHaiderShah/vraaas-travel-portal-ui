@@ -3,10 +3,10 @@ import { Icon } from "@iconify/react";
 import { Link } from "react-router-dom";
 const Breadcrumb = ({ title }) => {
   return (
-    <div className="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
+    <div className="d-flex flex-wrap align-items-md-center justify-content-md-between justify-content-start align-items-start gap-3 mb-24 flex-column md-flex-row">
       <h6 className="fw-semibold mb-0">Dashboard</h6>
       <ul className="d-flex align-items-center gap-2">
-        <li className="fw-medium d-flex align-items-center gap-5">
+        <li className="fw-medium d-flex align-items-center gap-1 flex-column flex-md-row gap-md-5">
           <Link
             to="/sign-in"
             className="d-flex align-items-center gap-1 hover-text-primary"
