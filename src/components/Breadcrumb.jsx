@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 const Breadcrumb = ({ title }) => {
   return (
     <div className="d-flex flex-wrap align-items-md-center justify-content-md-between justify-content-start align-items-start gap-3 mb-24 flex-column md-flex-row">
-      <h6 className="fw-semibold mb-0">Dashboard</h6>
+      <h6 className="fw-semibold mb-0">Useful links</h6>
       <ul className="d-flex align-items-center gap-2">
-        <li className="fw-medium d-flex align-items-center gap-1 flex-column flex-md-row gap-md-5">
+        <li className="fw-medium d-flex align-items-center gap-1 flex-column flex-md-row gap-md-5 flex-wrap ">
           <Link
             to="/sign-in"
             className="d-flex align-items-center gap-1 hover-text-primary"
@@ -35,7 +35,7 @@ const Breadcrumb = ({ title }) => {
               icon="solar:home-smile-angle-outline"
               className="icon text-lg"
             />
-            User Detail
+            User Profile Detail
           </Link>
           <Link
             to="/user-data"
@@ -45,21 +45,21 @@ const Breadcrumb = ({ title }) => {
               icon="solar:home-smile-angle-outline"
               className="icon text-lg"
             />
-            User Data
+            Uploaded Documents
           </Link>
           <Link
-            to="/"
+            to="/upload-document"
             className="d-flex align-items-center gap-1 hover-text-primary"
           >
             <Icon
               icon="solar:home-smile-angle-outline"
               className="icon text-lg"
             />
-            Dashboard
+            Upload/Update Document
           </Link>
         </li>
-        <li> - </li>
-        <li className="fw-medium">{title}</li>
+        {/* <li> - </li>
+        <li className="fw-medium">{title}</li> */}
       </ul>
     </div>
   );

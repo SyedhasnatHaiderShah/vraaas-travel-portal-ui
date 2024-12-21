@@ -8,7 +8,7 @@ import EditData from "./EditData";
 import { IoClose } from "react-icons/io5";
 import { FaDownload, FaEdit } from "react-icons/fa";
 
-const UserDataLayer = () => {
+const UserUploadDocument = () => {
   const username = localStorage.getItem("username");
   const user_id = localStorage.getItem("user_id");
   const fileInputRef = useRef(null);
@@ -17,6 +17,7 @@ const UserDataLayer = () => {
   const [showModal, setShowModal] = useState(false);
   const [editData, setEditData] = useState(null);
   const [allUserData, setAllUserData] = useState([]);
+  console.log("all user data", allUserData);
   const [loading, setLoading] = useState(true);
 
   const [showImageModal, setShowImageModal] = useState(false);
@@ -62,10 +63,10 @@ const UserDataLayer = () => {
       formData.append("document_name", data.document_name);
       formData.append("document_type", data.document_type);
       formData.append("username", username);
+      formData.append("file", selectFile);
 
-      if (selectFile) {
-        formData.append("file", selectFile);
-      }
+      console.log("form data:", formData);
+
       const response = await axios.post(
         "http://localhost:3000/user-data/save",
         formData
@@ -104,10 +105,16 @@ const UserDataLayer = () => {
 
   // Edit Handler
   const handleEdit = (id) => {
-    console.log(id);
-    const selectedData = allUserData.find((item) => item.id === id);
+    console.log("all user data new", allUserData[id.value || id]);
+    const actualId = id.value || id; // Update this line based on the actual structure
+
+    const selectedData = allUserData.find((item) => item.id === actualId) || [
+      actualId,
+    ];
+    console.log("Selected Data:", selectedData);
+
     if (selectedData) {
-      setEditData(selectedData);
+      setEditData(selectedData[0]);
       setShowModal(true);
     } else {
       toast.error("Data not found.");
@@ -140,7 +147,9 @@ const UserDataLayer = () => {
         <div className="modal-content">
           <div className="modal-header ">
             <div className=" d-flex align-items-center justify-content-between w-100">
-              <h5 className="modal-title">Edit User Data</h5>
+              <h5 className="modal-title">
+                Update Your Document {editData.document_name || ""}
+              </h5>
               <button
                 type="button"
                 className="close"
@@ -152,49 +161,20 @@ const UserDataLayer = () => {
               </button>
             </div>
           </div>
-          {/* <div className="modal-body">
+          <div className="modal-body">
             {editData && (
-              <EditData editUserData={editData} setShowModal={setShowModal} />
+              <EditData
+                editUserData={editData}
+                setShowModal={setShowModal}
+                getUserData={getUserData}
+              />
             )}
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
   );
 
-  // const handleDelete = async (id) => {
-  //   if (!id || typeof id !== "number") {
-  //     toast.error("Invalid ID for deletion.");
-  //     return;
-  //   }
-
-  //   // SweetAlert2 confirmation popup
-  //   // const result = await Swal.fire({
-  //   //   title: "Are you sure to delete this data?",
-  //   //   text: "You won't be able to revert this!",
-  //   //   icon: "warning",
-  //   //   showCancelButton: true,
-  //   //   confirmButtonColor: "#d33",
-  //   //   cancelButtonColor: "#3085d6",
-  //   //   confirmButtonText: "Yes, delete it!",
-  //   // });
-
-  //   // if (result.isConfirmed) {
-  //   try {
-  //     const response = await axios.post(
-  //       `http://localhost:3000/user-data/delete/${id}`
-  //     );
-  //     if (response.data.is_success) {
-  //       // Swal.fire("Deleted!", response.data.message, "success");
-  //       setAllUserData(allUserData.filter((item) => item.id !== id));
-  //     } else {
-  //       toast.error(response.data.message);
-  //     }
-  //   } catch (error) {
-  //     toast.error("Failed to delete data.");
-  //   }
-  //   // }
-  // };
   const handleDelete = async (id) => {
     if (!id || typeof id !== "number") {
       toast.error("Invalid ID for deletion.");
@@ -288,6 +268,170 @@ const UserDataLayer = () => {
                 {localStorage.getItem("email") || "Email"}
               </span>
             </div>
+            <div className="mt-24 text-center">
+              <h6 className="text-xl mb-16">Upload & Edit Your Documents</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="col-lg-8">
+        <div className="card h-100">
+          <div className="card-body p-24">
+            <div className="tab-content" id="pills-tabContent">
+              <div>
+                <h6 className="text-md text-primary-light mb-16">
+                  To Upload the Docuement
+                </h6>
+                <form action="#" onSubmit={handleSubmit(onSubmit)}>
+                  {/* file */}
+                  {/* // passport, id, visa, air_ticket, other_document, itinerary */}
+                  <div className=" w-100 d-flex flex-column align-items-center justify-content-center gap-3 flex-md-row ">
+                    <div className="col-12 col-md-6 mb-20">
+                      <label className="form-label">Document Photo</label>
+                      <input
+                        className="form-control"
+                        type="file"
+                        // accept image / pdf document
+                        accept="image/*, application/pdf"
+                        onChange={handleFileChange}
+                        ref={fileInputRef}
+                        required=""
+                      />
+                      <div className="invalid-feedback">
+                        Please choose a file.
+                      </div>
+                    </div>
+                    <div className=" col-12 col-md-6">
+                      {preview && (
+                        <div className="mt-3 relative">
+                          <img
+                            src={preview}
+                            alt="Selected File"
+                            style={{
+                              maxWidth: "100%",
+                              maxHeight: "80px",
+                              borderRadius: "10px",
+                            }}
+                            className="relative"
+                          />
+                          <MdDeleteForever
+                            size="30px"
+                            className=" absolute top-0 right-0 text-danger cursor-pointer"
+                            onClick={handleRemoveFile}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    {/* <div className="col-sm-6">
+                      <div className="mb-20">
+                        <label
+                          htmlFor="number"
+                          className="form-label fw-semibold text-primary-light text-sm mb-8"
+                        >
+                          Document ID
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control radius-8"
+                          id="number"
+                          placeholder="Enter Document ID"
+                          {...register("document_id", {
+                            required: true,
+                          })}
+                        />
+                      </div>
+                    </div> */}
+                    <div className="col-sm-6">
+                      <div className="mb-20">
+                        <label
+                          htmlFor="number"
+                          className="form-label fw-semibold text-primary-light text-sm mb-8"
+                        >
+                          Document Name
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control radius-8"
+                          id="number"
+                          placeholder="Enter Document Name"
+                          {...register("document_name", { required: true })}
+                        />
+                      </div>
+                    </div>
+                    <div className="col-sm-6">
+                      <div className="mb-20">
+                        <label
+                          htmlFor="number"
+                          className="form-label fw-semibold text-primary-light text-sm mb-8"
+                        >
+                          Document Type
+                        </label>
+                        <select
+                          name=""
+                          id=""
+                          className="form-control radius-8"
+                          {...register("document_type", { required: true })}
+                          //   defaultValue={editUserData?.data?.role || ""}
+                        >
+                          {/* <option value="leader">Leader</option> */}
+                          <option value="Passport">Passport</option>
+                          <option value="ID">ID</option>
+                          <option value="Visa">Visa</option>
+                          <option value="Air Ticket">Air Ticket</option>
+                          <option value="Other Document">Other Document</option>
+                          <option value="Itinerary">Itinerary</option>
+                        </select>
+                        {/* <input
+                          value={editUserData.data.leader_id}
+                          type=""
+                          className="form-control radius-8"
+                          id="number"
+                          placeholder="Enter Leader ID"
+                          {...register("leader_id", {
+                            required: true,
+                          })}
+                        /> */}
+                      </div>
+                    </div>
+                    {/* <div className="col-sm-6">
+                      <div className="mb-20">
+                        <label
+                          htmlFor="number"
+                          className="form-label fw-semibold text-primary-light text-sm mb-8"
+                        >
+                          Document Type
+                        </label>
+                        <input
+                          value={selectFile?.type || ""}
+                          type="text"
+                          className="form-control radius-8 bg-gray-100"
+                          id="number"
+                          placeholder="Enter Document Type"
+                          {...register("document_type", { required: true })}
+                        />
+                      </div>
+                    </div> */}
+                  </div>
+                  <div className="d-flex align-items-center justify-content-center gap-3 flex-column flex-md-row">
+                    <button
+                      type="button"
+                      className="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md px-56 py-11 radius-8"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="btn btn-primary border border-primary-600 text-md px-56 py-12 radius-8"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -333,8 +477,10 @@ const UserDataLayer = () => {
       {/* all user data */}
       <div className="col-lg-8 mx-auto">
         <div className="card">
-          <div className="card-header d-flex justify-content-between align-items-center">
-            <h5 className="card-title mb-0">User Uploaded Documents</h5>
+          <div className="card-header d-flex justify-content-between align-items-center text-center">
+            <h5 className="card-title mb-0 text-center">
+              User Uploaded Documents
+            </h5>
           </div>
           <div className="card-body">
             {loading ? (
@@ -350,7 +496,7 @@ const UserDataLayer = () => {
                 {allUserData.map((item) => (
                   <div
                     key={item.id}
-                    className="border rounded p-3 flex-column d-flex align-items-center justify-content-center w-100"
+                    className="border rounded p-3 align-items-center justify-content-center d-flex flex-column"
                   >
                     <div className="mb-2">
                       <img
@@ -378,7 +524,13 @@ const UserDataLayer = () => {
                     <div>
                       <strong>Extension:</strong> {item.document_extension}
                     </div>
-                    <div className="d-flex align-items-center gap-2 mt-2 justify-content-center flex-column w-100">
+                    <div className="d-flex align-items-center gap-2 my-3 flex-column w-100 ">
+                      <button
+                        className="border border-info-600 btn-sm bg-hover-info-200 text-info-600 text-md px-20 py-15 rounded-pill d-flex align-items-center justify-content-center gap-2 w-50"
+                        onClick={() => handleEdit(item)}
+                      >
+                        <i className="bi bi-pencil"></i> Edit
+                      </button>
                       <button
                         className="border border-danger-600 btn-sm bg-hover-danger-200 text-danger-600 text-md px-20 py-15 rounded-pill d-flex align-items-center justify-content-center gap-2 w-50"
                         onClick={() => handleDelete(item.id)}
@@ -409,7 +561,7 @@ const UserDataLayer = () => {
                   </thead>
                   <tbody>
                     {allUserData.map((item) => (
-                      <tr key={item.id}>
+                      <tr key={item.id} className="">
                         <td>
                           <img
                             src={item.secure_url}
@@ -430,7 +582,15 @@ const UserDataLayer = () => {
                         <td>{item.document_type}</td>
                         <td>{item.document_extension}</td>
                         <td>
-                          <div className="d-flex align-items-center gap-2 w-100">
+                          <div className="d-flex align-items-center gap-2 w-100 flex-wrap justify-content-center">
+                            {/* edit button */}
+                            <button
+                              className="border border-info-600 btn-sm bg-hover-info-200 text-info-600 text-md px-20 py-15 rounded-pill d-flex align-items-center justify-content-center gap-2 w-50"
+                              onClick={() => handleEdit(item)}
+                            >
+                              <i className="bi bi-pencil"></i> Edit
+                            </button>
+
                             <button
                               className="border border-danger-600 btn-sm bg-hover-danger-200 text-danger-600 text-md px-20 py-15 rounded-pill d-flex align-items-center justify-content-center gap-2 w-50"
                               onClick={() => handleDelete(item.id)}
@@ -461,4 +621,4 @@ const UserDataLayer = () => {
   );
 };
 
-export default UserDataLayer;
+export default UserUploadDocument;

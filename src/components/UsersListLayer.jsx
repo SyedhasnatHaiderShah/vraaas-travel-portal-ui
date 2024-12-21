@@ -7,12 +7,10 @@ import { useNavigate } from "react-router-dom";
 import UserDetailLayer from "./UserDetailLayer";
 
 const UsersListLayer = () => {
-  const navigate = useNavigate();
   const [users, setUsers] = React.useState([]);
   const [showModal, setShowModal] = useState(false);
   const [singleUser, setSingleUser] = React.useState(null);
   const [editData, setEditData] = useState(null);
-  console.log(users);
 
   const getAllUsers = async () => {
     try {

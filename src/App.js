@@ -86,6 +86,7 @@ import TextGeneratorNewPage from "./pages/TextGeneratorNewPage";
 import ChangePasswordPage from "./pages/ChangePasswordPage";
 import UserDetailPage from "./pages/UserDetailPage";
 import UserDataPage from "./pages/UserDataPage";
+import UserUploadDocument from "./components/UserUploadData";
 
 function App() {
   return (
@@ -161,12 +162,15 @@ function App() {
         <Route exact path="/progress" element={<ProgressPage />} />
         <Route exact path="/radio" element={<RadioPage />} />
         <Route exact path="/role-access" element={<RoleAccessPage />} />
+
+        {/*updated by shahzad */}
         <Route exact path="/sign-in" element={<SignInPage />} />
         <Route exact path="/sign-up" element={<SignUpPage />} />
         <Route exact path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route exact path="/change-password" element={<ChangePasswordPage />} />
         <Route exact path="/user-detail" element={<UserDetailPage />} />
         <Route exact path="/user-data" element={<UserDataPage />} />
+        <Route exact path="/upload-document" element={<UserUploadDocument />} />
 
         <Route exact path="/star-rating" element={<StarRatingPage />} />
         <Route exact path="/starred" element={<StarredPage />} />
