@@ -6,23 +6,20 @@ import { MdDelete, MdDeleteForever } from "react-icons/md";
 import Swal from "sweetalert2";
 import EditData from "./EditData";
 import { IoClose } from "react-icons/io5";
-import { FaDownload, FaEdit } from "react-icons/fa";
 
 const UserUploadDocument = () => {
   const username = localStorage.getItem("username");
   const user_id = localStorage.getItem("user_id");
+  const token = localStorage.getItem("token");
   const fileInputRef = useRef(null);
   const [selectFile, setSelectFile] = React.useState(null);
   const [preview, setPreview] = React.useState(null);
   const [showModal, setShowModal] = useState(false);
   const [editData, setEditData] = useState(null);
   const [allUserData, setAllUserData] = useState([]);
-  console.log("all user data", allUserData);
   const [loading, setLoading] = useState(true);
-
   const [showImageModal, setShowImageModal] = useState(false);
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
-
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   const handleFileChange = (event) => {
@@ -55,31 +52,80 @@ const UserUploadDocument = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
       // Create a FormData instance
       const formData = new FormData();
       formData.append("user_id", "2");
-      // formData.append("document_id", data.document_id);
       formData.append("document_name", data.document_name);
       formData.append("document_type", data.document_type);
       formData.append("username", username);
       formData.append("file", selectFile);
 
-      console.log("form data:", formData);
-
       const response = await axios.post(
-        "http://localhost:3000/user-data/save",
-        formData
+        "http://localhost:3000/user-data/create",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       if (response.data.is_success === true) {
+        setLoading(false);
         toast.success(response.data.message);
+        getUserData();
       } else {
         toast.error(response.data.message);
       }
     } catch (error) {
       console.error(error.response?.data);
       toast.error(error.response?.data?.message || "An error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    if (!id || typeof id !== "number") {
+      toast.error("Invalid ID for deletion.");
+      return;
+    }
+    const result = await Swal.fire({
+      title: "Are you sure to delete this data?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        setLoading(true);
+        const response = await axios.post(
+          `http://localhost:3000/user-data/delete/${id}`,
+          null,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (response.data.is_success) {
+          Swal.fire("Deleted!", response.data.message, "success");
+          setAllUserData(allUserData.filter((item) => item.id !== id));
+          getUserData();
+        } else {
+          toast.error(response.data.message);
+        }
+      } catch (error) {
+        toast.error("Failed to delete data.");
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -87,17 +133,20 @@ const UserUploadDocument = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:3000/user-data/all/${username}`
+        `http://localhost:3000/user-data/all/${username}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       console.log("username data", response.data);
       if (response.data.is_success === true) {
         setAllUserData(response.data.data);
       } else {
-        // toast.error(response.data.message);
       }
       setLoading(false);
     } catch (error) {
-      // toast.error("Failed to fetch user data.");
     } finally {
       setLoading(false);
     }
@@ -106,7 +155,7 @@ const UserUploadDocument = () => {
   // Edit Handler
   const handleEdit = (id) => {
     console.log("all user data new", allUserData[id.value || id]);
-    const actualId = id.value || id; // Update this line based on the actual structure
+    const actualId = id.value || id;
 
     const selectedData = allUserData.find((item) => item.id === actualId) || [
       actualId,
@@ -174,40 +223,6 @@ const UserUploadDocument = () => {
       </div>
     </div>
   );
-
-  const handleDelete = async (id) => {
-    if (!id || typeof id !== "number") {
-      toast.error("Invalid ID for deletion.");
-      return;
-    }
-
-    // SweetAlert2 confirmation popup
-    const result = await Swal.fire({
-      title: "Are you sure to delete this data?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Yes, delete it!",
-    });
-
-    if (result.isConfirmed) {
-      try {
-        const response = await axios.post(
-          `http://localhost:3000/user-data/delete/${id}`
-        );
-        if (response.data.is_success) {
-          Swal.fire("Deleted!", response.data.message, "success");
-          setAllUserData(allUserData.filter((item) => item.id !== id));
-        } else {
-          toast.error(response.data.message);
-        }
-      } catch (error) {
-        toast.error("Failed to delete data.");
-      }
-    }
-  };
 
   const handleDownload = async (fileUrl) => {
     try {

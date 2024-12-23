@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import ThemeToggleButton from "../helper/ThemeToggleButton";
+import logo from "../utils/logo2.png";
 
 const MasterLayout = ({ children }) => {
   let [sidebarActive, seSidebarActive] = useState(false);
@@ -13,39 +14,44 @@ const MasterLayout = ({ children }) => {
     const handleDropdownClick = (event) => {
       event.preventDefault();
       const clickedLink = event.currentTarget;
-      const clickedDropdown = clickedLink.closest('.dropdown');
+      const clickedDropdown = clickedLink.closest(".dropdown");
 
       if (!clickedDropdown) return;
 
-      const isActive = clickedDropdown.classList.contains('open');
+      const isActive = clickedDropdown.classList.contains("open");
 
       // Close all dropdowns
-      const allDropdowns = document.querySelectorAll('.sidebar-menu .dropdown');
+      const allDropdowns = document.querySelectorAll(".sidebar-menu .dropdown");
       allDropdowns.forEach((dropdown) => {
-        dropdown.classList.remove('open');
+        dropdown.classList.remove("open");
       });
 
       // Toggle the clicked dropdown
       if (!isActive) {
-        clickedDropdown.classList.add('open');
+        clickedDropdown.classList.add("open");
       }
     };
 
     // Attach click event listeners to all dropdown triggers
-    const dropdownTriggers = document.querySelectorAll('.sidebar-menu .dropdown > a, .sidebar-menu .dropdown > Link');
+    const dropdownTriggers = document.querySelectorAll(
+      ".sidebar-menu .dropdown > a, .sidebar-menu .dropdown > Link"
+    );
 
     dropdownTriggers.forEach((trigger) => {
-      trigger.addEventListener('click', handleDropdownClick);
+      trigger.addEventListener("click", handleDropdownClick);
     });
 
     // Function to open submenu based on current route
     const openActiveDropdown = () => {
-      const allDropdowns = document.querySelectorAll('.sidebar-menu .dropdown');
+      const allDropdowns = document.querySelectorAll(".sidebar-menu .dropdown");
       allDropdowns.forEach((dropdown) => {
-        const submenuLinks = dropdown.querySelectorAll('.sidebar-submenu li a');
+        const submenuLinks = dropdown.querySelectorAll(".sidebar-submenu li a");
         submenuLinks.forEach((link) => {
-          if (link.getAttribute('href') === location.pathname || link.getAttribute('to') === location.pathname) {
-            dropdown.classList.add('open');
+          if (
+            link.getAttribute("href") === location.pathname ||
+            link.getAttribute("to") === location.pathname
+          ) {
+            dropdown.classList.add("open");
           }
         });
       });
@@ -54,17 +60,13 @@ const MasterLayout = ({ children }) => {
     // Open the submenu that contains the open route
     openActiveDropdown();
 
-
-
     // Cleanup event listeners on unmount
     return () => {
       dropdownTriggers.forEach((trigger) => {
-        trigger.removeEventListener('click', handleDropdownClick);
+        trigger.removeEventListener("click", handleDropdownClick);
       });
-
     };
   }, [location.pathname]);
-
 
   let sidebarControl = () => {
     seSidebarActive(!sidebarActive);
@@ -74,29 +76,39 @@ const MasterLayout = ({ children }) => {
     setMobileMenu(!mobileMenu);
   };
 
-
-
   return (
     <section className={mobileMenu ? "overlay active" : "overlay "}>
       {/* sidebar */}
-      <aside className={sidebarActive ? "sidebar active " : mobileMenu ? "sidebar sidebar-open" : "sidebar"}>
-        <button onClick={mobileMenuControl} type="button" className="sidebar-close-btn">
+      <aside
+        className={
+          sidebarActive
+            ? "sidebar active "
+            : mobileMenu
+            ? "sidebar sidebar-open"
+            : "sidebar"
+        }
+      >
+        <button
+          onClick={mobileMenuControl}
+          type="button"
+          className="sidebar-close-btn"
+        >
           <Icon icon="radix-icons:cross-2" />
         </button>
         <div>
           <Link to="/" className="sidebar-logo">
             <img
-              src="assets/images/logo.png"
+              src={logo || "assets/images/logo2.png"}
               alt="site logo"
               className="light-logo"
             />
             <img
-              src="assets/images/logo-light.png"
+              src={logo || "assets/images/logo2.png"}
               alt="site logo"
               className="dark-logo"
             />
             <img
-              src="assets/images/logo-icon.png"
+              src={logo || "assets/images/logo2.png"}
               alt="site logo"
               className="logo-icon"
             />
@@ -106,15 +118,22 @@ const MasterLayout = ({ children }) => {
           <ul className="sidebar-menu" id="sidebar-menu">
             <li className="dropdown">
               <Link to="#">
-                <Icon icon="solar:home-smile-angle-outline" className="menu-icon" />
+                <Icon
+                  icon="solar:home-smile-angle-outline"
+                  className="menu-icon"
+                />
                 <span>Dashboard</span>
               </Link>
               <ul className="sidebar-submenu">
                 <li>
-                  <NavLink to="/" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-primary-600 w-auto" />Team
+                  <NavLink
+                    to="/"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-primary-600 w-auto" />
+                    Team
                   </NavLink>
                 </li>
                 {/* <li>
@@ -328,157 +347,242 @@ const MasterLayout = ({ children }) => {
             {/* Components Dropdown */}
             <li className="dropdown">
               <Link to="#">
-                <Icon icon="solar:document-text-outline" className="menu-icon" />
+                <Icon
+                  icon="solar:document-text-outline"
+                  className="menu-icon"
+                />
                 <span>Components</span>
               </Link>
               <ul className="sidebar-submenu">
                 <li>
-                  <NavLink to="/typography" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
+                  <NavLink
+                    to="/typography"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
                     <i className="ri-circle-fill circle-icon text-primary-600 w-auto" />
                     Typography
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/colors" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-warning-main w-auto" /> Colors
+                  <NavLink
+                    to="/colors"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-warning-main w-auto" />{" "}
+                    Colors
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/button" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-success-main w-auto" /> Button
+                  <NavLink
+                    to="/button"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-success-main w-auto" />{" "}
+                    Button
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/dropdown" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-lilac-600 w-auto" /> Dropdown
+                  <NavLink
+                    to="/dropdown"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-lilac-600 w-auto" />{" "}
+                    Dropdown
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/alert" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-warning-main w-auto" /> Alerts
+                  <NavLink
+                    to="/alert"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-warning-main w-auto" />{" "}
+                    Alerts
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/card" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-danger-main w-auto" /> Card
+                  <NavLink
+                    to="/card"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-danger-main w-auto" />{" "}
+                    Card
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/carousel" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-info-main w-auto" /> Carousel
+                  <NavLink
+                    to="/carousel"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-info-main w-auto" />{" "}
+                    Carousel
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/avatar" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-success-main w-auto" /> Avatars
+                  <NavLink
+                    to="/avatar"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-success-main w-auto" />{" "}
+                    Avatars
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/progress" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-primary-600 w-auto" /> Progress bar
+                  <NavLink
+                    to="/progress"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-primary-600 w-auto" />{" "}
+                    Progress bar
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/tabs" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-warning-main w-auto" /> Tab &amp; Accordion
+                  <NavLink
+                    to="/tabs"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-warning-main w-auto" />{" "}
+                    Tab &amp; Accordion
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/pagination" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
+                  <NavLink
+                    to="/pagination"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
                     <i className="ri-circle-fill circle-icon text-danger-main w-auto" />
                     Pagination
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/badges" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-info-main w-auto" /> Badges
+                  <NavLink
+                    to="/badges"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-info-main w-auto" />{" "}
+                    Badges
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/tooltip" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-lilac-600 w-auto" /> Tooltip &amp; Popover
+                  <NavLink
+                    to="/tooltip"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-lilac-600 w-auto" />{" "}
+                    Tooltip &amp; Popover
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/videos" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-cyan w-auto" /> Videos
+                  <NavLink
+                    to="/videos"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-cyan w-auto" />{" "}
+                    Videos
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/star-rating" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-indigo w-auto" /> Star Ratings
+                  <NavLink
+                    to="/star-rating"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-indigo w-auto" />{" "}
+                    Star Ratings
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/tags" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-purple w-auto" /> Tags
+                  <NavLink
+                    to="/tags"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-purple w-auto" />{" "}
+                    Tags
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/list" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-red w-auto" /> List
+                  <NavLink
+                    to="/list"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-red w-auto" />{" "}
+                    List
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/calendar" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-yellow w-auto" /> Calendar
+                  <NavLink
+                    to="/calendar"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-yellow w-auto" />{" "}
+                    Calendar
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/radio" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-orange w-auto" /> Radio
+                  <NavLink
+                    to="/radio"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-orange w-auto" />{" "}
+                    Radio
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/switch" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-pink w-auto" /> Switch
+                  <NavLink
+                    to="/switch"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-pink w-auto" />{" "}
+                    Switch
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/image-upload" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-primary-600 w-auto" /> Upload
+                  <NavLink
+                    to="/image-upload"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-primary-600 w-auto" />{" "}
+                    Upload
                   </NavLink>
                 </li>
               </ul>
@@ -589,36 +693,55 @@ const MasterLayout = ({ children }) => {
             {/* Users Dropdown */}
             <li className="dropdown">
               <Link to="#">
-                <Icon icon="flowbite:users-group-outline" className="menu-icon" />
+                <Icon
+                  icon="flowbite:users-group-outline"
+                  className="menu-icon"
+                />
                 <span>Users</span>
               </Link>
               <ul className="sidebar-submenu">
                 <li>
-                  <NavLink to="/users-list" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-primary-600 w-auto" /> Users List
+                  <NavLink
+                    to="/users-list"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-primary-600 w-auto" />{" "}
+                    Users List
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/users-grid" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-warning-main w-auto" /> Users Grid
+                  <NavLink
+                    to="/users-grid"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-warning-main w-auto" />{" "}
+                    Users Grid
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/add-user" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-info-main w-auto" /> Add User
+                  <NavLink
+                    to="/add-user"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-info-main w-auto" />{" "}
+                    Add User
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/view-profile" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-danger-main w-auto" /> View Profile
+                  <NavLink
+                    to="/view-profile"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-danger-main w-auto" />{" "}
+                    View Profile
                   </NavLink>
                 </li>
               </ul>
@@ -632,17 +755,25 @@ const MasterLayout = ({ children }) => {
               </Link>
               <ul className="sidebar-submenu">
                 <li>
-                  <NavLink to="/role-access" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-primary-600 w-auto" /> Role &amp; Access
+                  <NavLink
+                    to="/role-access"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-primary-600 w-auto" />{" "}
+                    Role &amp; Access
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/assign-role" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-warning-main w-auto" /> Assign Role
+                  <NavLink
+                    to="/assign-role"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-warning-main w-auto" />{" "}
+                    Assign Role
                   </NavLink>
                 </li>
               </ul>
@@ -784,27 +915,36 @@ const MasterLayout = ({ children }) => {
         </div>
       </aside>
 
-      <main className={sidebarActive ? "dashboard-main active" : "dashboard-main"}>
+      <main
+        className={sidebarActive ? "dashboard-main active" : "dashboard-main"}
+      >
         <div className="navbar-header">
           <div className="row align-items-center justify-content-between">
             <div className="col-auto">
               <div className="d-flex flex-wrap align-items-center gap-4">
-                <button type="button" className="sidebar-toggle" onClick={sidebarControl}>
-                  {
-                    sidebarActive ? (<Icon
+                <button
+                  type="button"
+                  className="sidebar-toggle"
+                  onClick={sidebarControl}
+                >
+                  {sidebarActive ? (
+                    <Icon
                       icon="iconoir:arrow-right"
                       className="icon text-2xl non-active"
-                    />) : (<Icon
+                    />
+                  ) : (
+                    <Icon
                       icon="heroicons:bars-3-solid"
                       className="icon text-2xl non-active "
-                    />)
-                  }
+                    />
+                  )}
                 </button>
-                <button onClick={mobileMenuControl} type="button" className="sidebar-mobile-toggle">
-                  <Icon
-                    icon="heroicons:bars-3-solid"
-                    className="icon"
-                  />
+                <button
+                  onClick={mobileMenuControl}
+                  type="button"
+                  className="sidebar-mobile-toggle"
+                >
+                  <Icon icon="heroicons:bars-3-solid" className="icon" />
                 </button>
                 <form className="navbar-search">
                   <input type="text" name="search" placeholder="Search" />
@@ -1367,7 +1507,10 @@ const MasterLayout = ({ children }) => {
                     data-bs-toggle="dropdown"
                   >
                     <img
-                      src="assets/images/user.png"
+                      src={
+                        localStorage.getItem("profile_picture") ||
+                        "assets/images/user.png"
+                      }
                       alt="image_user"
                       className="w-40-px h-40-px object-fit-cover rounded-circle"
                     />
@@ -1378,10 +1521,15 @@ const MasterLayout = ({ children }) => {
                         <h6 className="text-lg text-primary-light fw-semibold mb-2">
                           Shaidul Islam
                         </h6>
-                        <span className="text-secondary-light fw-medium text-sm">Admin</span>
+                        <span className="text-secondary-light fw-medium text-sm">
+                          Admin
+                        </span>
                       </div>
                       <button type="button" className="hover-text-danger">
-                        <Icon icon="radix-icons:cross-1" className="icon text-xl" />
+                        <Icon
+                          icon="radix-icons:cross-1"
+                          className="icon text-xl"
+                        />
                       </button>
                     </div>
                     <ul className="to-top-list">
@@ -1390,8 +1538,11 @@ const MasterLayout = ({ children }) => {
                           className="dropdown-item text-black px-0 py-8 hover-bg-transparent hover-text-primary d-flex align-items-center gap-3"
                           to="/view-profile"
                         >
-                          <Icon icon="solar:user-linear" className="icon text-xl" /> My
-                          Profile
+                          <Icon
+                            icon="solar:user-linear"
+                            className="icon text-xl"
+                          />{" "}
+                          My Profile
                         </Link>
                       </li>
                       <li>
@@ -1399,7 +1550,10 @@ const MasterLayout = ({ children }) => {
                           className="dropdown-item text-black px-0 py-8 hover-bg-transparent hover-text-primary d-flex align-items-center gap-3"
                           to="/email"
                         >
-                          <Icon icon="tabler:message-check" className="icon text-xl" />{" "}
+                          <Icon
+                            icon="tabler:message-check"
+                            className="icon text-xl"
+                          />{" "}
                           Inbox
                         </Link>
                       </li>
@@ -1420,14 +1574,14 @@ const MasterLayout = ({ children }) => {
                           className="dropdown-item text-black px-0 py-8 hover-bg-transparent hover-text-danger d-flex align-items-center gap-3"
                           to="#"
                         >
-                          <Icon icon="lucide:power" className="icon text-xl" /> Log Out
+                          <Icon icon="lucide:power" className="icon text-xl" />{" "}
+                          Log Out
                         </Link>
                       </li>
                     </ul>
                   </div>
                 </div>
                 {/* Profile dropdown end */}
-
               </div>
             </div>
           </div>
@@ -1440,11 +1594,16 @@ const MasterLayout = ({ children }) => {
         <footer className="d-footer">
           <div className="row align-items-center justify-content-between">
             <div className="col-auto">
-              <p className="mb-0">© 2024 Vraaas Travel and Tour. All Rights Reserved.</p>
+              <p className="mb-0">
+                © 2024 Vraaas Travel and Tour. All Rights Reserved.
+              </p>
             </div>
             <div className="col-auto">
               <p className="mb-0">
-                Made by <span className="text-primary-600">Vraaas Digital Solution</span>
+                Made by{" "}
+                <span className="text-primary-600">
+                  Vraaas Digital Solution
+                </span>
               </p>
             </div>
           </div>

@@ -9,6 +9,7 @@ import { IoClose } from "react-icons/io5";
 import { FaDownload, FaEdit } from "react-icons/fa";
 
 const UserDataLayer = () => {
+  const token = localStorage.getItem("token");
   const username = localStorage.getItem("username");
   const user_id = localStorage.getItem("user_id");
   const fileInputRef = useRef(null);
@@ -67,8 +68,13 @@ const UserDataLayer = () => {
         formData.append("file", selectFile);
       }
       const response = await axios.post(
-        "http://localhost:3000/user-data/save",
-        formData
+        "http://localhost:3000/user-data/create",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       if (response.data.is_success === true) {
@@ -86,7 +92,12 @@ const UserDataLayer = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:3000/user-data/all/${username}`
+        `http://localhost:3000/user-data/all/${username}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       console.log("username data", response.data);
       if (response.data.is_success === true) {
@@ -215,7 +226,12 @@ const UserDataLayer = () => {
     if (result.isConfirmed) {
       try {
         const response = await axios.post(
-          `http://localhost:3000/user-data/delete/${id}`
+          `http://localhost:3000/user-data/delete/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         if (response.data.is_success) {
           Swal.fire("Deleted!", response.data.message, "success");
