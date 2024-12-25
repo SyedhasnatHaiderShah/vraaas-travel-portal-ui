@@ -101,28 +101,15 @@ import UserUploadDocument from "./components/UserUploadData";
 import AuthWrapper from "./utils/AuthWrapper";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Layout from "./utils/Layout";
+import ValidateUserOtp from "./pages/ValidateUserOtp";
 
 const router = createBrowserRouter([
-  {
-    path: "/sign-in",
-    element: <SignInPage />,
-  },
-  {
-    path: "/sign-up",
-    element: <SignUpPage />,
-  },
-  {
-    path: "/forgot-password",
-    element: <ForgotPasswordPage />,
-  },
-  {
-    path: "/change-password",
-    element: <ChangePasswordPage />,
-  },
-  {
-    path: "*",
-    element: <ErrorPage />,
-  },
+  { path: "/sign-in", element: <SignInPage /> },
+  { path: "/sign-up", element: <SignUpPage /> },
+  { path: "/forgot-password", element: <ForgotPasswordPage /> },
+  { path: "/change-password", element: <ChangePasswordPage /> },
+  { path: "/validate-user-otp", element: <ValidateUserOtp /> },
+  { path: "*", element: <ErrorPage /> },
   {
     path: "/",
     element: (
@@ -132,114 +119,85 @@ const router = createBrowserRouter([
     ), // Wrap the dashboard with AuthWrapper
     children: [
       { path: "/", element: <HomePageOne /> },
-      {
-        path: "/users-detail",
-        element: <UserDetailPage />,
-      },
-      {
-        path: "/users-data",
-        element: <UserDataPage />,
-      },
-      {
-        path: "/upload-document",
-        element: <UserUploadDocument />,
-      },
-      {
-        path: "/index-2",
-        element: <HomePageTwo />,
-      },
-      {
-        path: "/index-3",
-        element: <HomePageThree />,
-      },
-      {
-        path: "/index-4",
-        element: <HomePageFour />,
-      },
-      {
-        path: "/index-5",
-        element: <HomePageFive />,
-      },
-      {
-        path: "/index-6",
-        element: <HomePageSix />,
-      },
-      {
-        path: "/index-7",
-        element: <HomePageSeven />,
-      },
-      {
-        path: "/add-user",
-        element: <AddUserPage />,
-      },
-      {
-        path: "/alert",
-        element: <AlertPage />,
-      },
-      {
-        path: "/assign-role",
-        element: <AssignRolePage />,
-      },
-      {
-        path: "/avatar",
-        element: <AvatarPage />,
-      },
-      {
-        path: "/badges",
-        element: <BadgesPage />,
-      },
-      {
-        path: "/button",
-        element: <ButtonPage />,
-      },
-      {
-        path: "/calendar-main",
-        element: <CalendarMainPage />,
-      },
-      {
-        path: "/card",
-        element: <CardPage />,
-      },
-      {
-        path: "/carousel",
-        element: <CarouselPage />,
-      },
-      {
-        path: "/chat-empty",
-        element: <ChatEmptyPage />,
-      },
-      {
-        path: "/chat-message",
-        element: <ChatMessagePage />,
-      },
-      {
-        path: "/chat-profile",
-        element: <ChatProfilePage />,
-      },
-      {
-        path: "/chat-profile",
-        element: <ChatProfilePage />,
-      },
-      {
-        path: "/code-generator",
-        element: <CodeGeneratorPage />,
-      },
-      {
-        path: "/users-list",
-        element: <UsersListPage />,
-      },
-      {
-        path: "/view-profile",
-        element: <ViewProfilePage />,
-      },
-      {
-        path: "/users-grid",
-        element: <UsersGridPage />,
-      },
-      {
-        path: "/view-details",
-        element: <ViewDetailsPage />,
-      },
+      { path: "/users-detail", element: <UserDetailPage /> },
+      { path: "/users-data", element: <UserDataPage /> },
+      { path: "/upload-document", element: <UserUploadDocument /> },
+      { path: "/index-2", element: <HomePageTwo /> },
+      { path: "/index-3", element: <HomePageThree /> },
+      { path: "/index-4", element: <HomePageFour /> },
+      { path: "/index-5", element: <HomePageFive /> },
+      { path: "/index-6", element: <HomePageSix /> },
+      { path: "/index-7", element: <HomePageSeven /> },
+      { path: "/add-user", element: <AddUserPage /> },
+      { path: "/alert", element: <AlertPage /> },
+      { path: "/assign-role", element: <AssignRolePage /> },
+      { path: "/avatar", element: <AvatarPage /> },
+      { path: "/badges", element: <BadgesPage /> },
+      { path: "/button", element: <ButtonPage /> },
+      { path: "/calendar-main", element: <CalendarMainPage /> },
+      { path: "/card", element: <CardPage /> },
+      { path: "/carousel", element: <CarouselPage /> },
+      { path: "/chat-empty", element: <ChatEmptyPage /> },
+      { path: "/chat-message", element: <ChatMessagePage /> },
+      { path: "/chat-profile", element: <ChatProfilePage /> },
+      { path: "/code-generator", element: <CodeGeneratorPage /> },
+      { path: "/users-list", element: <UsersListPage /> },
+      { path: "/view-profile", element: <ViewProfilePage /> },
+      { path: "/users-grid", element: <UsersGridPage /> },
+      { path: "/view-details", element: <ViewDetailsPage /> },
+      { path: "/code-generator-new", element: <CodeGeneratorNewPage /> },
+      { path: "/colors", element: <ColorsPage /> },
+      { path: "/column-chart", element: <ColumnChartPage /> },
+      { path: "/company", element: <CompanyPage /> },
+      { path: "/currencies", element: <CurrenciesPage /> },
+      { path: "/dropdown", element: <DropdownPage /> },
+      { path: "/email", element: <EmailPage /> },
+      { path: "/faq", element: <FaqPage /> },
+      { path: "/form-layout", element: <FormLayoutPage /> },
+      { path: "/form-validation", element: <FormValidationPage /> },
+      { path: "/form", element: <FormPage /> },
+      { path: "/gallery", element: <GalleryPage /> },
+      { path: "/image-generator", element: <ImageGeneratorPage /> },
+      { path: "/image-upload", element: <ImageUploadPage /> },
+      { path: "/invoice-add", element: <InvoiceAddPage /> },
+      { path: "/invoice-edit", element: <InvoiceEditPage /> },
+      { path: "/invoice-list", element: <InvoiceListPage /> },
+      { path: "/invoice-preview", element: <InvoicePreviewPage /> },
+      { path: "/kanban", element: <KanbanPage /> },
+      { path: "/language", element: <LanguagePage /> },
+      { path: "/line-chart", element: <LineChartPage /> },
+      { path: "/list", element: <ListPage /> },
+      { path: "/marketplace-details", element: <MarketplaceDetailsPage /> },
+      { path: "/marketplace", element: <MarketplacePage /> },
+      { path: "/notification-alert", element: <NotificationAlertPage /> },
+      { path: "/notification", element: <NotificationPage /> },
+      { path: "/pagination", element: <PaginationPage /> },
+      { path: "/payment-gateway", element: <PaymentGatewayPage /> },
+      { path: "/pie-chart", element: <PieChartPage /> },
+      { path: "/portfolio", element: <PortfolioPage /> },
+      { path: "/pricing", element: <PricingPage /> },
+      { path: "/progress", element: <ProgressPage /> },
+      { path: "/radio", element: <RadioPage /> },
+      { path: "/role-access", element: <RoleAccessPage /> },
+      { path: "/star-rating", element: <StarRatingPage /> },
+      { path: "/starred", element: <StarredPage /> },
+      { path: "/switch", element: <SwitchPage /> },
+      { path: "/table-basic", element: <TableBasicPage /> },
+      { path: "/table-data", element: <TableDataPage /> },
+      { path: "/tabs", element: <TabsPage /> },
+      { path: "/tags", element: <TagsPage /> },
+      { path: "/terms-condition", element: <TermsConditionPage /> },
+      { path: "/text-generator-new", element: <TextGeneratorNewPage /> },
+      { path: "/text-generator", element: <TextGeneratorPage /> },
+      { path: "/theme", element: <ThemePage /> },
+      { path: "/tooltip", element: <TooltipPage /> },
+      { path: "/typography", element: <TypographyPage /> },
+      { path: "/video-generator", element: <VideoGeneratorPage /> },
+      { path: "/videos", element: <VideosPage /> },
+      { path: "/voice-generator", element: <VoiceGeneratorPage /> },
+      { path: "/wallet", element: <WalletPage /> },
+      { path: "/widgets", element: <WidgetsPage /> },
+      { path: "/wizard", element: <WizardPage /> },
     ],
   },
 ]);
@@ -251,8 +209,8 @@ root.render(
       <RouterProvider router={router}>
         <RouteScrollToTop />
         {/* <App /> */}
-        <ToastContainer />
       </RouterProvider>
+      <ToastContainer />
     </StrictMode>
   </>
 );

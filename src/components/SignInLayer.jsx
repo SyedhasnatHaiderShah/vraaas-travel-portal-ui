@@ -99,7 +99,11 @@ const SignInLayer = () => {
                 type="text"
                 className="form-control h-56-px bg-neutral-50 radius-12"
                 placeholder="Username"
-                defaultValue={rememberedUser.username || ""}
+                defaultValue={
+                  rememberedUser.username ||
+                  localStorage.getItem("username") ||
+                  ""
+                }
                 {...register("username", { required: true })}
               />
             </div>
