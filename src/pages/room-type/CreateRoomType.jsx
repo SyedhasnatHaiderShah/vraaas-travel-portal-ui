@@ -38,7 +38,7 @@ const CreateRoomType = () => {
       if (response.data.is_success) {
         toast.success(response.data.message);
       } else {
-        toast.error(response.data.message);
+        toast.error("An error occurred. Please try again.");
       }
     } catch (error) {
       console.error(error);
@@ -126,7 +126,7 @@ const CreateRoomType = () => {
                         type="radio"
                         name="radio"
                         id="radio33"
-                        // value="true"
+                        value="true"
                         {...register("active", {
                           required: "active is required",
                         })}
@@ -144,7 +144,7 @@ const CreateRoomType = () => {
                         type="radio"
                         name="radio"
                         id="radio44"
-                        // value="false"
+                        value="false"
                         {...register("active", {
                           required: "active is required",
                         })}
@@ -168,21 +168,21 @@ const CreateRoomType = () => {
                 Submit
               </button>
             </form>
-          </div>
-          <div
-            className=" text-center d-flex align-items-center justify-content-center border w-100 rounded-1 my-3 "
-            onClick={() => navigate("/room-type")}
-            style={{
-              cursor: "pointer",
-            }}
-          >
-            <button
-              type="button"
-              className="btn rounded-pill btn-link text-secondary-light text-decoration-none radius-8 px-20 py-11"
+            <div
+              className=" text-center d-flex align-items-center justify-content-center border w-100 rounded-1 my-3 "
+              onClick={() => navigate("/room-type")}
+              style={{
+                cursor: "pointer",
+              }}
             >
-              Go back to Room Type
-            </button>
-            <IoMdReturnLeft />
+              <button
+                type="button"
+                className="btn rounded-pill btn-link text-secondary-light text-decoration-none radius-8 px-20 py-11"
+              >
+                Go back to Room Type
+              </button>
+              <IoMdReturnLeft />
+            </div>
           </div>
         </div>
       </MasterLayout>

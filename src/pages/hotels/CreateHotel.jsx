@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import axios from "axios";
 import MasterLayout from "../../masterLayout/MasterLayout";
+import { IoMdReturnLeft } from "react-icons/io";
 
 const CreateHotel = () => {
   const navigate = useNavigate();
@@ -160,9 +161,9 @@ const CreateHotel = () => {
                       <input
                         className="form-check-input"
                         type="radio"
-                        name="radio"
+                        name="true"
                         id="radio33"
-                        // value="true"
+                        value="true"
                         {...register("active", {
                           required: "active is required",
                         })}
@@ -178,11 +179,12 @@ const CreateHotel = () => {
                       <input
                         className="form-check-input"
                         type="radio"
-                        name="radio"
+                        name="false"
                         id="radio44"
-                        // value="false"
+                        value="false"
                         {...register("active", {
                           required: "active is required",
+                          setValueAs: (v) => Boolean(v),
                         })}
                       />
                       <label
@@ -214,7 +216,7 @@ const CreateHotel = () => {
                         type="radio"
                         name="radio"
                         id="radio33"
-                        // value="true"
+                        value="true"
                         {...register("is_partner", {
                           required: "is partner is required",
                         })}
@@ -232,7 +234,7 @@ const CreateHotel = () => {
                         type="radio"
                         name="radio"
                         id="radio44"
-                        // value="false"
+                        value="false"
                         {...register("is_partner", {
                           required: "is partner is required",
                         })}
@@ -288,15 +290,21 @@ const CreateHotel = () => {
                 Submit
               </button>
             </form>
-          </div>
-          <div className=" text-center">
-            <button
-              type="button"
-              className="btn rounded-pill btn-link text-secondary-light text-decoration-none radius-8 px-20 py-11"
+            <div
+              className=" text-center d-flex align-items-center justify-content-center border w-100 rounded-1 my-3 "
               onClick={() => navigate("/hotels")}
+              style={{
+                cursor: "pointer",
+              }}
             >
-              go back
-            </button>
+              <button
+                type="button"
+                className="btn rounded-pill btn-link text-secondary-light text-decoration-none radius-8 px-20 py-11"
+              >
+                Click to go back to home
+              </button>
+              <IoMdReturnLeft />
+            </div>
           </div>
         </div>
       </MasterLayout>

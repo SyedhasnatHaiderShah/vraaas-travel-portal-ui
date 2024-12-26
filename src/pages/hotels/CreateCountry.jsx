@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import axios from "axios";
 import MasterLayout from "../../masterLayout/MasterLayout";
+import { IoMdReturnLeft } from "react-icons/io";
 
 const CreateCountry = () => {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ const CreateCountry = () => {
   };
 
   return (
-    <section className=" w-100">
+    <section className="w-100">
       <MasterLayout>
         <div className="auth-right py-10 px-24">
           <div className="max-w-464-px mx-md-auto mx-0 w-100">
@@ -88,16 +89,22 @@ const CreateCountry = () => {
                 Submit
               </button>
             </form>
+            <div
+              className=" text-center d-flex align-items-center justify-content-center border w-100 rounded-1 my-3 "
+              onClick={() => navigate("/hotels")}
+              style={{
+                cursor: "pointer",
+              }}
+            >
+              <button
+                type="button"
+                className="btn rounded-pill btn-link text-secondary-light text-decoration-none radius-8 px-20 py-11"
+              >
+                Click to go back to home
+              </button>
+              <IoMdReturnLeft />
+            </div>
           </div>
-        </div>
-        <div className=" text-center">
-          <button
-            type="button"
-            className="btn rounded-pill btn-link text-secondary-light text-decoration-none radius-8 px-20 py-11"
-            onClick={() => navigate("/hotels")}
-          >
-            go back
-          </button>
         </div>
       </MasterLayout>
     </section>

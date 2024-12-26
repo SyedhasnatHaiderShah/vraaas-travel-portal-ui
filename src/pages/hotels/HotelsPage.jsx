@@ -16,53 +16,80 @@ const HotelsPage = () => {
       <MasterLayout>
         {/* Breadcrumb */}
         <Breadcrumb title="AI" />
-        <div className=" border p-3 ">
-          <h3>To Create Country</h3>
-          <button
-            type="button"
-            className="btn rounded-pill btn-link text-secondary-light text-decoration-none radius-8 px-20 py-11"
+        <div className=" d-flex align-items-center justify-content-center flex-column gap-3 w-100">
+          <div
+            className="  border border-2 p-3 w-100 rounded-2 "
+            style={{ cursor: "pointer" }}
             onClick={() => navigate("/create-country")}
           >
-            click here to navigate create a country
-          </button>
-        </div>
-        <div className=" border p-3 ">
-          <h3>To Create City</h3>
-          <button
-            type="button"
-            className="btn rounded-pill btn-link text-secondary-light text-decoration-none radius-8 px-20 py-11"
+            <h5>To Create Country</h5>
+            <button
+              type="button"
+              className="btn rounded-pill btn-link text-secondary-light text-decoration-none radius-8 px-20 py-11"
+            >
+              click here to navigate create a country
+            </button>
+          </div>
+          <div
+            className="  border border-2 p-3 w-100 rounded-2 "
+            style={{ cursor: "pointer" }}
             onClick={() => navigate("/create-city")}
           >
-            click here to navigate to create a city
-          </button>
-        </div>
-        <div className=" border p-3 ">
-          <h3>To Create Hotel</h3>
-          <button
-            type="button"
-            className="btn rounded-pill btn-link text-secondary-light text-decoration-none radius-8 px-20 py-11"
+            <h5>To Create City</h5>
+            <button
+              type="button"
+              className="btn rounded-pill btn-link text-secondary-light text-decoration-none radius-8 px-20 py-11"
+            >
+              click here to navigate to create a city
+            </button>
+          </div>
+          <div
+            className="  border border-2 p-3 w-100 rounded-2 "
+            style={{ cursor: "pointer" }}
             onClick={() => navigate("/create-hotel")}
           >
-            click here to navigate to create hotel
-          </button>
-        </div>
-        <div className=" border p-3 ">
-          <h3>All the Available Data</h3>
+            <h5>To Create Hotel</h5>
+            <button
+              type="button"
+              className="btn rounded-pill btn-link text-secondary-light text-decoration-none radius-8 px-20 py-11"
+            >
+              click here to navigate to create hotel
+            </button>
+          </div>
+          <div
+            className="  border border-2 p-3 w-100 rounded-2 "
+            style={{ cursor: "pointer" }}
+            onClick={() => navigate("/hotel-all-data")}
+          >
+            <h5>All the hotels also including Edit and Delete</h5>
+            <button
+              type="button"
+              className="btn rounded-pill btn-link text-secondary-light text-decoration-none radius-8 px-20 py-11"
+            >
+              click here to navigate hotel
+            </button>
+          </div>
+          <div
+            className="  border border-2 p-3 w-100 rounded-2 "
+            style={{ cursor: "pointer" }}
+            onClick={() => navigate("/hotel-id")}
+          >
+            <h5>Get Hotel by ID</h5>
+            <button
+              type="button"
+              className="btn rounded-pill btn-link text-secondary-light text-decoration-none radius-8 px-20 py-11"
+            >
+              click here to navigate hotel
+            </button>
+          </div>
           <button
             type="button"
             className="btn rounded-pill btn-link text-secondary-light text-decoration-none radius-8 px-20 py-11"
-            onClick={() => navigate("/hotel-all-data")}
+            onClick={() => navigate("/")}
           >
-            click here to navigate hotel
+            Click to go back to home
           </button>
         </div>
-        <button
-          type="button"
-          className="btn rounded-pill btn-link text-secondary-light text-decoration-none radius-8 px-20 py-11"
-          onClick={() => navigate("/")}
-        >
-          Click to go back to home
-        </button>
       </MasterLayout>
     </>
   );
