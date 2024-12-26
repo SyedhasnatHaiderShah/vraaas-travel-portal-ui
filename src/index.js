@@ -113,6 +113,9 @@ import RoomTypeLayer from "./pages/room-type/RoomTypeLayer";
 import RoomTableAllData from "./pages/room-type/RoomTableAllData";
 import HotelByID from "./pages/hotels/HotelByID";
 import RoomByID from "./pages/room-type/RoomByID";
+import HotelServicesLayer from "./pages/hotel-services/HotelServicesLayer";
+import CreateHotelServices from "./pages/hotel-services/CreateHotelServices";
+import GetAllHotelServices from "./pages/hotel-services/GetAllHotelServices";
 
 const router = createBrowserRouter([
   { path: "/sign-in", element: <SignInPage /> },
@@ -219,6 +222,9 @@ const router = createBrowserRouter([
       { path: "/create-room-type", element: <CreateRoomType /> },
       { path: "/room-type-all", element: <RoomTableAllData /> },
       { path: "/room-by-id", element: <RoomByID /> },
+      { path: "/hotel-services-layer", element: <HotelServicesLayer /> },
+      { path: "/create-hotel-services", element: <CreateHotelServices /> },
+      { path: "/all-hotel-services", element: <GetAllHotelServices /> },
     ],
   },
 ]);

@@ -78,6 +78,16 @@ const Breadcrumb = ({ title }) => {
             />
             Room type
           </Link>
+          <Link
+            to="/hotel-services-layer"
+            className="d-flex align-items-center gap-1 hover-text-primary"
+          >
+            <Icon
+              icon="solar:home-smile-angle-outline"
+              className="icon text-lg"
+            />
+            Hotel Services
+          </Link>
         </li>
         {/* <li> - </li>
         <li className="fw-medium">{title}</li> */}
