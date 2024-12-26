@@ -7,9 +7,9 @@ import "react-modal-video/css/modal-video.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import { ToastContainer } from "react-toastify";
 import HomePageOne from "./pages/HomePageOne";
 import HomePageTwo from "./pages/HomePageTwo";
 import HomePageThree from "./pages/HomePageThree";
@@ -102,6 +102,15 @@ import AuthWrapper from "./utils/AuthWrapper";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Layout from "./utils/Layout";
 import ValidateUserOtp from "./pages/ValidateUserOtp";
+import HotelsPage from "./pages/hotels/HotelsPage";
+import UserUploadPage from "./pages/UserUploadPage";
+import CreateCountry from "./pages/hotels/CreateCountry";
+import CreateCity from "./pages/hotels/CreateCity";
+import CreateHotel from "./pages/hotels/CreateHotel";
+import HotelAllData from "./pages/hotels/HotelAllData";
+import CreateRoomType from "./pages/room-type/CreateRoomType";
+import RoomTypeLayer from "./pages/room-type/RoomTypeLayer";
+import RoomTableAllData from "./pages/room-type/RoomTableAllData";
 
 const router = createBrowserRouter([
   { path: "/sign-in", element: <SignInPage /> },
@@ -116,12 +125,12 @@ const router = createBrowserRouter([
       <AuthWrapper>
         <Layout />
       </AuthWrapper>
-    ), // Wrap the dashboard with AuthWrapper
+    ),
     children: [
       { path: "/", element: <HomePageOne /> },
-      { path: "/users-detail", element: <UserDetailPage /> },
-      { path: "/users-data", element: <UserDataPage /> },
-      { path: "/upload-document", element: <UserUploadDocument /> },
+      { path: "/user-detail", element: <UserDetailPage /> },
+      { path: "/user-data", element: <UserDataPage /> },
+      { path: "/upload-document", element: <UserUploadPage /> },
       { path: "/index-2", element: <HomePageTwo /> },
       { path: "/index-3", element: <HomePageThree /> },
       { path: "/index-4", element: <HomePageFour /> },
@@ -198,6 +207,14 @@ const router = createBrowserRouter([
       { path: "/wallet", element: <WalletPage /> },
       { path: "/widgets", element: <WidgetsPage /> },
       { path: "/wizard", element: <WizardPage /> },
+      { path: "/hotels", element: <HotelsPage /> },
+      { path: "/create-country", element: <CreateCountry /> },
+      { path: "/create-city", element: <CreateCity /> },
+      { path: "/create-hotel", element: <CreateHotel /> },
+      { path: "/hotel-all-data", element: <HotelAllData /> },
+      { path: "/room-type", element: <RoomTypeLayer /> },
+      { path: "/create-room-type", element: <CreateRoomType /> },
+      { path: "/room-type-all", element: <RoomTableAllData /> },
     ],
   },
 ]);

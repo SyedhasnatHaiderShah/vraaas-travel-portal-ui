@@ -203,7 +203,7 @@ const UsersListLayer = () => {
                         id="selectAll"
                       />
                     </div>
-                    S.L
+                    Sr. #
                   </div>
                 </th>
                 <th scope="col">Join Date</th>
@@ -267,12 +267,12 @@ const UsersListLayer = () => {
                     <td className="text-center">
                       <span
                         className={`bg-success-focus ${
-                          user.is_active
+                          user.is_verified
                             ? "bg-success-focus border border-success-main"
                             : "bg-danger-focus border border-danger-main"
                         } text-success-600 border border-success-main px-24 py-4 radius-4 fw-medium text-sm`}
                       >
-                        {user.is_active ? "Active" : "Inactive"}
+                        {user.is_verified ? "Verified" : "Not Verified"}
                       </span>
                     </td>
                     <td className="text-center">

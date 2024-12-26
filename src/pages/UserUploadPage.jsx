@@ -1,15 +1,15 @@
 import React from "react";
-import UserDetailLayer from "./../components/UserDetailLayer";
 import MasterLayout from "../masterLayout/MasterLayout";
+import UserUploadDocument from "./../components/UserUploadData";
 
-const UserDetailPage = () => {
+const UserUploadPage = () => {
   return (
     <div>
       <MasterLayout>
-        <UserDetailLayer />
+        <UserUploadDocument />
       </MasterLayout>
     </div>
   );
 };
 
-export default UserDetailPage;
+export default UserUploadPage;

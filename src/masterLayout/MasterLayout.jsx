@@ -1594,16 +1594,11 @@ const MasterLayout = ({ children }) => {
         <footer className="d-footer">
           <div className="row align-items-center justify-content-between">
             <div className="col-auto">
-              <p className="mb-0">
-                © 2024 Vraaas Travel and Tour. All Rights Reserved.
-              </p>
+              <p className="mb-0">© 2025 W2S. All Rights Reserved.</p>
             </div>
             <div className="col-auto">
               <p className="mb-0">
-                Made by{" "}
-                <span className="text-primary-600">
-                  Vraaas Digital Solution
-                </span>
+                Made by <span className="text-primary-600">DEV TECH</span>
               </p>
             </div>
           </div>

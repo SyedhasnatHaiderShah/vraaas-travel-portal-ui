@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const Breadcrumb = ({ title }) => {
   return (
     <div className="d-flex flex-wrap align-items-md-center justify-content-md-between justify-content-start align-items-start gap-3 mb-24 flex-column md-flex-row">
-      <h6 className="fw-semibold mb-0">Useful links</h6>
+      <h6 className="fw-semibold mb-0">Ready links</h6>
       <ul className="d-flex align-items-center gap-2">
         <li className="fw-medium d-flex align-items-center gap-1 flex-column flex-md-row gap-md-5 flex-wrap ">
           <Link
@@ -27,6 +27,7 @@ const Breadcrumb = ({ title }) => {
             />
             Sign Up
           </Link>
+          khurram
           <Link
             to="/user-detail"
             className="d-flex align-items-center gap-1 hover-text-primary"
@@ -56,6 +57,26 @@ const Breadcrumb = ({ title }) => {
               className="icon text-lg"
             />
             Upload/Update Document
+          </Link>
+          <Link
+            to="/hotels"
+            className="d-flex align-items-center gap-1 hover-text-primary"
+          >
+            <Icon
+              icon="solar:home-smile-angle-outline"
+              className="icon text-lg"
+            />
+            Hotels
+          </Link>
+          <Link
+            to="/room-type"
+            className="d-flex align-items-center gap-1 hover-text-primary"
+          >
+            <Icon
+              icon="solar:home-smile-angle-outline"
+              className="icon text-lg"
+            />
+            Room type
           </Link>
         </li>
         {/* <li> - </li>
