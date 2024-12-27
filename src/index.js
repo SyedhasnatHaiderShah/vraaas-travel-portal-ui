@@ -124,6 +124,10 @@ import AirportsLayer from "./pages/airports/AirportsLayer";
 import GetAllAirports from "./pages/airports/GetAllAirports";
 import GetAirportById from "./pages/airports/GetAirportById";
 import CreateAirports from "./pages/airports/CreateAirports";
+import CreateAirLines from "./pages/airlines/CreateAirLines";
+import GetAllAirlines from "./pages/airlines/GetAllAirlines";
+import GetAirlinesById from "./pages/airlines/GetAirlinesById";
+import ArilinesLayer from "./pages/airlines/ArilinesLayer";
 
 const router = createBrowserRouter([
   { path: "/sign-in", element: <SignInPage /> },
@@ -246,6 +250,11 @@ const router = createBrowserRouter([
       { path: "/get-all-airports", element: <GetAllAirports /> },
       { path: "/airport-by-id", element: <GetAirportById /> },
       { path: "/create-airports", element: <CreateAirports /> },
+      // airlines
+      { path: "/airlines-layer", element: <ArilinesLayer /> },
+      { path: "/get-all-airlines", element: <GetAllAirlines /> },
+      { path: "/airlines-by-id", element: <GetAirlinesById /> },
+      { path: "/create-airlines", element: <CreateAirLines /> },
     ],
   },
 ]);

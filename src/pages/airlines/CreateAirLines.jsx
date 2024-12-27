@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import MasterLayout from "../../masterLayout/MasterLayout";
 import { IoMdReturnLeft } from "react-icons/io";
-const CreateAirports = () => {
+const CreateAirLines = () => {
   const navigate = useNavigate();
   const {
     register,
@@ -18,14 +18,14 @@ const CreateAirports = () => {
     // Convert `active` field to a boolean
     const formattedData = {
       ...data,
-      city_id: Number(data.city_id),
+      country_id: parseInt(data.country_id),
     };
 
     console.log("formattedData", formattedData);
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/airports/create",
+        "http://localhost:3000/airlines/create",
         formattedData,
         {
           headers: {
@@ -64,7 +64,7 @@ const CreateAirports = () => {
               className="  w-100"
             >
               <div className=" col-12">
-                <label className="form-label">Airport Name</label>
+                <label className="form-label">Airline Name</label>
                 <div className="icon-field has-validation">
                   <span className="icon">
                     <Icon icon="f7:person" />
@@ -73,16 +73,16 @@ const CreateAirports = () => {
                     type="text"
                     name="#0"
                     className="form-control"
-                    placeholder="Enter Airport Name"
+                    placeholder="Enter Airline Name"
                     required=""
-                    {...register("airport_name", {
-                      required: "airport_name is required",
+                    {...register("airline_name", {
+                      required: "airline name is required",
                     })}
                   />
 
-                  {errors.airport_name && (
+                  {errors.airline_name && (
                     <div className="fw-normal text-danger">
-                      {errors.airport_name.message}
+                      {errors.airline_name.message}
                     </div>
                   )}
                 </div>
@@ -152,32 +152,56 @@ const CreateAirports = () => {
                 </div>
               </div>
               <div className=" col-12">
-                <label className="form-label">City ID</label>
+                <label className="form-label">Call Sign</label>
+                <div className="icon-field has-validation">
+                  <span className="icon">
+                    <Icon icon="f7:person" />
+                  </span>
+                  <input
+                    type="text"
+                    name="#0"
+                    className="form-control"
+                    placeholder="Enter Call Sign"
+                    required=""
+                    {...register("callsign", {
+                      required: "call sign is required",
+                    })}
+                  />
+
+                  {errors.callsign && (
+                    <div className="fw-normal text-danger">
+                      {errors.callsign.message}
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className=" col-12">
+                <label className="form-label">Country ID</label>
                 <div className="icon-field has-validation">
                   <span className="icon">
                     <Icon icon="f7:person" />
                   </span>
                   <input
                     min={1}
-                    maxLength={1000}
+                    maxLength={100}
                     type="number"
                     name="#0"
                     className="form-control"
-                    placeholder="Enter City ID"
+                    placeholder="Enter Country ID"
                     required=""
-                    {...register("city_id", {
-                      required: "city id  is required",
+                    {...register("country_id", {
+                      required: "country id  is required",
                     })}
                   />
 
-                  {errors.city_id && (
+                  {errors.country_id && (
                     <div className="fw-normal text-danger">
-                      {errors.city_id.message}
+                      {errors.country_id.message}
                     </div>
                   )}
                 </div>
               </div>
-              <div className="col-12">
+              {/* <div className="col-12">
                 <label className="form-label">Time Zone</label>
                 <div className="icon-field has-validation">
                   <span className="icon">
@@ -192,7 +216,6 @@ const CreateAirports = () => {
                     })}
                   >
                     <option value="">Select Time Zone</option>
-                    {/* UAE and nearby regions */}
                     <option value="Asia/Dubai">
                       Asia/Dubai (UAE - Gulf Standard Time)
                     </option>
@@ -208,8 +231,6 @@ const CreateAirports = () => {
                     <option value="Asia/Riyadh">
                       Asia/Riyadh (Saudi Arabia - Arabian Standard Time)
                     </option>
-
-                    {/* Common Global Time Zones */}
                     <option value="UTC">UTC</option>
                     <option value="America/New_York">
                       America/New_York (EST)
@@ -221,17 +242,14 @@ const CreateAirports = () => {
                     <option value="Australia/Sydney">
                       Australia/Sydney (AEDT)
                     </option>
-
-                    {/* Add additional time zones as needed */}
                   </select>
-
                   {errors.timezone && (
                     <div className="fw-normal text-danger">
                       {errors.timezone.message}
                     </div>
                   )}
                 </div>
-              </div>
+              </div> */}
 
               <button
                 type="submit"
@@ -243,7 +261,7 @@ const CreateAirports = () => {
             </form>
             <div
               className=" text-center d-flex align-items-center justify-content-center border w-100 rounded-1 my-3 "
-              onClick={() => navigate("/airports-layer")}
+              onClick={() => navigate("/airlines-layer")}
               style={{
                 cursor: "pointer",
               }}
@@ -252,7 +270,7 @@ const CreateAirports = () => {
                 type="button"
                 className="btn rounded-pill btn-link text-secondary-light text-decoration-none radius-8 px-20 py-11"
               >
-                Go back to Airports Page
+                Go back to Airlines Page
               </button>
               <IoMdReturnLeft />
             </div>
@@ -263,4 +281,4 @@ const CreateAirports = () => {
   );
 };
 
-export default CreateAirports;
+export default CreateAirLines;
