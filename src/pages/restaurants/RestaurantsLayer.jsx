@@ -3,7 +3,7 @@ import MasterLayout from "../../masterLayout/MasterLayout";
 import { useNavigate } from "react-router-dom";
 import { IoMdReturnLeft } from "react-icons/io";
 
-const HotelServicesLayer = () => {
+const RestaurantsLayer = () => {
   const navigate = useNavigate();
   return (
     <div>
@@ -12,44 +12,44 @@ const HotelServicesLayer = () => {
           <div
             className="  border border-2 p-3 w-100 rounded-2 "
             style={{ cursor: "pointer" }}
-            onClick={() => navigate("/create-hotel-services")}
+            onClick={() => navigate("/create-restaurants")}
           >
-            <h5>Create Hotel Services</h5>
+            <h5>To Create Restaurants</h5>
             <button
               type="button"
               className="btn rounded-pill btn-link text-secondary-light text-decoration-none radius-8 px-20 py-11"
             >
-              Navigate to create hotel services
+              Navigate to Create Restaurants
             </button>
           </div>
 
           <div
             className="  border border-2 p-3 w-100 rounded-2 "
             style={{ cursor: "pointer" }}
-            onClick={() => navigate("/all-hotel-services")}
+            onClick={() => navigate("/get-all-restaurants")}
           >
-            <h5>Get Hotel Services By Hotel ID</h5>
+            <h5>All the Available Restaurants</h5>
             <button
               type="button"
               className="btn rounded-pill btn-link text-secondary-light text-decoration-none radius-8 px-20 py-11"
             >
-              Navigate to get hotel services by hotel id and service id, also
-              can be updated and deleted services.
+              Navigate to All Restaurants Page also update and delete the
+              restaurants.
             </button>
           </div>
-          {/* <div
+          <div
             className="  border border-2 p-3 w-100 rounded-2 "
             style={{ cursor: "pointer" }}
-            onClick={() => navigate("/room-by-id")}
+            onClick={() => navigate("/get-restaurants-id")}
           >
-            <h5>Get room type by id</h5>
+            <h5>Get Restaurants by ID</h5>
             <button
               type="button"
               className="btn rounded-pill btn-link text-secondary-light text-decoration-none radius-8 px-20 py-11"
             >
-              Click here to navigate Room Type by ID
+              Navigate to get the restaurants by ID
             </button>
-          </div> */}
+          </div>
 
           <div
             className=" text-center d-flex align-items-center justify-content-center border w-100 rounded-1 my-3 "
@@ -72,4 +72,4 @@ const HotelServicesLayer = () => {
   );
 };
 
-export default HotelServicesLayer;
+export default RestaurantsLayer;

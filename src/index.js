@@ -116,6 +116,10 @@ import RoomByID from "./pages/room-type/RoomByID";
 import HotelServicesLayer from "./pages/hotel-services/HotelServicesLayer";
 import CreateHotelServices from "./pages/hotel-services/CreateHotelServices";
 import GetAllHotelServices from "./pages/hotel-services/GetAllHotelServices";
+import RestaurantsLayer from "./pages/restaurants/RestaurantsLayer";
+import GetRestaurantsById from "./pages/restaurants/GetRestaurantsById";
+import GetAllRestaurantsData from "./pages/restaurants/GetAllRestaurantsData";
+import CreateRestaurants from "./pages/restaurants/CreateRestaurants";
 
 const router = createBrowserRouter([
   { path: "/sign-in", element: <SignInPage /> },
@@ -225,6 +229,10 @@ const router = createBrowserRouter([
       { path: "/hotel-services-layer", element: <HotelServicesLayer /> },
       { path: "/create-hotel-services", element: <CreateHotelServices /> },
       { path: "/all-hotel-services", element: <GetAllHotelServices /> },
+      { path: "/restaurants-layer", element: <RestaurantsLayer /> },
+      { path: "/create-restaurants", element: <CreateRestaurants /> },
+      { path: "/get-restaurants-id", element: <GetRestaurantsById /> },
+      { path: "/get-all-restaurants", element: <GetAllRestaurantsData /> },
     ],
   },
 ]);
