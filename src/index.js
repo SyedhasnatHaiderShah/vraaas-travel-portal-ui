@@ -120,6 +120,10 @@ import RestaurantsLayer from "./pages/restaurants/RestaurantsLayer";
 import GetRestaurantsById from "./pages/restaurants/GetRestaurantsById";
 import GetAllRestaurantsData from "./pages/restaurants/GetAllRestaurantsData";
 import CreateRestaurants from "./pages/restaurants/CreateRestaurants";
+import AirportsLayer from "./pages/airports/AirportsLayer";
+import GetAllAirports from "./pages/airports/GetAllAirports";
+import GetAirportById from "./pages/airports/GetAirportById";
+import CreateAirports from "./pages/airports/CreateAirports";
 
 const router = createBrowserRouter([
   { path: "/sign-in", element: <SignInPage /> },
@@ -216,23 +220,32 @@ const router = createBrowserRouter([
       { path: "/wallet", element: <WalletPage /> },
       { path: "/widgets", element: <WidgetsPage /> },
       { path: "/wizard", element: <WizardPage /> },
+      // hotels
       { path: "/hotels", element: <HotelsPage /> },
       { path: "/create-country", element: <CreateCountry /> },
       { path: "/create-city", element: <CreateCity /> },
       { path: "/create-hotel", element: <CreateHotel /> },
       { path: "/hotel-all-data", element: <HotelAllData /> },
       { path: "/hotel-id", element: <HotelByID /> },
+      // room type
       { path: "/room-type", element: <RoomTypeLayer /> },
       { path: "/create-room-type", element: <CreateRoomType /> },
       { path: "/room-type-all", element: <RoomTableAllData /> },
       { path: "/room-by-id", element: <RoomByID /> },
+      // hotel services
       { path: "/hotel-services-layer", element: <HotelServicesLayer /> },
       { path: "/create-hotel-services", element: <CreateHotelServices /> },
       { path: "/all-hotel-services", element: <GetAllHotelServices /> },
+      // restaurants
       { path: "/restaurants-layer", element: <RestaurantsLayer /> },
       { path: "/create-restaurants", element: <CreateRestaurants /> },
       { path: "/get-restaurants-id", element: <GetRestaurantsById /> },
       { path: "/get-all-restaurants", element: <GetAllRestaurantsData /> },
+      // airports
+      { path: "/airports-layer", element: <AirportsLayer /> },
+      { path: "/get-all-airports", element: <GetAllAirports /> },
+      { path: "/airport-by-id", element: <GetAirportById /> },
+      { path: "/create-airports", element: <CreateAirports /> },
     ],
   },
 ]);

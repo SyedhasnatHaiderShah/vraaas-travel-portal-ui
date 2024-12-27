@@ -98,6 +98,16 @@ const Breadcrumb = ({ title }) => {
             />
             Restaurants
           </Link>
+          <Link
+            to="/airports-layer"
+            className="d-flex align-items-center gap-1 hover-text-primary"
+          >
+            <Icon
+              icon="solar:home-smile-angle-outline"
+              className="icon text-lg"
+            />
+            Airports
+          </Link>
         </li>
         {/* <li> - </li>
         <li className="fw-medium">{title}</li> */}
