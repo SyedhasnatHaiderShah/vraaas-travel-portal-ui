@@ -118,6 +118,16 @@ const Breadcrumb = ({ title }) => {
             />
             Airlines
           </Link>
+          <Link
+            to="/flights-layer"
+            className="d-flex align-items-center gap-1 hover-text-primary"
+          >
+            <Icon
+              icon="solar:home-smile-angle-outline"
+              className="icon text-lg"
+            />
+            Flights
+          </Link>
         </li>
         {/* <li> - </li>
         <li className="fw-medium">{title}</li> */}
