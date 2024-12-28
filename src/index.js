@@ -132,6 +132,10 @@ import FlightsLayer from "./pages/flights/FlightsLayer";
 import GetAllFlights from "./pages/flights/GetAllFlights";
 import GetFlightsById from "./pages/flights/GetFlightsById";
 import CreateFlights from "./pages/flights/CreateFlights";
+import TransportCompanyLayer from "./pages/transport-company/TransportCompanyLayer";
+import GetAllCompanyData from "./pages/transport-company/GetAllCompanyData";
+import GetCompanyById from "./pages/transport-company/GetCompanyById";
+import CreateCompany from "./pages/transport-company/CreateCompany";
 
 const router = createBrowserRouter([
   { path: "/sign-in", element: <SignInPage /> },
@@ -264,6 +268,11 @@ const router = createBrowserRouter([
       { path: "/get-all-flights", element: <GetAllFlights /> },
       { path: "/flights-by-id", element: <GetFlightsById /> },
       { path: "/create-flight", element: <CreateFlights /> },
+      // transport companies
+      { path: "/transport-company-layer", element: <TransportCompanyLayer /> },
+      { path: "/all-transport-companies", element: <GetAllCompanyData /> },
+      { path: "/transport-companies-by-id", element: <GetCompanyById /> },
+      { path: "/create-transport-company", element: <CreateCompany /> },
     ],
   },
 ]);
