@@ -119,11 +119,12 @@ const RoomTableAllData = () => {
                         </td>
                         <td>
                           <button
-                            className="btn btn-success btn-sm me-2"
+                            className="btn  btn-sm me-2"
                             onClick={() => {
                               setSelectedRoom(room);
                               setShowModal(true);
                             }}
+                            style={{ backgroundColor: "#57bcce" }}
                           >
                             Update
                           </button>

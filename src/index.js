@@ -152,6 +152,10 @@ import SupportTicketsLayer from "./pages/support-tickets/SupportTicketsLayer";
 import CreateSupportTickets from "./pages/support-tickets/CreateSupportTickets";
 import GetSupportTicketsById from "./pages/support-tickets/GetSupportTicketsById";
 import GetAllSupportTicketsData from "./pages/support-tickets/GetAllSupportTicketsData";
+import TicketsResponseLayer from "./pages/tickets-response/TicketsResponseLayer";
+import CreateTicketsResponse from "./pages/tickets-response/CreateTicketsResponse";
+import GetTicketsResponseById from "./pages/tickets-response/GetTicketsResponseById";
+import GetAllTicketsResponseData from "./pages/tickets-response/GetAllTicketsResponseData";
 
 const router = createBrowserRouter([
   { path: "/sign-in", element: <SignInPage /> },
@@ -317,6 +321,17 @@ const router = createBrowserRouter([
       {
         path: "/get-all-support-tickets",
         element: <GetAllSupportTicketsData />,
+      },
+      // tickets-response
+      { path: "/tickets-response-layer", element: <TicketsResponseLayer /> },
+      { path: "/create-tickets-response", element: <CreateTicketsResponse /> },
+      {
+        path: "/get-tickets-response-id",
+        element: <GetTicketsResponseById />,
+      },
+      {
+        path: "/get-all-tickets-response",
+        element: <GetAllTicketsResponseData />,
       },
     ],
   },

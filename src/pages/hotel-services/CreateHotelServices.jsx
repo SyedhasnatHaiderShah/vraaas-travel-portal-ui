@@ -53,9 +53,7 @@ const CreateHotelServices = () => {
     <section className=" w-100">
       <MasterLayout>
         {/* use these in form data */}
-        <code>
-          "hotel_id": 2, "room_type_id": 2, "service_price": 0, "active": true
-        </code>
+
         <div className="auth-right py-10 px-24 w-100">
           <div className="max-w-464-px mx-md-auto mx-0 w-100">
             <div>
@@ -194,7 +192,8 @@ const CreateHotelServices = () => {
 
               <button
                 type="submit"
-                className="btn btn-primary text-sm btn-sm px-12 py-16 w-100 radius-12 mt-32"
+                className="btn text-sm btn-sm px-12 py-16 w-100 radius-12 mt-32"
+                style={{ backgroundColor: "#57bcce" }}
               >
                 {" "}
                 Submit

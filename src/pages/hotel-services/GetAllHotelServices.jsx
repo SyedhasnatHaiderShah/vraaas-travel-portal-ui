@@ -136,7 +136,8 @@ const GetAllHotelServices = () => {
               </div>
               <button
                 type="submit"
-                className="btn btn-primary btn-sm px-4 py-3 w-100 radius-8 mt-3"
+                className="btn  btn-sm px-4 py-3 w-100 radius-8 mt-3"
+                style={{ backgroundColor: "#57bcce" }}
               >
                 Fetch Services
               </button>

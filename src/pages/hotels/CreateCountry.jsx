@@ -83,7 +83,8 @@ const CreateCountry = () => {
 
               <button
                 type="submit"
-                className="btn btn-primary text-sm btn-sm px-12 py-16 w-100 radius-12 mt-32"
+                className="btn text-sm btn-sm px-12 py-16 w-100 radius-12 mt-32"
+                style={{ backgroundColor: "#57bcce" }}
               >
                 {" "}
                 Submit

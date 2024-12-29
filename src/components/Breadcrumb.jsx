@@ -178,6 +178,16 @@ const Breadcrumb = ({ title }) => {
             />
             Support Tickets
           </Link>
+          <Link
+            to="/tickets-response-layer"
+            className="d-flex align-items-center gap-1 hover-text-primary"
+          >
+            <Icon
+              icon="solar:home-smile-angle-outline"
+              className="icon text-lg"
+            />
+            Tickets Response
+          </Link>
         </li>
         {/* <li> - </li>
         <li className="fw-medium">{title}</li> */}

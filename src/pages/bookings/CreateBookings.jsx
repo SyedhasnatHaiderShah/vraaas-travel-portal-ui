@@ -7,6 +7,7 @@ import axios from "axios";
 import MasterLayout from "../../masterLayout/MasterLayout";
 import { IoMdReturnLeft } from "react-icons/io";
 const CreateBookings = () => {
+  const user_id = localStorage.getItem("user_id");
   const navigate = useNavigate();
   const {
     register,
@@ -18,7 +19,7 @@ const CreateBookings = () => {
     // Convert `active` field to a boolean
     const formattedData = {
       ...data,
-      customer_id: Number(data.customer_id),
+      customer_id: Number(user_id),
       service_id: Number(data.service_id),
     };
 
@@ -67,7 +68,7 @@ const CreateBookings = () => {
               onSubmit={handleSubmit(onSubmit)}
               className="  w-100"
             >
-              <div className=" col-12">
+              {/* <div className=" col-12">
                 <label className="form-label">Customer ID</label>
                 <div className="icon-field has-validation">
                   <span className="icon">
@@ -91,7 +92,7 @@ const CreateBookings = () => {
                     </div>
                   )}
                 </div>
-              </div>
+              </div> */}
               <div className="col-12">
                 <div className="mb-20">
                   <label
@@ -165,7 +166,10 @@ const CreateBookings = () => {
               </div>
               <button
                 type="submit"
-                className="btn btn-primary text-sm btn-sm px-12 py-16 w-100 radius-12 mt-32"
+                className="btn btn- text-sm btn-sm px-12 py-16 w-100 radius-12 mt-32"
+                style={{
+                  backgroundColor: "#439ab6",
+                }}
               >
                 {" "}
                 Submit

@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { RxEyeOpen } from "react-icons/rx";
 import { RxEyeClosed } from "react-icons/rx";
+import mainTheme from "../utils/theme.png";
 
 const SignInLayer = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -76,7 +77,7 @@ const SignInLayer = () => {
     <section className="auth bg-base d-flex flex-wrap">
       <div className="auth-left d-lg-block d-none">
         <div className="d-flex align-items-center flex-column h-100 justify-content-center">
-          <img src="assets/images/auth/auth-img.png" alt="" />
+          <img src={mainTheme || "assets/images/auth/auth-img.png"} alt="" />
         </div>
       </div>
       <div className="auth-right py-32 px-24 d-flex flex-column justify-content-center">
@@ -159,19 +160,26 @@ const SignInLayer = () => {
                   Remember me
                 </label>
               </div>
-              <Link
-                to="/forgot-password"
-                className="text-primary-600 fw-medium"
+              <button
+                // to="/forgot-password"
+                className="fw-medium text-decoration-none"
+                style={{
+                  cursor: "pointer",
+                  color: "#439ab6",
+                }}
+                onClick={() => navigate("/forgot-password")}
               >
                 Forgot Password?
-              </Link>
+              </button>
             </div>
             <button
               type="submit"
-              className="btn btn-primary text-sm btn-sm px-12 py-16 w-100 radius-12 mt-32"
+              className="btn text-sm btn-sm px-12 py-16 w-100 radius-12 mt-32"
+              style={{ backgroundColor: "#57bcce", color: "#fff" }}
             >
               Sign In
             </button>
+
             <div className="mt-32 center-border-horizontal text-center">
               <span className="bg-base z-1 px-4">Or sign in with</span>
             </div>
@@ -200,7 +208,14 @@ const SignInLayer = () => {
             <div className="mt-32 text-center text-sm">
               <p className="mb-0">
                 Don’t have an account?{" "}
-                <Link to="/sign-up" className="text-primary-600 fw-semibold">
+                <Link
+                  to="/sign-up"
+                  className="text-decoration-none fw-semibold"
+                  style={{
+                    cursor: "pointer",
+                    color: "#439ab6",
+                  }}
+                >
                   Sign Up
                 </Link>
               </p>

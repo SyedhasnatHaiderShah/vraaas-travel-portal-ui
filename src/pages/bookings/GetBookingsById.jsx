@@ -47,7 +47,7 @@ const GetBookingsById = () => {
         <div className=" w-100 border p-3 ">
           {/* <h1>All the Countries List</h1> */}
           {/* <HotelTableAllData /> */}
-          <h3>Get Restuarant by ID</h3>
+          <h3>Get Booking by ID</h3>
           <form action="#" onSubmit={handleSubmit(onSubmit)}>
             <div className=" col-12">
               <label className="form-label">Booking ID</label>
@@ -76,7 +76,8 @@ const GetBookingsById = () => {
 
             <button
               type="submit"
-              className="btn btn-primary text-sm btn-sm px-12 py-16 w-100 radius-12 mt-32"
+              className="btn  text-sm btn-sm px-12 py-16 w-100 radius-12 mt-32"
+              style={{ backgroundColor: "#57bcce" }}
             >
               {" "}
               Submit

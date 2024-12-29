@@ -7,7 +7,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { toast } from "react-toastify";
 import { IoMdReturnLeft } from "react-icons/io";
 
-const GetRestaurantsById = () => {
+const GetTicketsResponseById = () => {
   const navigate = useNavigate();
   const {
     register,
@@ -15,14 +15,14 @@ const GetRestaurantsById = () => {
     formState: { errors, isValid },
   } = useForm();
 
-  const [hotelData, setHotelData] = React.useState(null);
+  const [bookingData, setBookingData] = React.useState(null);
   const onSubmit = async (data) => {
     const formatedData = {
-      restaurant_id: Number(data.restaurant_id),
+      ticket_id: Number(data.ticket_id),
     };
     try {
       const response = await axios.get(
-        `http://localhost:3000/restaurants/${formatedData.restaurant_id}`,
+        `http://localhost:3000/ticket-responses/${formatedData.ticket_id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -30,11 +30,11 @@ const GetRestaurantsById = () => {
           },
         }
       );
-      console.log(response.data);
+      console.log(response.data === true);
       if (response.data.is_success) {
-        setHotelData(response.data.data);
+        setBookingData(response.data);
       } else {
-        setHotelData(null);
+        setBookingData(null);
         toast.error(response.data.message);
       }
     } catch (error) {
@@ -42,15 +42,15 @@ const GetRestaurantsById = () => {
     }
   };
   return (
-    <div className=" w-100">
+    <div className="">
       <MasterLayout>
         <div className=" w-100 border p-3 ">
           {/* <h1>All the Countries List</h1> */}
           {/* <HotelTableAllData /> */}
-          <h3>Get Restuarant by ID</h3>
+          <h3>Get Support Ticket by ID</h3>
           <form action="#" onSubmit={handleSubmit(onSubmit)}>
             <div className=" col-12">
-              <label className="form-label">Restaurant ID</label>
+              <label className="form-label">Enter Support Ticket ID</label>
               <div className="icon-field has-validation">
                 <span className="icon">
                   <Icon icon="f7:person" />
@@ -59,16 +59,16 @@ const GetRestaurantsById = () => {
                   type="text"
                   name="#0"
                   className="form-control"
-                  placeholder="Enter Restaurant ID"
+                  placeholder="Enter Support Ticket ID"
                   required=""
-                  {...register("restaurant_id", {
-                    required: "hotel id is required",
+                  {...register("ticket_id", {
+                    required: "ticket id is required",
                   })}
                 />
 
-                {errors.restaurant_id && (
+                {errors.ticket_id && (
                   <div className="fw-normal text-danger">
-                    {errors.restaurant_id.message}
+                    {errors.ticket_id.message}
                   </div>
                 )}
               </div>
@@ -76,8 +76,10 @@ const GetRestaurantsById = () => {
 
             <button
               type="submit"
-              className="btn  text-sm btn-sm px-12 py-16 w-100 radius-12 mt-32"
-              style={{ backgroundColor: "#57bcce" }}
+              className="btn btn- text-sm btn-sm px-12 py-16 w-100 radius-12 mt-32"
+              style={{
+                backgroundColor: "#439ab6",
+              }}
             >
               {" "}
               Submit
@@ -89,7 +91,7 @@ const GetRestaurantsById = () => {
               <div className="card">
                 <div className="card-header">
                   <h5 className="card-title mb-0">
-                    All the available hotels list
+                    The available Booking list
                   </h5>
                 </div>
                 {/* card body start */}
@@ -98,31 +100,46 @@ const GetRestaurantsById = () => {
                     <table className="table basic-border-table mb-0">
                       <thead>
                         <tr>
-                          <th>Restaurants ID</th>
-                          <th>Restaurants Name</th>
-                          <th>Address</th>
-                          <th>Cuisine Type</th>
-                          <th>Details</th>
-                          <th>Is Partner?</th>
-                          <th>Is Active?</th>
+                          <th>Response ID</th>
+                          <th>Message</th>
+                          <th>Created At</th>
+                          <th>Ticket ID</th>
+                          <th>Subject</th>
+                          <th>Status</th>
+                          <th>Priority</th>
+                          <th>Responder ID</th>
+                          <th>Full Name</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {hotelData ? (
+                        {bookingData ? (
                           <tr>
-                            <td>{hotelData.restaurant_id}</td>
-                            <td>{hotelData.restaurant_name}</td>
-                            <td>{hotelData.address}</td>
-                            <td>{hotelData.cuisine_type}</td>
-                            <td>{hotelData.details}</td>
-                            <td>{hotelData.is_partner ? "Yes" : "No"}</td>
-                            <td>{hotelData.active ? "Yes" : "No"}</td>
+                            <td>{bookingData.response_id}</td>
+                            <td>{bookingData.message}</td>
+                            <td>
+                              {new Date(
+                                bookingData.data.created_at
+                              ).toLocaleString()}
+                            </td>
+                            <td>{bookingData.data.ticket.ticket_id}</td>
+                            <td>{bookingData.data.ticket.subject}</td>
+                            <td>{bookingData.data.ticket.status}</td>
+                            <td>{bookingData.data.ticket.priority}</td>
+                            <td>{bookingData.data.responder.user_id}</td>
+                            <td>{bookingData.data.responder.full_name}</td>
+                            {/* <td>
+                              <button className="btn btn-primary btn-sm">
+                                View
+                              </button>
+                              <button className="btn btn-danger btn-sm ml-2">
+                                Delete
+                              </button>
+                            </td> */}
                           </tr>
                         ) : (
                           <tr>
-                            <td colSpan="6" className="text-center">
-                              No data available. Please submit a valid
-                              Restaurant ID.
+                            <td colSpan="10" className="text-center">
+                              No response data available.
                             </td>
                           </tr>
                         )}
@@ -135,7 +152,7 @@ const GetRestaurantsById = () => {
             </div>
             <div
               className=" text-center d-flex align-items-center justify-content-center border w-100 rounded-1 my-3 "
-              onClick={() => navigate("/restaurants-layer")}
+              onClick={() => navigate("/tickets-response-layer")}
               style={{
                 cursor: "pointer",
               }}
@@ -144,7 +161,7 @@ const GetRestaurantsById = () => {
                 type="button"
                 className="btn rounded-pill btn-link text-secondary-light text-decoration-none radius-8 px-20 py-11"
               >
-                Go back to Restaurants Page
+                Go back to Tickets Response Page
               </button>
               <IoMdReturnLeft />
             </div>
@@ -155,4 +172,4 @@ const GetRestaurantsById = () => {
   );
 };
 
-export default GetRestaurantsById;
+export default GetTicketsResponseById;

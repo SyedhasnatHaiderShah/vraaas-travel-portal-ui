@@ -68,7 +68,7 @@ const UpdateBooking = ({ bookingData, setShowModal }) => {
             onSubmit={handleSubmit(onSubmit)}
             className="  w-100"
           >
-            <div className=" col-12">
+            {/* <div className=" col-12">
               <label className="form-label">Customer ID</label>
               <div className="icon-field has-validation">
                 <span className="icon">
@@ -93,7 +93,7 @@ const UpdateBooking = ({ bookingData, setShowModal }) => {
                   </div>
                 )}
               </div>
-            </div>
+            </div> */}
             <div className="col-12">
               <div className="mb-20">
                 <label

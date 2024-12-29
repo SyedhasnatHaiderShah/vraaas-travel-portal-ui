@@ -6,12 +6,13 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import MasterLayout from "../../masterLayout/MasterLayout";
 import { IoMdReturnLeft } from "react-icons/io";
-const CreateSupportTickets = () => {
+const CreateTicketsResponse = () => {
   const user_id = localStorage.getItem("user_id");
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isValid },
   } = useForm();
 
@@ -19,15 +20,15 @@ const CreateSupportTickets = () => {
     // Convert `active` field to a boolean
     const formattedData = {
       ...data,
-      category_id: Number(data.category_id),
-      user_id: Number(user_id),
+      ticket_id: Number(data.ticket_id),
+      responder_id: Number(data.responder_id),
     };
 
     console.log("formattedData", formattedData);
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/support-tickets",
+        "http://localhost:3000/ticket-responses",
         formattedData,
         {
           headers: {
@@ -37,8 +38,9 @@ const CreateSupportTickets = () => {
         }
       );
 
-      if (response.data.is_success) {
+      if (response.data.is_success === true) {
         toast.success(response.data.message);
+        reset();
       } else {
         toast.error("An error occurred. Please try again.");
       }
@@ -57,11 +59,11 @@ const CreateSupportTickets = () => {
               {/* <Link to="/" className="mb-40 max-w-290-px">
               <img src="assets/images/logo.png" alt="" />
             </Link> */}
-              <h4 className="mb-12">Create Support Ticket </h4>
+              <h4 className="mb-12">Create Ticket Response </h4>
               <p className="mb-32 text-secondary-light text-lg">
                 {" "}
-                Following are the fields required to create a new support
-                ticket.
+                Following are the fields required to create a new ticket
+                response.
               </p>
             </div>
             <form
@@ -69,8 +71,9 @@ const CreateSupportTickets = () => {
               onSubmit={handleSubmit(onSubmit)}
               className="  w-100"
             >
+              {/* ticket_id */}
               <div className=" col-12">
-                <label className="form-label">Category ID</label>
+                <label className="form-label">Ticket ID</label>
                 <div className="icon-field has-validation">
                   <span className="icon">
                     <Icon icon="f7:person" />
@@ -81,21 +84,22 @@ const CreateSupportTickets = () => {
                     type="number"
                     name="#0"
                     className="form-control"
-                    placeholder="Enter Category ID"
+                    placeholder="Enter Ticket ID"
                     required=""
-                    {...register("category_id", {
-                      required: "Category ID is required",
+                    {...register("ticket_id", {
+                      required: "Ticket ID is required",
                     })}
                   />
-                  {errors.category_id && (
+                  {errors.ticket_id && (
                     <div className="fw-normal text-danger">
-                      {errors.category_id.message}
+                      {errors.ticket_id.message}
                     </div>
                   )}
                 </div>
               </div>
+              {/* responder_id */}
               <div className=" col-12">
-                <label className="form-label">Subject</label>
+                <label className="form-label">Responder ID</label>
                 <div className="icon-field has-validation">
                   <span className="icon">
                     <Icon icon="f7:person" />
@@ -103,24 +107,25 @@ const CreateSupportTickets = () => {
                   <input
                     min={1}
                     maxLength={10000}
-                    type="text"
+                    type="number"
                     name="#0"
                     className="form-control"
-                    placeholder="Enter Subject"
+                    placeholder="Enter Responder ID"
                     required=""
-                    {...register("subject", {
-                      required: "Subject is required",
+                    {...register("responder_id", {
+                      required: "Responder ID is required",
                     })}
                   />
-                  {errors.subject && (
+                  {errors.responder_id && (
                     <div className="fw-normal text-danger">
-                      {errors.subject.message}
+                      {errors.responder_id.message}
                     </div>
                   )}
                 </div>
               </div>
+
               <div className=" col-12">
-                <label className="form-label">Description</label>
+                <label className="form-label">Message</label>
                 <div className="icon-field has-validation">
                   <span className="icon">
                     <Icon icon="f7:person" />
@@ -136,69 +141,23 @@ const CreateSupportTickets = () => {
                     className="form-control"
                     placeholder="Enter Description"
                     required=""
-                    {...register("description", {
+                    {...register("message", {
                       required: "Description is required",
                     })}
                   />
-                  {errors.description && (
+                  {errors.message && (
                     <div className="fw-normal text-danger">
-                      {errors.description.message}
+                      {errors.message.message}
                     </div>
                   )}
                 </div>
               </div>
-              <div className="col-12">
-                <div className="mb-20">
-                  <label
-                    htmlFor="number"
-                    className="form-label fw-semibold text-primary-light text-sm mb-8"
-                  >
-                    Priority
-                  </label>
-                  <select
-                    name=""
-                    id=""
-                    className="form-control radius-8"
-                    {...register("priority", { required: true })}
-                    //   defaultValue={editUserData?.data?.role || ""}
-                  >
-                    {/* <option value="leader">Leader</option> */}
-                    <option value="">Choose any Priority</option>
-                    <option value="Low">Low</option>
-                    <option value="Medium">Medium</option>
-                    <option value="High">High</option>
-                    <option value="Urgent">Urgent</option>
-                  </select>
-                </div>
-              </div>
-              <div className="col-12">
-                <div className="mb-20">
-                  <label
-                    htmlFor="number"
-                    className="form-label fw-semibold text-primary-light text-sm mb-8"
-                  >
-                    Status
-                  </label>
-                  <select
-                    name=""
-                    id=""
-                    className="form-control radius-8"
-                    {...register("status", { required: true })}
-                    //   defaultValue={editUserData?.data?.role || ""}
-                  >
-                    {/* set the status to the open, in progress, resolved ,closed */}
-                    <option value="">Choose Status</option>
-                    <option value="Open">Open</option>
-                    <option value="In Progress">In Progress</option>
-                    <option value="Resolved">Resolved</option>
-                    <option value="Closed">Closed</option>
-                  </select>
-                </div>
-              </div>
               <button
                 type="submit"
-                className="btn text-sm btn-sm px-12 py-16 w-100 radius-12 mt-32"
-                style={{ backgroundColor: "#57bcce" }}
+                className="btn btn- text-sm btn-sm px-12 py-16 w-100 radius-12 mt-32"
+                style={{
+                  backgroundColor: "#439ab6",
+                }}
               >
                 {" "}
                 Submit
@@ -206,7 +165,7 @@ const CreateSupportTickets = () => {
             </form>
             <div
               className=" text-center d-flex align-items-center justify-content-center border w-100 rounded-1 my-3 "
-              onClick={() => navigate("/bookings-layer")}
+              onClick={() => navigate("/tickets-response-layer")}
               style={{
                 cursor: "pointer",
               }}
@@ -215,7 +174,7 @@ const CreateSupportTickets = () => {
                 type="button"
                 className="btn rounded-pill btn-link text-secondary-light text-decoration-none radius-8 px-20 py-11"
               >
-                Go back to Bookings Page
+                Go back to Tickets Response Page
               </button>
               <IoMdReturnLeft />
             </div>
@@ -226,4 +185,4 @@ const CreateSupportTickets = () => {
   );
 };
 
-export default CreateSupportTickets;
+export default CreateTicketsResponse;
