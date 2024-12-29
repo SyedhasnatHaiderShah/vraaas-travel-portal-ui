@@ -136,6 +136,18 @@ import TransportCompanyLayer from "./pages/transport-company/TransportCompanyLay
 import GetAllCompanyData from "./pages/transport-company/GetAllCompanyData";
 import GetCompanyById from "./pages/transport-company/GetCompanyById";
 import CreateCompany from "./pages/transport-company/CreateCompany";
+import AllTransportServices from "./pages/transport-services/AllTransportServices";
+import TransportServicesByid from "./pages/transport-services/TransportServicesByid";
+import CreateTransportServices from "./pages/transport-services/CreateTransportServices";
+import TransportServicesLayer from "./pages/transport-services/TransportServicesLayer";
+import BookingsLayer from "./pages/bookings/BookingsLayer";
+import CreateBookings from "./pages/bookings/CreateBookings";
+import GetBookingsById from "./pages/bookings/GetBookingsById";
+import GetAllBookingsData from "./pages/bookings/GetAllBookingsData";
+import PaymentsLayer from "./pages/payments/PaymentsLayer";
+import CreatePayments from "./pages/payments/CreatePayments";
+import GetPaymentsById from "./pages/payments/GetPaymentsById";
+import GetAllPaymentsData from "./pages/payments/GetAllPaymentsData";
 
 const router = createBrowserRouter([
   { path: "/sign-in", element: <SignInPage /> },
@@ -273,6 +285,27 @@ const router = createBrowserRouter([
       { path: "/all-transport-companies", element: <GetAllCompanyData /> },
       { path: "/transport-companies-by-id", element: <GetCompanyById /> },
       { path: "/create-transport-company", element: <CreateCompany /> },
+      // transport services
+      {
+        path: "/transport-services-layer",
+        element: <TransportServicesLayer />,
+      },
+      { path: "/transport-services", element: <AllTransportServices /> },
+      { path: "/transport-services-by-id", element: <TransportServicesByid /> },
+      {
+        path: "/create-transport-services",
+        element: <CreateTransportServices />,
+      },
+      // bookings
+      { path: "/bookings-layer", element: <BookingsLayer /> },
+      { path: "/create-bookings", element: <CreateBookings /> },
+      { path: "/get-bookings-id", element: <GetBookingsById /> },
+      { path: "/get-all-bookings", element: <GetAllBookingsData /> },
+      // payments
+      { path: "/payments-layer", element: <PaymentsLayer /> },
+      { path: "/create-payments", element: <CreatePayments /> },
+      { path: "/get-payments-id", element: <GetPaymentsById /> },
+      { path: "/get-all-payments", element: <GetAllPaymentsData /> },
     ],
   },
 ]);

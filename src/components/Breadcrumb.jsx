@@ -138,6 +138,36 @@ const Breadcrumb = ({ title }) => {
             />
             Transport Companies
           </Link>
+          <Link
+            to="/transport-services-layer"
+            className="d-flex align-items-center gap-1 hover-text-primary"
+          >
+            <Icon
+              icon="solar:home-smile-angle-outline"
+              className="icon text-lg"
+            />
+            Transport Companies Services
+          </Link>
+          <Link
+            to="/bookings-layer"
+            className="d-flex align-items-center gap-1 hover-text-primary"
+          >
+            <Icon
+              icon="solar:home-smile-angle-outline"
+              className="icon text-lg"
+            />
+            Bookings
+          </Link>
+          <Link
+            to="/payments-layer"
+            className="d-flex align-items-center gap-1 hover-text-primary"
+          >
+            <Icon
+              icon="solar:home-smile-angle-outline"
+              className="icon text-lg"
+            />
+            Payments
+          </Link>
         </li>
         {/* <li> - </li>
         <li className="fw-medium">{title}</li> */}
