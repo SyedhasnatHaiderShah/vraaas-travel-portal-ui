@@ -148,6 +148,10 @@ import PaymentsLayer from "./pages/payments/PaymentsLayer";
 import CreatePayments from "./pages/payments/CreatePayments";
 import GetPaymentsById from "./pages/payments/GetPaymentsById";
 import GetAllPaymentsData from "./pages/payments/GetAllPaymentsData";
+import SupportTicketsLayer from "./pages/support-tickets/SupportTicketsLayer";
+import CreateSupportTickets from "./pages/support-tickets/CreateSupportTickets";
+import GetSupportTicketsById from "./pages/support-tickets/GetSupportTicketsById";
+import GetAllSupportTicketsData from "./pages/support-tickets/GetAllSupportTicketsData";
 
 const router = createBrowserRouter([
   { path: "/sign-in", element: <SignInPage /> },
@@ -306,6 +310,14 @@ const router = createBrowserRouter([
       { path: "/create-payments", element: <CreatePayments /> },
       { path: "/get-payments-id", element: <GetPaymentsById /> },
       { path: "/get-all-payments", element: <GetAllPaymentsData /> },
+      // support ticket
+      { path: "/support-tickets-layer", element: <SupportTicketsLayer /> },
+      { path: "/create-support-tickets", element: <CreateSupportTickets /> },
+      { path: "/get-support-tickets-id", element: <GetSupportTicketsById /> },
+      {
+        path: "/get-all-support-tickets",
+        element: <GetAllSupportTicketsData />,
+      },
     ],
   },
 ]);

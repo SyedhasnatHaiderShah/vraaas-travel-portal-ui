@@ -168,6 +168,16 @@ const Breadcrumb = ({ title }) => {
             />
             Payments
           </Link>
+          <Link
+            to="/support-tickets-layer"
+            className="d-flex align-items-center gap-1 hover-text-primary"
+          >
+            <Icon
+              icon="solar:home-smile-angle-outline"
+              className="icon text-lg"
+            />
+            Support Tickets
+          </Link>
         </li>
         {/* <li> - </li>
         <li className="fw-medium">{title}</li> */}
