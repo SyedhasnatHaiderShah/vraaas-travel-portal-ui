@@ -194,7 +194,7 @@ const GetSupportTicketsById = () => {
             </div>
             <div
               className=" text-center d-flex align-items-center justify-content-center border w-100 rounded-1 my-3 "
-              onClick={() => navigate("/bookings-layer")}
+              onClick={() => navigate("/support-tickets-layer")}
               style={{
                 cursor: "pointer",
               }}
@@ -203,7 +203,7 @@ const GetSupportTicketsById = () => {
                 type="button"
                 className="btn rounded-pill btn-link text-secondary-light text-decoration-none radius-8 px-20 py-11"
               >
-                Go back to Bookings Page
+                Go back to Support Tickets Page
               </button>
               <IoMdReturnLeft />
             </div>
