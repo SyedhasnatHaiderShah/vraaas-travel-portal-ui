@@ -49,6 +49,7 @@ const SignInLayer = () => {
         localStorage.setItem("user_id", response.data.data.user.user_id);
         localStorage.setItem("username", response.data.data.user.username);
         localStorage.setItem("email", response.data.data.user.email);
+        localStorage.setItem("full_name", response.data.data.user.full_name);
         toast.success(response.data.message);
         navigate("/");
 
@@ -114,7 +115,7 @@ const SignInLayer = () => {
             <Link to="/" className="mb-40 max-w-290-px">
               <img src={rightlogo || "assets/images/logo.png"} alt="" />
             </Link>
-            <h4 className="mb-12">Sign In to your Account</h4>
+            <h4 className="mb-12 text-secondary">Sign In to your Account</h4>
             <p className="mb-32 text-secondary-light text-lg">
               Welcome back! Please enter your details
             </p>

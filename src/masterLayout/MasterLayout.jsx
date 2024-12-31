@@ -1544,7 +1544,7 @@ const MasterLayout = ({ children }) => {
                     <div className="py-12 px-16 radius-8 bg-primary-50 mb-16 d-flex align-items-center justify-content-between gap-2">
                       <div>
                         <h6 className="text-lg text-primary-light fw-semibold mb-2">
-                          Shaidul Islam
+                          {localStorage.getItem("full_name") || "Admin"}
                         </h6>
                         <span className="text-secondary-light fw-medium text-sm">
                           Admin
@@ -1597,7 +1597,10 @@ const MasterLayout = ({ children }) => {
                       <li>
                         <Link
                           className="dropdown-item text-black px-0 py-8 hover-bg-transparent hover-text-danger d-flex align-items-center gap-3"
-                          to="#"
+                          to="/sign-in"
+                          onClick={() => {
+                            localStorage.removeItem("token");
+                          }}
                         >
                           <Icon icon="lucide:power" className="icon text-xl" />{" "}
                           Log Out
