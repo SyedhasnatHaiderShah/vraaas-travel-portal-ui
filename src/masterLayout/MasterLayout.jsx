@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import ThemeToggleButton from "../helper/ThemeToggleButton";
-import logo from "../utils/logo2.png";
+import logo from "../utils/logo168x40.svg";
+import logo2 from "../utils/logo2168x40.svg";
+import logo3 from "../utils/logoSmall168x40.svg";
 
 const MasterLayout = ({ children }) => {
   let [sidebarActive, seSidebarActive] = useState(false);
@@ -95,10 +97,10 @@ const MasterLayout = ({ children }) => {
         >
           <Icon icon="radix-icons:cross-2" />
         </button>
-        <div>
+        <div className="">
           <Link to="/" className="sidebar-logo">
             <img
-              src={logo || "assets/images/logo2.png"}
+              src={logo2 || "assets/images/logo2.png"}
               alt="site logo"
               className="light-logo"
             />
@@ -108,7 +110,7 @@ const MasterLayout = ({ children }) => {
               className="dark-logo"
             />
             <img
-              src={logo || "assets/images/logo2.png"}
+              src={logo3 || "assets/images/logo2.png"}
               alt="site logo"
               className="logo-icon"
             />
@@ -116,7 +118,7 @@ const MasterLayout = ({ children }) => {
         </div>
         <div className="sidebar-menu-area">
           <ul className="sidebar-menu" id="sidebar-menu">
-            <li className="dropdown">
+            {/* <li className="dropdown">
               <Link to="#">
                 <Icon
                   icon="solar:home-smile-angle-outline"
@@ -136,51 +138,74 @@ const MasterLayout = ({ children }) => {
                     Team
                   </NavLink>
                 </li>
-                {/* <li>
-                  <NavLink to="/index-2" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-warning-main w-auto" /> CRM
+                <li>
+                  <NavLink
+                    to="/index-2"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-warning-main w-auto" />{" "}
+                    CRM
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/index-3" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-info-main w-auto" /> eCommerce
+                  <NavLink
+                    to="/index-3"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-info-main w-auto" />{" "}
+                    eCommerce
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/index-4" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
+                  <NavLink
+                    to="/index-4"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
                     <i className="ri-circle-fill circle-icon text-danger-main w-auto" />
                     Cryptocurrency
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/index-5" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-success-main w-auto" /> Investment
+                  <NavLink
+                    to="/index-5"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-success-main w-auto" />{" "}
+                    Investment
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/index-6" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-purple w-auto" /> LMS
+                  <NavLink
+                    to="/index-6"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-purple w-auto" />{" "}
+                    LMS
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/index-7" className={(navData) =>
-                    navData.isActive ? "active-page" : ""
-                  }>
-                    <i className="ri-circle-fill circle-icon text-info-main w-auto" /> NFT &amp; Gaming
+                  <NavLink
+                    to="/index-7"
+                    className={(navData) =>
+                      navData.isActive ? "active-page" : ""
+                    }
+                  >
+                    <i className="ri-circle-fill circle-icon text-info-main w-auto" />{" "}
+                    NFT &amp; Gaming
                   </NavLink>
-                </li> */}
+                </li>
               </ul>
-            </li>
+            </li> */}
 
             {/* <li className="sidebar-menu-group-title">Application</li> */}
             {/* <li>

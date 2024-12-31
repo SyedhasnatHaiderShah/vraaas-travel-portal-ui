@@ -173,7 +173,7 @@ const router = createBrowserRouter([
     ),
     children: [
       { path: "/", element: <HomePageOne /> },
-      { path: "/user-detail", element: <UserDetailPage /> },
+      // { path: "/user-detail", element: <UserDetailPage /> },
       { path: "/user-data", element: <UserDataPage /> },
       { path: "/upload-document", element: <UserUploadPage /> },
       { path: "/index-2", element: <HomePageTwo /> },

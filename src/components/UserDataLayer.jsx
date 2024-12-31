@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import EditData from "./EditData";
 import { IoClose } from "react-icons/io5";
 import { FaDownload, FaEdit } from "react-icons/fa";
+import noFile from "../utils/noFile.svg";
 
 const UserDataLayer = () => {
   const token = localStorage.getItem("token");
@@ -350,7 +351,7 @@ const UserDataLayer = () => {
       <div className="col-lg-8 mx-auto">
         <div className="card">
           <div className="card-header d-flex justify-content-between align-items-center">
-            <h5 className="card-title mb-0">User Uploaded Documents</h5>
+            <h5 className="card-title mb-0">Uploaded Documents</h5>
           </div>
           <div className="card-body">
             {loading ? (
@@ -360,7 +361,25 @@ const UserDataLayer = () => {
                 </div>
               </div>
             ) : allUserData.length === 0 ? (
-              <div className="text-center text-muted">No data found</div>
+              <div
+                className="text-center d-flex flex-column align-items-center justify-content-center py-5"
+                style={{ minHeight: "300px" }}
+              >
+                <div className="mb-3">
+                  <i
+                    className="bi bi-exclamation-circle-fill text-warning"
+                    style={{ fontSize: "2rem" }}
+                  ></i>
+                </div>
+                <p className="mb-0  fs-5">No data found</p>
+                <img
+                  src={noFile || ""}
+                  alt=""
+                  style={{
+                    width: "50px",
+                  }}
+                />
+              </div>
             ) : isSmallScreen ? (
               <div className="d-flex flex-column gap-3">
                 {allUserData.map((item) => (

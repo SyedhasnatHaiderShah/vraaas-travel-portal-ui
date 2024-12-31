@@ -15,7 +15,9 @@ const UsersListLayer = () => {
   const getAllUsers = async () => {
     try {
       const responce = await axios.get("http://localhost:3000/user/all");
-      setUsers(responce.data);
+      if (responce.data.is_success === true && responce.data.data.length > 0) {
+        setUsers(responce.data.data);
+      }
     } catch (error) {
       console.log(error.message);
     }

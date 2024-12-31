@@ -9,7 +9,10 @@ import axios from "axios";
 import { allCountries } from "./../utils/countries";
 import { MdDeleteForever } from "react-icons/md";
 import ValidateUserOtp from "../pages/ValidateUserOtp";
-
+import bgTheme from "../utils/bg.svg";
+import right1 from "../utils/right-1.png";
+import logo from "../utils/logo168x40.svg";
+import signupImage from "../utils/signup.png";
 const SignUpLayer = () => {
   const navigate = useNavigate();
   const [step, setStep] = React.useState(1);
@@ -88,26 +91,66 @@ const SignUpLayer = () => {
   };
 
   return (
-    <section className="auth bg-base d-flex flex-wrap">
+    <section
+      className="auth bg-base d-flex flex-wrap"
+      style={{
+        backgroundImage: `url(${bgTheme})`,
+        backgroundSize: "1000px 1000px",
+        backgroundPosition: "center",
+        backgroundRepeat: "repeat",
+        width: "100%",
+        position: "absolute",
+        top: 0,
+        left: 0,
+        overflow: "hidden",
+        zIndex: -11,
+      }}
+    >
       <div className="auth-left d-lg-block d-none">
-        <div className="d-flex align-items-center flex-column h-100 justify-content-center">
-          <img src="assets/images/auth/auth-img.png" alt="" />
+        <div
+          className="d-flex align-items-center flex-column justify-content-center"
+          style={{
+            width: "100%",
+            height: "100%",
+            position: "relative",
+            zIndex: 111,
+          }}
+        >
+          <img src={signupImage || "assets/images/auth/auth-img.png"} alt="" />
         </div>
       </div>
       {step === 1 ? (
-        <div className="auth-right py-32 px-24 d-flex flex-column justify-content-center">
-          <div className="max-w-464-px mx-md-auto mx-0 w-100">
+        <div
+          className="auth-right p-3 d-flex flex-column justify-content-center"
+          style={{
+            backgroundColor: "#fff",
+            borderRadius: "20px",
+            boxShadow: "0px 0px 20px 0px #0000000d",
+            position: "relative",
+            zIndex: 111,
+            width: "100%",
+            maxWidth: "564px",
+            margin: "auto",
+          }}
+        >
+          {/* use this image on right side to show vector art as absolute position */}
+
+          <div className=" mx-md-auto mx-0 w-100">
             <div>
               <Link to="/" className="mb-40 max-w-290-px">
-                <img src="assets/images/logo.png" alt="" />
+                <img src={logo || "assets/images/logo.png"} alt="" />
               </Link>
               <h4 className="mb-12">Sign Up to your Account</h4>
-              <p className="mb-32 text-secondary-light text-lg">
+              <p className="mb-12 text-secondary-light text-lg">
                 Welcome back! please enter your detail
               </p>
             </div>
-            <form action="#" onSubmit={handleSubmit(onSubmit)}>
-              <div className=" col-12">
+            <form
+              action="#"
+              onSubmit={handleSubmit(onSubmit)}
+              className=" d-flex align-items-center justify-content-center flex-wrap"
+            >
+              <div className=" col-12 col-md-6 p-1">
                 <label className="form-label">Full Name</label>
                 <div className="icon-field has-validation">
                   <span className="icon">
@@ -131,7 +174,7 @@ const SignUpLayer = () => {
                   )}
                 </div>
               </div>
-              <div className="col-12">
+              <div className=" col-12 col-md-6 p-1">
                 <label className="form-label">Email</label>
                 <div className="icon-field has-validation">
                   <span className="icon">
@@ -157,7 +200,7 @@ const SignUpLayer = () => {
             </div> */}
                 </div>
               </div>
-              <div className="col-12">
+              <div className=" col-12 col-md-6 p-1">
                 <label className="form-label">Leader ID</label>
                 <div className="icon-field has-validation relative">
                   <span className="icon">
@@ -181,7 +224,7 @@ const SignUpLayer = () => {
                   {/* <div className="invalid-feedback">Please provide Leader ID</div> */}
                 </div>
               </div>
-              <div className="col-12">
+              <div className=" col-12 col-md-6 p-1">
                 <label className="form-label">Phone</label>
                 <div className="icon-field has-validation">
                   <span className="icon">
@@ -213,15 +256,14 @@ const SignUpLayer = () => {
           handleSubmit={handleSubmit}
           errors={errors}
         /> */}
-
-              <div className="col-12">
+              <div className=" col-12 col-md-6 p-1">
                 <label className="form-label">Country</label>
                 <div className="icon-field has-validation">
                   {/* <span className="icon">
       <Icon icon="solar:phone-calling-linear" />
     </span> */}
                   <select
-                    className=" form-select form-control px-16 py-14 h-48-px"
+                    className=" form-select form-control px-16 py-10 h-44-px"
                     {...register("country", { required: true })}
                   >
                     <option value="">Select a country</option>
@@ -274,7 +316,8 @@ const SignUpLayer = () => {
         </div> */}
 
               {/* password */}
-              <div className="col-12">
+
+              <div className=" col-12 col-md-6 p-1">
                 <label className="form-label">Password</label>
                 <div className="icon-field has-validation">
                   <span className="icon">
@@ -297,16 +340,26 @@ const SignUpLayer = () => {
 
                   {!showPassword ? (
                     <RxEyeClosed
-                      className=" toggle-password cursor-pointer position-absolute end-0 top-50 translate-middle-y me-16 text-secondary-light fs-5"
+                      className=" toggle-password cursor-pointer position-absolute  translate-middle-y me-16 text-secondary-light fs-5"
+                      style={{
+                        top: "50%",
+                        right: "0",
+                        transform: "translateY(-50%)",
+                      }}
                       onClick={() => {
                         setShowPassword(!showPassword);
                       }}
                     />
                   ) : (
                     <RxEyeOpen
-                      className=" toggle-password cursor-pointer position-absolute end-0 top-50 translate-middle-y me-16 text-secondary-light fs-5"
+                      className=" toggle-password cursor-pointer position-absolute me-16 text-secondary-light fs-5"
                       onClick={() => {
                         setShowPassword(!showPassword);
+                      }}
+                      style={{
+                        top: "50%",
+                        right: "0",
+                        transform: "translateY(-50%)",
                       }}
                     />
                   )}
@@ -318,7 +371,7 @@ const SignUpLayer = () => {
                   {/* <div className="invalid-feedback">Please provide password</div> */}
                 </div>
               </div>
-              <div className="col-12">
+              <div className=" col-12 col-md-6 p-1">
                 <label className="form-label">Confirm Password</label>
                 <div className="icon-field has-validation">
                   <span className="icon">
@@ -340,16 +393,26 @@ const SignUpLayer = () => {
                   />
                   {!showConfirmPassword ? (
                     <RxEyeClosed
-                      className=" toggle-password cursor-pointer position-absolute end-0 top-50 translate-middle-y me-16 text-secondary-light fs-5"
+                      className=" toggle-password cursor-pointer position-absolute me-16 text-secondary-light fs-5"
                       onClick={() => {
                         setShowConfirmPassword(!showConfirmPassword);
+                      }}
+                      style={{
+                        top: "50%",
+                        right: "0",
+                        transform: "translateY(-50%)",
                       }}
                     />
                   ) : (
                     <RxEyeOpen
-                      className=" toggle-password cursor-pointer position-absolute end-0 top-50 translate-middle-y me-16 text-secondary-light fs-5"
+                      className=" toggle-password cursor-pointer position-absolute  translate-middle-y me-16 text-secondary-light fs-5"
                       onClick={() => {
                         setShowConfirmPassword(!showConfirmPassword);
+                      }}
+                      style={{
+                        top: "50%",
+                        right: "0",
+                        transform: "translateY(-50%)",
                       }}
                     />
                   )}
@@ -360,13 +423,13 @@ const SignUpLayer = () => {
                   )}
                   {/* <div className="invalid-feedback">Please confirm password</div> */}
                 </div>
-              </div>
 
-              <div className="mb-20">
-                <div className="position-relative "></div>
-                <span className="mt-12 text-sm text-secondary-light">
-                  Your password must have at least 8 characters
-                </span>
+                <div className="">
+                  <div className="position-relative "></div>
+                  <span className="mt-12 text-sm text-secondary-light">
+                    Your password must have at least 8 characters
+                  </span>
+                </div>
               </div>
 
               <div className="">
@@ -384,13 +447,29 @@ const SignUpLayer = () => {
                       htmlFor="condition"
                     >
                       By creating an account means you agree to the
-                      <Link to="#" className="text-primary-600 fw-semibold">
+                      <span
+                        to="#"
+                        className=" fw-semibold"
+                        style={{
+                          cursor: "pointer",
+                          marginLeft: "5px",
+                          color: "#a734ac",
+                        }}
+                      >
                         Terms &amp; Conditions
-                      </Link>{" "}
+                      </span>{" "}
                       and our
-                      <Link to="#" className="text-primary-600 fw-semibold">
+                      <span
+                        to="#"
+                        className=" fw-semibold"
+                        style={{
+                          cursor: "pointer",
+                          marginLeft: "5px",
+                          color: "#a734ac",
+                        }}
+                      >
                         Privacy Policy
-                      </Link>
+                      </span>
                     </label>
                   </div>
                 </div>
@@ -398,7 +477,7 @@ const SignUpLayer = () => {
 
               <button
                 type="submit"
-                className="btn text-sm btn-sm px-12 py-16 w-100 radius-12 mt-32"
+                className="btn text-sm btn-sm px-12 py-16 w-100 radius-12 fw-semibold mt-2"
                 style={{
                   cursor: "pointer",
                   color: "#fff",
@@ -413,16 +492,21 @@ const SignUpLayer = () => {
                   Already have been registered?{" "}
                   <Link
                     to="/validate-user-otp"
-                    className="text-primary-600 fw-semibold"
+                    className=" fw-semibold"
+                    style={{
+                      cursor: "pointer",
+                      marginLeft: "5px",
+                      color: "#a734ac",
+                    }}
                   >
                     Validate OTP
                   </Link>
                 </span>
               </div>
-              <div className="mt-32 center-border-horizontal text-center">
+              <div className="my-3 center-border-horizontal text-center w-100">
                 <span className="bg-base z-1 px-4">Or sign up with</span>
               </div>
-              <div className="mt-32 d-flex align-items-center gap-3">
+              <div className=" d-flex align-items-center gap-3 flex-column flex-md-row w-100">
                 <button
                   type="button"
                   className="fw-semibold text-primary-light py-16 px-24 w-50 border radius-12 text-md d-flex align-items-center justify-content-center gap-12 line-height-1 bg-hover-primary-50"
@@ -447,7 +531,18 @@ const SignUpLayer = () => {
               <div className="mt-32 text-center text-sm">
                 <p className="mb-0">
                   Already have an account?{" "}
-                  <Link to="/sign-in" className="text-primary-600 fw-semibold">
+                  <Link
+                    to="/sign-in"
+                    className=" fw-semibold"
+                    style={{
+                      cursor: "pointer",
+                      marginLeft: "5px",
+                      color: "#a734ac",
+                      ":hover": {
+                        textDecoration: "underline",
+                      },
+                    }}
+                  >
                     Sign In
                   </Link>
                 </p>

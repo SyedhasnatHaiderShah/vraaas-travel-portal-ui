@@ -27,8 +27,7 @@ const Breadcrumb = ({ title }) => {
             />
             Sign Up
           </Link>
-          khurram
-          <Link
+          {/* <Link
             to="/user-detail"
             className="d-flex align-items-center gap-1 hover-text-primary"
           >
@@ -37,7 +36,7 @@ const Breadcrumb = ({ title }) => {
               className="icon text-lg"
             />
             User Profile Detail
-          </Link>
+          </Link> */}
           <Link
             to="/user-data"
             className="d-flex align-items-center gap-1 hover-text-primary"

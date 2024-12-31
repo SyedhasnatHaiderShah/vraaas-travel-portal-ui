@@ -6,8 +6,17 @@ import { MdDelete, MdDeleteForever } from "react-icons/md";
 import Swal from "sweetalert2";
 import EditData from "./EditData";
 import { IoClose } from "react-icons/io5";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 const UserUploadDocument = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm();
+
   const username = localStorage.getItem("username");
   const user_id = localStorage.getItem("user_id");
   const token = localStorage.getItem("token");
@@ -22,19 +31,56 @@ const UserUploadDocument = () => {
   const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectFile(file);
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setPreview(null);
+  // code update
+  const [imagePreview, setImagePreview] = useState(null);
+
+  const handleFileChange = (e) => {
+    if (e.target.files.length) {
+      const file = e.target.files[0]; // Get the actual file
+      const src = URL.createObjectURL(file); // Create a preview URL
+      setImagePreview(src); // Set the preview
+      setSelectFile(file); // Set the file object
     }
   };
+
+  // const handleFileChange = (e) => {
+  //   if (e.target.files.length) {
+  //     const src = URL.createObjectURL(e.target.files[0]);
+  //     setImagePreview(src);
+  //     setSelectFile(src);
+  //   }
+  // };
+
+  // const handleFileChange = (event) => {
+  //   const file = event.target.files[0];
+  //   setSelectFile(file);
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onloadend = () => {
+  //       setPreview(reader.result);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   } else {
+  //     setPreview(null);
+  //   }
+  // };
+
+  const removeImage = () => {
+    setImagePreview(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (imagePreview) {
+        URL.revokeObjectURL(imagePreview);
+      }
+    };
+  }, [imagePreview]);
+
+  // end
 
   const handleRemoveFile = () => {
     setSelectFile(null);
@@ -44,19 +90,12 @@ const UserUploadDocument = () => {
     }
   };
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
-
   const onSubmit = async (data) => {
     setLoading(true);
     try {
       // Create a FormData instance
       const formData = new FormData();
-      formData.append("user_id", "2");
+      formData.append("user_id", localStorage.getItem("user_id"));
       formData.append("document_name", data.document_name);
       formData.append("document_type", data.document_type);
       formData.append("username", username);
@@ -75,6 +114,7 @@ const UserUploadDocument = () => {
       if (response.data.is_success === true) {
         setLoading(false);
         toast.success(response.data.message);
+        reset();
         getUserData();
       } else {
         toast.error(response.data.message);
@@ -300,7 +340,7 @@ const UserUploadDocument = () => {
                 <form action="#" onSubmit={handleSubmit(onSubmit)}>
                   {/* file */}
                   {/* // passport, id, visa, air_ticket, other_document, itinerary */}
-                  <div className=" w-100 d-flex flex-column align-items-center justify-content-center gap-3 flex-md-row ">
+                  {/* <div className=" w-100 d-flex flex-column align-items-center justify-content-center gap-3 flex-md-row ">
                     <div className="col-12 col-md-6 mb-20">
                       <label className="form-label">Document Photo</label>
                       <input
@@ -337,8 +377,57 @@ const UserUploadDocument = () => {
                         </div>
                       )}
                     </div>
-                  </div>
+                  </div> */}
 
+                  <div className="card-body p-24">
+                    <div className="upload-image-wrapper d-flex align-items-center gap-3">
+                      {/* Image preview section */}
+                      {imagePreview ? (
+                        <div className="uploaded-img position-relative h-120-px w-120-px border input-form-light radius-8 overflow-hidden border-dashed bg-neutral-50">
+                          <button
+                            type="button"
+                            onClick={removeImage}
+                            className="uploaded-img__remove position-absolute top-0 end-0 z-1 text-2xxl line-height-1 me-8 mt-8 d-flex"
+                            aria-label="Remove uploaded image"
+                          >
+                            <Icon
+                              icon="radix-icons:cross-2"
+                              className="text-xl text-danger-600"
+                            ></Icon>
+                          </button>
+                          <img
+                            id="uploaded-img__preview"
+                            className="w-100 h-100 object-fit-cover"
+                            src={imagePreview}
+                            alt="Preview"
+                          />
+                        </div>
+                      ) : (
+                        <label
+                          className="upload-file h-120-px w-120-px border input-form-light radius-8 overflow-hidden border-dashed bg-neutral-50 bg-hover-neutral-200 d-flex align-items-center flex-column justify-content-center gap-1"
+                          htmlFor="upload-file"
+                        >
+                          <Icon
+                            icon="solar:camera-outline"
+                            className="text-xl text-secondary-light"
+                          ></Icon>
+                          <span className="fw-semibold text-secondary-light">
+                            Upload
+                          </span>
+                        </label>
+                      )}
+
+                      {/* Always render the input, but hide it */}
+                      <input
+                        id="upload-file"
+                        type="file"
+                        onChange={handleFileChange}
+                        hidden
+                        ref={fileInputRef}
+                        accept="image/*" // Optional: restrict to image files
+                      />
+                    </div>
+                  </div>
                   <div className="row">
                     {/* <div className="col-sm-6">
                       <div className="mb-20">
@@ -382,7 +471,7 @@ const UserUploadDocument = () => {
                           htmlFor="number"
                           className="form-label fw-semibold text-primary-light text-sm mb-8"
                         >
-                          Document Type
+                          Select Document Type
                         </label>
                         <select
                           name=""
@@ -430,18 +519,26 @@ const UserUploadDocument = () => {
                       </div>
                     </div> */}
                   </div>
-                  <div className="d-flex align-items-center justify-content-center gap-3 flex-column flex-md-row">
+                  <div className="d-flex align-items-center justify-content-center gap-3 flex-column flex-md-row w-100">
                     <button
                       type="button"
-                      className="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md px-56 py-11 radius-8"
+                      className="btn col-12 col-md-6  text-md px-56 py-12 radius-8"
+                      style={{
+                        color: "#fff",
+                        backgroundColor: "#a6274f",
+                      }}
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
-                      className="btn btn-primary border border-primary-600 text-md px-56 py-12 radius-8"
+                      className="btn col-12 col-md-6   text-md px-56 py-12 radius-8"
+                      style={{
+                        color: "#fff",
+                        backgroundColor: "#439ab6",
+                      }}
                     >
-                      Save
+                      Upload Document
                     </button>
                   </div>
                 </form>
@@ -454,7 +551,7 @@ const UserUploadDocument = () => {
       {showImageModal && (
         <div
           className="modal fade show"
-          style={{ display: "block", backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+          style={{ display: "block" }}
           role="dialog"
         >
           <div className="modal-dialog modal-dialog-centered w-100">
@@ -505,7 +602,7 @@ const UserUploadDocument = () => {
                 </div>
               </div>
             ) : allUserData.length === 0 ? (
-              <div className="text-center text-muted">No data found</div>
+              <div className="text-center ">No Documents found</div>
             ) : isSmallScreen ? (
               <div className="d-flex flex-column gap-3">
                 {allUserData.map((item) => (
@@ -539,21 +636,38 @@ const UserUploadDocument = () => {
                     <div>
                       <strong>Extension:</strong> {item.document_extension}
                     </div>
-                    <div className="d-flex align-items-center gap-2 my-3 flex-column w-100 ">
+                    <div className="d-flex align-items-center gap-2 w-100 flex-wrap justify-content-center">
+                      {/* Edit button */}
                       <button
-                        className="border border-info-600 btn-sm bg-hover-info-200 text-info-600 text-md px-20 py-15 rounded-pill d-flex align-items-center justify-content-center gap-2 w-50"
+                        className="btn col-12 col-md-6 text-md px-56 py-12 radius-8"
+                        style={{
+                          color: "#fff",
+                          backgroundColor: "#439ab6",
+                        }}
                         onClick={() => handleEdit(item)}
                       >
                         <i className="bi bi-pencil"></i> Edit
                       </button>
+
+                      {/* Delete button */}
                       <button
-                        className="border border-danger-600 btn-sm bg-hover-danger-200 text-danger-600 text-md px-20 py-15 rounded-pill d-flex align-items-center justify-content-center gap-2 w-50"
+                        className="btn col-12 col-md-6 text-md px-56 py-12 radius-8"
+                        style={{
+                          color: "#fff",
+                          backgroundColor: "#a6274f",
+                        }}
                         onClick={() => handleDelete(item.id)}
                       >
                         <i className="bi bi-trash"></i> Delete
                       </button>
+
+                      {/* Download button */}
                       <button
-                        className="border border-success-600 btn-sm bg-hover-success-200 text-success-600 text-md px-20 py-15 rounded-pill d-flex align-items-center justify-content-center gap-2 w-50"
+                        className="btn col-12 col-md-6 text-md px-56 py-12 radius-8"
+                        style={{
+                          color: "#fff",
+                          backgroundColor: "#3baa90",
+                        }}
                         onClick={() => handleDownload(item.secure_url)}
                       >
                         <i className="bi bi-download"></i> Download
@@ -597,23 +711,38 @@ const UserUploadDocument = () => {
                         <td>{item.document_type}</td>
                         <td>{item.document_extension}</td>
                         <td>
-                          <div className="d-flex align-items-center gap-2 w-100 flex-wrap justify-content-center">
-                            {/* edit button */}
+                          <div className="d-flex align-items-center gap-1 w-100 flex-wrap justify-content-center flex-column flex-md-row">
+                            {/* Edit button */}
                             <button
-                              className="border border-info-600 btn-sm bg-hover-info-200 text-info-600 text-md px-20 py-15 rounded-pill d-flex align-items-center justify-content-center gap-2 w-50"
+                              className="btn text-md px-2 py-2 radius-8v w-50"
+                              style={{
+                                color: "#fff",
+                                backgroundColor: "#439ab6",
+                              }}
                               onClick={() => handleEdit(item)}
                             >
                               <i className="bi bi-pencil"></i> Edit
                             </button>
 
+                            {/* Delete button */}
                             <button
-                              className="border border-danger-600 btn-sm bg-hover-danger-200 text-danger-600 text-md px-20 py-15 rounded-pill d-flex align-items-center justify-content-center gap-2 w-50"
+                              className="btn text-md px-2 py-2 radius-8 w-50"
+                              style={{
+                                color: "#fff",
+                                backgroundColor: "#a6274f",
+                              }}
                               onClick={() => handleDelete(item.id)}
                             >
                               <i className="bi bi-trash"></i> Delete
                             </button>
+
+                            {/* Download button */}
                             <button
-                              className="border border-success-600 btn-sm bg-hover-success-200 text-success-600 text-md px-20 py-15 rounded-pill d-flex align-items-center justify-content-center gap-2 w-50"
+                              className="btn text-md px-2 py-2 radius-8 w-50"
+                              style={{
+                                color: "#fff",
+                                backgroundColor: "#4fbfa3",
+                              }}
                               onClick={() => handleDownload(item.secure_url)}
                             >
                               <i className="bi bi-download"></i> Download

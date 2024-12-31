@@ -8,7 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { RxEyeOpen } from "react-icons/rx";
 import { RxEyeClosed } from "react-icons/rx";
 import mainTheme from "../utils/theme.png";
-
+import bgTheme from "../utils/bg.svg";
+import rightlogo from "../utils//logo168x40.svg";
 const SignInLayer = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
@@ -74,17 +75,44 @@ const SignInLayer = () => {
   );
 
   return (
-    <section className="auth bg-base d-flex flex-wrap">
+    <section
+      className="auth bg-base d-flex flex-wrap"
+      style={{
+        backgroundImage: `url(${bgTheme})`,
+        backgroundSize: "1000px 1000px",
+        backgroundPosition: "center",
+        backgroundRepeat: "repeat",
+        width: "100%",
+        position: "absolute",
+        top: 0,
+        left: 0,
+        overflow: "hidden",
+        zIndex: -11,
+      }}
+    >
       <div className="auth-left d-lg-block d-none">
         <div className="d-flex align-items-center flex-column h-100 justify-content-center">
           <img src={mainTheme || "assets/images/auth/auth-img.png"} alt="" />
         </div>
       </div>
-      <div className="auth-right py-32 px-24 d-flex flex-column justify-content-center">
-        <div className="max-w-464-px mx-auto w-100">
+      <div
+        className="auth-right py-32 px-24 d-flex flex-column justify-content-center"
+        //  use the bgtheme in the background
+        style={{
+          backgroundColor: "#fff",
+          borderRadius: "20px",
+          boxShadow: "0px 0px 20px 0px #0000000d",
+          position: "relative",
+          zIndex: 111,
+          width: "100%",
+          maxWidth: "464px",
+          margin: "auto",
+        }}
+      >
+        <div className="max-w-464-px mx-auto w-100" style={{}}>
           <div>
             <Link to="/" className="mb-40 max-w-290-px">
-              <img src="assets/images/logo.png" alt="" />
+              <img src={rightlogo || "assets/images/logo.png"} alt="" />
             </Link>
             <h4 className="mb-12">Sign In to your Account</h4>
             <p className="mb-32 text-secondary-light text-lg">
@@ -150,7 +178,7 @@ const SignInLayer = () => {
             <div className="d-flex justify-content-between gap-2">
               <div className="form-check style-check d-flex align-items-center">
                 <input
-                  className="form-check-input border border-neutral-300"
+                  className="form-check-input border border-neutral-300 custom-checkbox"
                   type="checkbox"
                   id="remember"
                   defaultChecked={Boolean(rememberedUser.username)}
@@ -165,7 +193,7 @@ const SignInLayer = () => {
                 className="fw-medium text-decoration-none"
                 style={{
                   cursor: "pointer",
-                  color: "#439ab6",
+                  color: "#a734ac",
                 }}
                 onClick={() => navigate("/forgot-password")}
               >
@@ -175,7 +203,15 @@ const SignInLayer = () => {
             <button
               type="submit"
               className="btn text-sm btn-sm px-12 py-16 w-100 radius-12 mt-32"
-              style={{ backgroundColor: "#57bcce", color: "#fff" }}
+              style={{
+                backgroundColor: "#57bcce",
+                position: "relative",
+                zIndex: 111,
+                color: "#fff",
+                "&:hover": {
+                  backgroundColor: "#439ab6",
+                },
+              }}
             >
               Sign In
             </button>
@@ -213,7 +249,7 @@ const SignInLayer = () => {
                   className="text-decoration-none fw-semibold"
                   style={{
                     cursor: "pointer",
-                    color: "#439ab6",
+                    color: "#a734ac",
                   }}
                 >
                   Sign Up

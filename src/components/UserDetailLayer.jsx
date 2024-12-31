@@ -217,8 +217,8 @@ const UserDetailLayer = ({ editUserData = {}, setShowModal }) => {
     try {
       const updatedData = {
         ...data,
-        username: editUserData?.data?.username,
-        user_id: "2",
+        // username: editUserData?.data?.username,
+        user_id: localStorage.getItem("user_id"),
         passport: selectPassport,
         id: selectId,
         visa: selectVisa,
@@ -237,7 +237,7 @@ const UserDetailLayer = ({ editUserData = {}, setShowModal }) => {
         }
       );
       if (response.data.is_success === true) {
-        resetForm();
+        // resetForm();
         toast.success(response.data.message);
       } else {
         toast.error(response.data.message);

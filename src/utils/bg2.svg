@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+  <!-- Define new pattern or effect if desired -->
+  
+  <!-- Circles with different colors and positions -->
+  <circle cx="30" cy="30" r="10" fill="#6fa3ef" />
+  <!-- <circle cx="70" cy="50" r="12" fill="#ff8a65" /> -->
+  <circle cx="50" cy="80" r="14" fill="#e3b57a" />
+</svg>

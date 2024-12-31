@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+  <!-- Define a blur filter -->
+  <!-- <defs>
+    <filter id="blur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" />
+    </filter>
+  </defs> -->
+
+  <!-- Apply the blur filter to each circle -->
+  <circle cx="25" cy="15" r="10" fill="#ff758d" filter="url(#blur)" />
+  <!-- <circle cx="80" cy="50" r="15" fill="#e8c89a" filter="url(#blur)" /> -->
+  <circle cx="52" cy="85" r="10" fill="#fbc2eb" filter="url(#blur)" />
+</svg>
