@@ -133,6 +133,10 @@ const ValidateUserOtp = () => {
                   required=""
                   {...register("username", {
                     required: "Username is required",
+                    maxLength: {
+                      value: 9,
+                      message: "Username must be less than 9 characters",
+                    },
                   })}
                 />
                 {errors.username && (

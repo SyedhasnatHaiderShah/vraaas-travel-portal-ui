@@ -224,7 +224,7 @@ const SignUpLayer = () => {
                   {/* <div className="invalid-feedback">Please provide Leader ID</div> */}
                 </div>
               </div>
-              <div className=" col-12 col-md-6 p-1">
+              <div className="col-12 col-md-6 p-1">
                 <label className="form-label">Phone</label>
                 <div className="icon-field has-validation">
                   <span className="icon">
@@ -232,24 +232,40 @@ const SignUpLayer = () => {
                   </span>
                   <input
                     type="text"
-                    name="#0"
+                    name="phone_number"
                     className="form-control"
-                    placeholder="+1 (555) 000-0000"
+                    placeholder="+15550000000"
                     required=""
                     {...register("phone_number", {
                       required: "Phone Number is required",
+                      validate: (value) => {
+                        if (!/^\+[0-9]{1,14}$/.test(value)) {
+                          return "Phone Number must start with + and contain up to 15 digits";
+                        }
+                        return true;
+                      },
                     })}
+                    onInput={(e) => {
+                      // Allow only digits after the "+" and ensure it starts with "+"
+                      const value = e.target.value;
+                      e.target.value =
+                        value[0] === "+"
+                          ? "+" +
+                            value
+                              .slice(1)
+                              .replace(/[^0-9]/g, "")
+                              .slice(0, 14)
+                          : "+" + value.replace(/[^0-9]/g, "").slice(0, 14);
+                    }}
                   />
                   {errors.phone_number && (
                     <div className="fw-normal text-danger">
                       {errors.phone_number.message}
                     </div>
                   )}
-                  {/* <div className="invalid-feedback">
-              Please provide phone number
-            </div> */}
                 </div>
               </div>
+
               {/* select country */}
               {/* <CountrySelect
           register={register}

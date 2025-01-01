@@ -16,6 +16,7 @@ import { IoCameraReverseOutline } from "react-icons/io5";
 import { MdDeleteForever } from "react-icons/md";
 import { FaCamera } from "react-icons/fa";
 import { FaDeleteLeft } from "react-icons/fa6";
+import { AiFillDelete } from "react-icons/ai";
 
 const ViewUserDetailLayer = () => {
   // image profile function
@@ -55,6 +56,10 @@ const ViewUserDetailLayer = () => {
       if (response.data.is_success) {
         toast.success(response.data.message);
         // Optionally, update the state with the new profile picture
+        localStorage.setItem(
+          "profile_picture",
+          response.data.data.profile_picture
+        );
         setProfileImagePreview(null); // Clear preview
         setSelectProfileImage(null); // Clear selected file
       } else {
@@ -355,53 +360,78 @@ const ViewUserDetailLayer = () => {
                 />
 
                 {/* Camera Icon Button */}
-                <label
+                {/* <button
                   htmlFor="profile-photo-upload"
-                  className="position-absolute bottom-2 end-0  rounded-circle p-2 cursor-pointer shadow"
-                  style={{ transform: "translate(50%, 50%)" }}
+                  className="position-absolute bottom-2 end-0  p-2 cursor-pointer"
+                  style={{ transform: "translate(-50%, 50%)" }}
                 >
                   <FaCamera style={{ fontSize: "1.5rem" }} />
-                </label>
-                <input
-                  type="file"
-                  id="profile-photo-upload"
-                  accept="image/*"
-                  className="d-none"
-                  onChange={handleImageChange}
-                />
+                </button> */}
 
                 {/* Remove Button */}
-                {profileImagePreview && (
-                  <button
-                    className="btn  btn-sm position-absolute top-0 start-50 translate-middle-x "
-                    style={{ transform: "translateY(-50%)" }}
-                    onClick={removeSelectedImage}
-                  >
-                    <FaDeleteLeft
-                      style={{
-                        fontSize: "1.5rem",
-                        color: "#ce1d52",
-                      }}
-                    />
-                  </button>
-                )}
               </div>
 
               {/* Update Button */}
-              <div>
-                {selectProfileImage && (
-                  <button
-                    className="btn  mt-3 shadow"
-                    onClick={profileImageHandle}
+              <div className=" d-flex align-items-center justify-content-center gap-2  w-100 mt-16 ">
+                <div className="  ">
+                  {profileImagePreview && (
+                    <button
+                      className="btn  btn-sm "
+                      onClick={removeSelectedImage}
+                      style={{
+                        backgroundColor: "#ce1d52",
+                        color: "#fff",
+                      }}
+                    >
+                      Cancel
+                      {/* <AiFillDelete
+                        style={
+                          {
+                            fontSize: "1.5rem",
+                            // color: "#ce1d52",
+                          }
+                        }
+                      /> */}
+                    </button>
+                  )}
+                </div>
+                <div>
+                  {selectProfileImage && (
+                    <button
+                      className="btn btn-sm"
+                      onClick={profileImageHandle}
+                      style={{
+                        backgroundColor: "#439ab6",
+                        color: "#fff",
+                      }}
+                    >
+                      Update
+                    </button>
+                  )}
+                  {/* {!selectProfileImage && ( */}
+                </div>
+                <div>
+                  <label
+                    htmlFor="profile-photo-upload"
+                    className="btn btn-sm"
                     style={{
-                      backgroundColor: "#439ab6",
+                      backgroundColor: "#22C55E",
                       color: "#fff",
                     }}
                   >
-                    Update
-                  </button>
-                )}
+                    Upload <FaCamera style={{ fontSize: "1.2rem" }} />
+                  </label>
+                  {/* )} */}
+                  <input
+                    type="file"
+                    id="profile-photo-upload"
+                    accept="image/*"
+                    className="d-none"
+                    onChange={handleImageChange}
+                  />
+                </div>
               </div>
+
               {/* User Information */}
               <h6 className="mb-0 mt-3">
                 {editUserData?.data?.full_name || "No full name available"}
@@ -579,7 +609,50 @@ const ViewUserDetailLayer = () => {
                         />
                       </div>
                     </div>
-                    <div className="col-sm-6">
+
+                    <div className="col-12 col-md-6 p-1">
+                      <label className="form-label">Phone Number</label>
+                      <div className="icon-field has-validation">
+                        <span className="icon">
+                          <Icon icon="solar:phone-calling-linear" />
+                        </span>
+                        <input
+                          type="text"
+                          name="phone_number"
+                          className="form-control"
+                          placeholder="+15550000000"
+                          required=""
+                          {...register("phone_number", {
+                            required: "Phone Number is required",
+                            validate: (value) => {
+                              if (!/^\+[0-9]{1,14}$/.test(value)) {
+                                return "Phone Number must start with + and contain up to 15 digits";
+                              }
+                              return true;
+                            },
+                          })}
+                          onInput={(e) => {
+                            // Allow only digits after the "+" and ensure it starts with "+"
+                            const value = e.target.value;
+                            e.target.value =
+                              value[0] === "+"
+                                ? "+" +
+                                  value
+                                    .slice(1)
+                                    .replace(/[^0-9]/g, "")
+                                    .slice(0, 14)
+                                : "+" +
+                                  value.replace(/[^0-9]/g, "").slice(0, 14);
+                          }}
+                        />
+                        {errors.phone_number && (
+                          <div className="fw-normal text-danger">
+                            {errors.phone_number.message}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    {/* <div className="col-sm-6">
                       <div className="mb-20">
                         <label
                           htmlFor="number"
@@ -598,7 +671,7 @@ const ViewUserDetailLayer = () => {
                           {...register("phone_number", { required: true })}
                         />
                       </div>
-                    </div>
+                    </div> */}
                     <div className="col-sm-6">
                       <div className="mb-20">
                         <label
@@ -849,7 +922,7 @@ const ViewUserDetailLayer = () => {
                     </div> */}
 
                     {/* passport */}
-                    <div className=" w-100 d-flex flex-column align-items-center justify-content-center">
+                    <div className=" w-100 d-flex flex-column align-items-center justify-content-center border">
                       <div className="col-12 mb-20">
                         <label className="form-label">Upload Passport</label>
                         <input
